@@ -1,6 +1,26 @@
 {
     "auth": {
         "login_title": "Welcome to PEKIDI",
-        "login_description": "Login via your E-mail address, LinkedIn or Google account."
+        "login_description": "Login via your E-mail address, LinkedIn or Google account.",
+        "login_with_linkedin": "Login with LinkedIn account",
+        "login_with_google": "Login with Google account",
+        "login": "Log in",
+        "sign_up": "Sign up",
+        "forgot_your_password": "Forgot your password?",
+        "dont_have_account": "Don't have an account?",
+        "have_account": "Already registered?",
+        "change_password": "Change password",
+        "register_title": "Register to PEKIDI",
+        "register_description": "Create a new account by filling the following details."
+    },
+    "messages": {
+        "auth": {
+            "successful_registration": "Congrats! Your account has been created!",
+            "reset_request_successful": "Check your mail! A new request to reset your password has been set"
+        },
+        "incorrect_login": "Incorrect login credentials. Either the given e-mail or password is wrong"
+    },
+    "errors": {
+        "unexpected": "ERROR: Unexpected error occurred for the given task. If the error persists, please contact your administrator"
     }
 }

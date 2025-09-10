@@ -4,7 +4,10 @@ import App from "./App.vue";
 import { createI18n } from 'vue-i18n'
 import en from "@/locale/en.json"
 import el from "@/locale/en.json"
-import {createPinia} from "pinia";
+import {createPinia, Pinia} from "pinia";
+import {useAuthStore} from "@/stores/authStore";
+import router from "@/router";
+import { autoAnimatePlugin } from '@formkit/auto-animate/vue'
 
 const i18n = createI18n({
     locale: 'ja',
@@ -15,10 +18,9 @@ const i18n = createI18n({
     }
 })
 
-const pinia = createPinia()
-const app = createApp(App).use(i18n).use(pinia)
-app.mount("#app")
-// const authStore = useAuthStore()
-// authStore.fetchUser().finally(() => {
-//     app.use(router).mount("#app")
-// })
+const pinia: Pinia = createPinia()
+const app = createApp(App).use(i18n).use(pinia).use(autoAnimatePlugin)
+const authStore = useAuthStore()
+authStore.fetchUser().finally(() => {
+    app.use(router).mount("#app")
+})

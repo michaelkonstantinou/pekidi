@@ -10,6 +10,33 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import {Linkedin} from "lucide-vue-next";
+import AuthService from "@/services/authService";
+import {ref, Ref} from "vue";
+import {useRouter} from "vue-router";
+import {useAuthStore} from "@/stores/authStore";
+import {toast} from "vue-sonner";
+
+const authStore = useAuthStore()
+const router = useRouter()
+
+// Variables
+const email: Ref<String> = ref("")
+const password: Ref<String> = ref("")
+
+async function onSubmit() {
+    try {
+        await AuthService.login(email.value, password.value)
+        await authStore.fetchUser()
+        await router.push({ name: "admin.dashboard" })
+    } catch (error: any) {
+        if (error.response && error.response.status === 422) {
+            toast.error("Incorrect credentials")
+        } else {
+            toast.error("Something went wrong. Please try again in a while")
+        }
+    }
+}
+
 </script>
 
 <template>
@@ -26,7 +53,7 @@ import {Linkedin} from "lucide-vue-next";
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <form>
+                        <form @submit.prevent="onSubmit">
                             <div class="grid gap-6">
                                 <div class="flex flex-col gap-4">
                                     <Button variant="outline" class="w-full">
@@ -47,42 +74,37 @@ import {Linkedin} from "lucide-vue-next";
                                     <div class="grid gap-2">
                                         <Label html-for="email">Email</Label>
                                         <Input
+                                            v-model="email"
                                             id="email"
                                             type="email"
-                                            placeholder="m@example.com"
+                                            placeholder="myname@example.com"
                                             required
                                         />
                                     </div>
                                     <div class="grid gap-2">
                                         <div class="flex items-center">
                                             <Label html-for="password">Password</Label>
-                                            <a
-                                                href="#"
-                                                class="ml-auto text-sm underline-offset-4 hover:underline"
-                                            >
-                                                Forgot your password?
-                                            </a>
+                                            <router-link :to="{'name': 'auth.forgotPassword'}"
+                                                         class="ml-auto text-sm underline-offset-4 hover:underline">
+                                                {{ $t("auth.forgot_your_password") }}
+                                            </router-link>
                                         </div>
-                                        <Input id="password" type="password" required />
+                                        <Input v-model="password" id="password" type="password" required />
                                     </div>
                                     <Button type="submit" class="w-full">
-                                        Login
+                                        {{ $t("auth.login") }}
                                     </Button>
                                 </div>
                                 <div class="text-center text-sm">
-                                    Don't have an account?
-                                    <a href="#" class="underline underline-offset-4">
-                                        Sign up
-                                    </a>
+                                    {{ $t("auth.dont_have_account") }}
+                                    <router-link :to="{'name': 'auth.register'}" class="underline underline-offset-4">
+                                        {{ $t("auth.sign_up") }}
+                                    </router-link>
                                 </div>
                             </div>
                         </form>
                     </CardContent>
                 </Card>
-                <div class="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary">
-                    By clicking continue, you agree to our <a href="#">Terms of Service</a>
-                    and <a href="#">Privacy Policy</a>.
-                </div>
             </div>
         </div>
     </div>

@@ -1,10 +1,11 @@
 <script setup>
-
-import LoginView from "@/views/auth/LoginView.vue";
+import 'vue-sonner/style.css'
+import { Toaster } from '@/components/ui/sonner'
 </script>
 
 <template>
-    <LoginView></LoginView>
+    <Toaster position="top-center" richColors/>
+    <router-view></router-view>
 </template>
 
 <style scoped>
