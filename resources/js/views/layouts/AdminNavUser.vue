@@ -58,7 +58,7 @@ const logout = async () => {
 }
 
 const toggleColorMode = () => {
-    colorMode.value = (colorMode.value === 'light') ? 'dark' : 'light'
+    colorMode.value = (colorMode.value !== 'dark') ? 'dark' : 'light'
 }
 </script>
 
@@ -111,9 +111,9 @@ const toggleColorMode = () => {
                             Profile Settings
                         </DropdownMenuItem>
                         <DropdownMenuItem @click="toggleColorMode">
-                            <Moon v-show="colorMode === 'light'"/>
+                            <Moon v-show="colorMode !== 'dark'"/>
                             <Sun v-show="colorMode === 'dark'"/>
-                            {{ $t(colorMode === 'light' ? 'settings.dark_mode' : 'settings.light_mode')}}
+                            {{ $t(colorMode !== 'dark' ? 'settings.dark_mode' : 'settings.light_mode')}}
                         </DropdownMenuItem>
                     </DropdownMenuGroup>
                     <DropdownMenuItem @click="logout">
