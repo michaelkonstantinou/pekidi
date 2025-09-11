@@ -31,7 +31,8 @@ const routes = [
     {
         path: "/reset-password",
         name: "auth.resetPassword",
-        component: () => import("@/views/auth/RegisterView.vue"),
+        component: () => import("@/views/auth/ResetPasswordView.vue"),
+        beforeEnter: redirectIfAuthenticated,
     },
     {
         path: "/admin",

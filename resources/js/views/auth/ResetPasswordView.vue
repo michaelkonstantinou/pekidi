@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input"
 import {Linkedin} from "lucide-vue-next";
 import AuthService from "@/services/authService";
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {toast} from "vue-sonner";
 import {
     FormControl,
@@ -20,21 +20,25 @@ import {
     FormMessage,
 } from '@/components/ui/form'
 import {useForm} from "vee-validate";
+import {useI18n} from "vue-i18n";
 import {FormFieldItem} from "@/dataTypes";
 const router = useRouter()
 const form = useForm()
+const route = useRoute()
+const {t} = useI18n()
+
+const token: String = route.query["token"]?.toString() ?? ""
 
 const formFields: FormFieldItem[] = [
-    new FormFieldItem("name", "Full name", "text", "John Smith"),
-    new FormFieldItem("email", "E-mail", "email", "my.name@example.com"),
-    new FormFieldItem("password", "Password", "password"),
-    new FormFieldItem("passwordConfirmation", "Confirm password", "password")
+    {name: "email", label: "E-mail", type: "email", placeholder: "my.name@example.com"},
+    {name: "password", label: "New password", type: "password", placeholder: ""},
+    {name: "passwordConfirmation", label: "Confirm password", type: "password", placeholder: ""}
 ]
 
 const onSubmit = form.handleSubmit((values) => {
-    AuthService.register(values.name, values.email, values.password, values.passwordConfirmation)
+    AuthService.resetPassword(values.email, values.password, values.passwordConfirmation, token)
         .then(() => {
-            toast.success($t("messages.auth.successful_registration"))
+            toast.success(t("messages.auth.successful_reset"))
             router.push({ name: "auth.login" })
         })
         .catch(errors => {
@@ -58,10 +62,10 @@ const onSubmit = form.handleSubmit((values) => {
                 <Card>
                     <CardHeader class="text-center">
                         <CardTitle class="text-xl">
-                            {{ $t("auth.register_title") }}
+                            {{ $t("auth.reset_title") }}
                         </CardTitle>
                         <CardDescription>
-                            {{ $t("auth.register_description") }}
+                            {{ $t("auth.reset_description") }}
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -81,15 +85,8 @@ const onSubmit = form.handleSubmit((values) => {
                                     </FormItem>
                                 </FormField>
                                 <Button type="submit" class="w-full">
-                                    {{ $t("auth.sign_up") }}
+                                    {{ $t("auth.change_password") }}
                                 </Button>
-
-                                <div class="text-center text-sm">
-                                    {{ $t("auth.have_account") }}
-                                    <router-link :to="{'name': 'auth.login'}" class="underline underline-offset-4">
-                                        {{ $t("auth.login") }}
-                                    </router-link>
-                                </div>
                             </div>
                         </form>
                     </CardContent>

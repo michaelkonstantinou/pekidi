@@ -22,10 +22,20 @@ export default class AuthService {
         });
     }
 
-    static async requestPasswordReset(mail: String): Promise<any> {
+    static async resetPassword(mail: String, password: String, passwordConfirmation: String, token: String) {
         return AuthService.getCsrfToken().then(() => {
-            return axios.post("/forgot-password", {"email": mail})
-        })
+            return axios.post("/reset-password", {
+                "email": mail,
+                "password": password,
+                "password_confirmation": passwordConfirmation,
+                "token": token
+            })
+        });
+    }
+
+    static async requestPasswordReset(mail: String): Promise<any> {
+        await AuthService.getCsrfToken()
+        return axios.post("/forgot-password", {"email": mail})
     }
 
     /**
@@ -55,7 +65,7 @@ export default class AuthService {
         }
     }
 
-    private static getCsrfToken() {
+    private static async getCsrfToken() {
         return axios.get('sanctum/csrf-cookie')
     }
 }

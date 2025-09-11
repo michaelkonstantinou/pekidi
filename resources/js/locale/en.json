@@ -11,7 +11,8 @@
         "have_account": "Already registered?",
         "change_password": "Change password",
         "register_title": "Register to PEKIDI",
-        "register_description": "Create a new account by filling the following details."
+        "register_description": "Create a new account by filling the following details.",
+        "reset_password_link_sent": "Reset password link has been sent to your mail"
     },
     "messages": {
         "auth": {
