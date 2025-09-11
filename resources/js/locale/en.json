@@ -18,7 +18,11 @@
         "title": "Profile Settings",
         "description": "Manage your profile and account settings",
         "update_pass_title": "Update password",
-        "update_pass_description": "Ensure your account is using a long, random password to stay secure"
+        "update_pass_description": "Ensure your account is using a long, random password to stay secure",
+        "preferences_title": "Preferences",
+        "preferences_description": "Customize the layout of the application, as you seem it fits better",
+        "light_mode": "Light mode",
+        "dark_mode": "Dark mode"
     },
     "messages": {
         "auth": {

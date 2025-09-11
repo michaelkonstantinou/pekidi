@@ -6,7 +6,9 @@ import {
     CreditCard,
     LogOut,
     Sparkles,
-    Settings
+    Settings,
+    Moon,
+    Sun
 } from "lucide-vue-next"
 
 import {
@@ -33,6 +35,8 @@ import User from "@/models/user";
 import {toast} from "vue-sonner";
 import {useRouter} from "vue-router";
 import {useAuthStore} from "@/stores/authStore";
+import {useColorMode} from "@vueuse/core";
+import {ref} from "vue";
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -42,6 +46,7 @@ const props = defineProps<{
 }>()
 
 const { isMobile } = useSidebar()
+const colorMode = useColorMode()
 
 const logout = async () => {
     const isLoggedOut: Boolean = await authStore.logout()
@@ -50,6 +55,10 @@ const logout = async () => {
     } else {
         toast.error($t("errors.unexpected"))
     }
+}
+
+const toggleColorMode = () => {
+    colorMode.value = (colorMode.value === 'light') ? 'dark' : 'light'
 }
 </script>
 
@@ -100,6 +109,11 @@ const logout = async () => {
                         <DropdownMenuItem @click="router.push({'name': 'admin.profileSettings'})">
                             <Settings />
                             Profile Settings
+                        </DropdownMenuItem>
+                        <DropdownMenuItem @click="toggleColorMode">
+                            <Moon v-show="colorMode === 'light'"/>
+                            <Sun v-show="colorMode === 'dark'"/>
+                            {{ $t(colorMode === 'light' ? 'settings.dark_mode' : 'settings.light_mode')}}
                         </DropdownMenuItem>
                     </DropdownMenuGroup>
                     <DropdownMenuItem @click="logout">

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {FormContext, useForm} from "vee-validate";
 import {FormFieldItem} from "@/dataTypes";
-import {useRouter} from "vue-router";
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
@@ -11,7 +10,6 @@ import AuthService from "@/services/authService";
 import {toast} from "vue-sonner";
 import {useI18n} from "vue-i18n";
 import {ref, Ref} from "vue";
-const router = useRouter()
 const form: FormContext = useForm()
 const {t} = useI18n()
 const isLoading: Ref<boolean> = ref(false)
