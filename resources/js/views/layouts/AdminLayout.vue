@@ -9,6 +9,16 @@ import {
     BreadcrumbList, BreadcrumbPage,
     BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
+import {BreadcrumbItemType} from "@/types";
+import {Separator} from "@/components/ui/separator";
+
+const props = defineProps({
+    breadcrumbs: {
+        type: Array<BreadcrumbItemType>,
+        required: false,
+        default: [],
+    }
+})
 </script>
 
 <template>
@@ -17,21 +27,27 @@ import {
     <SidebarInset>
         <header class="flex h-16 shrink-0 items-center gap-2 px-4">
             <SidebarTrigger class="-ml-1" />
-            <Separator orientation="vertical" class="mr-2 h-4" />
             <Breadcrumb>
                 <BreadcrumbList>
-                    <BreadcrumbItem class="hidden md:block">
-                        <BreadcrumbLink href="#">
-                            Building Your Application
-                        </BreadcrumbLink>
-                    </BreadcrumbItem>
-                    <BreadcrumbSeparator class="hidden md:block" />
-                    <BreadcrumbItem>
-                        <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                    </BreadcrumbItem>
+                    <template v-for="(item, index) in breadcrumbs" :key="index">
+                        <BreadcrumbItem>
+                            <template v-if="index === breadcrumbs.length - 1">
+                                <BreadcrumbPage>{{ $t(item.label) }}</BreadcrumbPage>
+                            </template>
+                            <template v-else>
+                                <BreadcrumbLink as-child>
+                                    <router-link :to="item.routeName !== null ? {'name': item.routeName} : '#'">
+                                        {{ $t(item.label) }}
+                                    </router-link>
+                                </BreadcrumbLink>
+                            </template>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator v-if="index !== breadcrumbs.length - 1" />
+                    </template>
                 </BreadcrumbList>
             </Breadcrumb>
         </header>
+        <Separator />
         <slot />
     </SidebarInset>
 </SidebarProvider>

@@ -3,6 +3,12 @@ import User from "@/models/user";
 
 export default class AuthService {
 
+    /**
+     * Executes a request to obtain the csrf token and makes a POST request to the login route
+     *
+     * @param mail
+     * @param password
+     */
     static async login(mail: String, password: String) {
         await AuthService.getCsrfToken();
         return axios.post("/login", {
@@ -63,6 +69,22 @@ export default class AuthService {
         } catch (e) {
             return false
         }
+    }
+
+    /**
+     * Executes a PUT request to Fortify's update password route.
+     * NOTE: The user must be logged in for this request to work
+     *
+     * @param currentPassword
+     * @param newPassword
+     * @param confirmPassword
+     */
+    static async userUpdatePassword(currentPassword: String, newPassword: String, confirmPassword: String) {
+        return axios.put("/user/password", {
+            "current_password": currentPassword,
+            "password": newPassword,
+            "password_confirmation": currentPassword
+        })
     }
 
     private static async getCsrfToken() {

@@ -42,6 +42,28 @@ const routes = [
                 path: "dashboard",
                 name: "admin.dashboard",
                 component: () => import("@/views/admin/DashboardView.vue"),
+            },
+            {
+                path: "profile-settings",
+                name: "admin.profileSettings",
+                component: () => import("@/views/admin/ProfileSettingsView.vue"),
+                children: [
+                    {
+                        path: "user-info",
+                        name: "admin.profileSettings.userInfo",
+                        component: () => import("@/views/admin/settings/ProfileUpdatePasswordView.vue"),
+                    },
+                    {
+                        path: "update-password",
+                        name: "admin.profileSettings.updatePassword",
+                        component: () => import("@/views/admin/settings/ProfileUpdatePasswordView.vue"),
+                    },
+                    {
+                        path: "preferences",
+                        name: "admin.profileSettings.preferences",
+                        component: () => import("@/views/admin/settings/ProfileUpdatePasswordView.vue"),
+                    }
+                ]
             }
         ]
     }

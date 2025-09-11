@@ -1,29 +1,24 @@
 <script setup lang="ts">
-
-import {Button} from "@/components/ui/button";
-import {useAuthStore} from "@/stores/authStore";
-import {useRouter} from "vue-router";
-import {toast} from "vue-sonner";
 import AdminLayout from "@/views/layouts/AdminLayout.vue";
+import {BreadcrumbItemType} from "@/types";
+import Heading from "@/components/Heading.vue";
+import { Separator } from '@/components/ui/separator';
 
-const authStore = useAuthStore()
-const router = useRouter()
-
-const logout = async () => {
-    const isLoggedOut: Boolean = await authStore.logout()
-    if (isLoggedOut === true) {
-        router.push({'name': 'auth.login'})
-    } else {
-        toast.error($t("errors.unexpected"))
-    }
-}
+const breadcrumbs: BreadcrumbItemType[] = [
+    {'label': 'Dashboard', routeName: 'admin.dashboard'}
+]
 </script>
 
 <template>
-<AdminLayout>
+<AdminLayout :breadcrumbs="breadcrumbs">
+    <div class="px-4 py-6">
+        <Heading title="Settings" description="Manage your profile and account settings"/>
+
+        <Separator class="my-6" />
+    </div>
+
     <div class="flex flex-1 flex-col gap-4 p-4 pt-0">
         <h1>Hey you are logged in!</h1>
-        <Button @click="logout">Logout</Button>
         <div class="grid auto-rows-min gap-4 md:grid-cols-3">
             <div class="aspect-video rounded-xl bg-muted/50" />
             <div class="aspect-video rounded-xl bg-muted/50" />

@@ -6,6 +6,7 @@ import {
     CreditCard,
     LogOut,
     Sparkles,
+    Settings
 } from "lucide-vue-next"
 
 import {
@@ -96,8 +97,8 @@ const logout = async () => {
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
-                        <DropdownMenuItem>
-                            <BadgeCheck />
+                        <DropdownMenuItem @click="router.push({'name': 'admin.profileSettings'})">
+                            <Settings />
                             Profile Settings
                         </DropdownMenuItem>
                     </DropdownMenuGroup>

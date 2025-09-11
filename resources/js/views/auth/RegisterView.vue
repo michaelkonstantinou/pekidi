@@ -40,13 +40,11 @@ const onSubmit = form.handleSubmit((values) => {
         .catch(errors => {
             if (errors.response?.status === 422) {
                 const messageErrors = errors.response.data.errors
-                // 4. Feed backend errors into vee-validate
                 Object.keys(messageErrors).forEach((field) => {
                     form.setFieldError(field, messageErrors[field][0])
                 })
             }
         })
-
 });
 
 </script>

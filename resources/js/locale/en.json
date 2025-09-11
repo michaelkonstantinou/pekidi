@@ -14,10 +14,17 @@
         "register_description": "Create a new account by filling the following details.",
         "reset_password_link_sent": "Reset password link has been sent to your mail"
     },
+    "settings": {
+        "title": "Profile Settings",
+        "description": "Manage your profile and account settings",
+        "update_pass_title": "Update password",
+        "update_pass_description": "Ensure your account is using a long, random password to stay secure"
+    },
     "messages": {
         "auth": {
             "successful_registration": "Congrats! Your account has been created!",
-            "reset_request_successful": "Check your mail! A new request to reset your password has been set"
+            "reset_request_successful": "Check your mail! A new request to reset your password has been set",
+            "update_password_success": "Password has been updated successfully!"
         },
         "incorrect_login": "Incorrect login credentials. Either the given e-mail or password is wrong"
     },
