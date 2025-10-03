@@ -106,7 +106,7 @@ const toggleColorMode = () => {
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
-                        <DropdownMenuItem @click="router.push({'name': 'admin.profileSettings'})">
+                        <DropdownMenuItem @click="router.push({'name': 'admin.profileSettings.userInfo'})">
                             <Settings />
                             Profile Settings
                         </DropdownMenuItem>

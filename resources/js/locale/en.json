@@ -12,7 +12,8 @@
         "change_password": "Change password",
         "register_title": "Register to PEKIDI",
         "register_description": "Create a new account by filling the following details.",
-        "reset_password_link_sent": "Reset password link has been sent to your mail"
+        "reset_password_link_sent": "Reset password link has been sent to your mail",
+        "update_profile": "Update profile"
     },
     "settings": {
         "title": "Profile Settings",
@@ -22,13 +23,16 @@
         "preferences_title": "Preferences",
         "preferences_description": "Customize the layout of the application, as you seem it fits better",
         "light_mode": "Light mode",
-        "dark_mode": "Dark mode"
+        "dark_mode": "Dark mode",
+        "update_profile": "Profile update",
+        "update_profile_description": "Edit the trivial information of your profile and your profile's appearance"
     },
     "messages": {
         "auth": {
             "successful_registration": "Congrats! Your account has been created!",
             "reset_request_successful": "Check your mail! A new request to reset your password has been set",
-            "update_password_success": "Password has been updated successfully!"
+            "update_password_success": "Password has been updated successfully!",
+            "update_user_profile_success": "Your profile has been updated successfully!"
         },
         "incorrect_login": "Incorrect login credentials. Either the given e-mail or password is wrong"
     },

@@ -83,7 +83,18 @@ export default class AuthService {
         return axios.put("/user/password", {
             "current_password": currentPassword,
             "password": newPassword,
-            "password_confirmation": currentPassword
+            "password_confirmation": confirmPassword
+        })
+    }
+
+    /**
+     * Executes a PUT request to Fortify's update password route.
+     * NOTE: The user must be logged in for this request to work
+     */
+    static async userProfileInformationUpdate(newName: String, email: String) {
+        return axios.put("/user/profile-information", {
+            "name": newName,
+            "email": email,
         })
     }
 

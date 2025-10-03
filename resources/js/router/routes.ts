@@ -51,7 +51,7 @@ const routes = [
                     {
                         path: "user-info",
                         name: "admin.profileSettings.userInfo",
-                        component: () => import("@/views/admin/settings/ProfileUpdatePasswordView.vue"),
+                        component: () => import("@/views/admin/settings/ProfileEditView.vue"),
                     },
                     {
                         path: "update-password",
