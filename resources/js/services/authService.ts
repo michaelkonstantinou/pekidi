@@ -98,7 +98,7 @@ export default class AuthService {
         })
     }
 
-    private static async getCsrfToken() {
+    public static async getCsrfToken() {
         return axios.get('sanctum/csrf-cookie')
     }
 }

@@ -9,9 +9,31 @@ import {updateFormErrors} from "@/helpers/formHelpers";
 import AuthService from "@/services/authService";
 import {toast} from "vue-sonner";
 import {useI18n} from "vue-i18n";
-import {ref, Ref} from "vue";
+import {ref, Ref, useTemplateRef} from "vue";
 import {useAuthStore} from "@/stores/authStore";
 
+// Import FilePond
+import vueFilePond, {setOptions} from 'vue-filepond';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import FilePondPluginImageResize from 'filepond-plugin-image-resize';
+import FilePondPluginImageCrop from 'filepond-plugin-image-crop';
+import FilePondPluginImageTransform from 'filepond-plugin-image-transform';
+import FilePondPluginImageEdit from 'filepond-plugin-image-edit';
+
+setOptions({
+    server: {
+        process: {
+            url: "/api/user/upload-profile-picture",
+            headers: {
+                'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').getAttribute("content")
+            }
+        }
+    },
+});
+
+// Create FilePond component
+const FilePond = vueFilePond(FilePondPluginImageEdit, FilePondPluginImagePreview, FilePondPluginImageResize, FilePondPluginImageCrop, FilePondPluginImageTransform);
+const elUserProfilePicture = useTemplateRef('user-profile-picture')
 const authStore = useAuthStore()
 const form: FormContext = useForm({
     "initialValues": {
@@ -44,10 +66,31 @@ const onSubmit = form.handleSubmit(values => {
             updateFormErrors(form, errors)
         }).finally(() => isLoading.value = false)
 })
+
 </script>
 
 <template>
     <HeadingSmall title="settings.update_profile" description="settings.update_profile_description" />
+    <div class="flex justify-center">
+            <FilePond
+                class="w-100"
+                name="image"
+                ref="user-profile-picture"
+                label-idle="Set profile picture..."
+                allow-multiple="false"
+                accepted-file-types="image/jpeg, image/png"
+                max-file-size="1MB"
+                style-panel-layout="compact circle"
+                styleLoadIndicatorPosition="center bottom"
+                styleProgressIndicatorPosition="right bottom"
+                styleButtonRemoveItemPosition="center bottom"
+                :allowImagePreview="true"
+                :imagePreviewHeight="150"
+                imageCropAspectRatio="1:1"
+                :imageResizeTargetWidth="150"
+                :imageResizeTargetHeight="150"
+            />
+    </div>
     <form @submit.prevent="onSubmit">
         <div class="grid gap-6">
             <FormField
@@ -65,8 +108,10 @@ const onSubmit = form.handleSubmit(values => {
             </FormField>
 
         </div>
-        <Button type="submit" class="mt-3" :disabled="isLoading">
+        <Button type="submit" class="mt-5" :disabled="isLoading">
             {{ $t("auth.update_profile") }}
         </Button>
     </form>
 </template>
+
+
