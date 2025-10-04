@@ -1,5 +1,6 @@
 import {h} from "vue";
 import {ColumnDef, Row} from "@tanstack/vue-table";
+import {getLocale, getLocaleDateString} from "@/helpers/localeHelpers";
 
 export function makeDateColumn<T extends Record<string, any>>(
     key: keyof T,
@@ -10,7 +11,7 @@ export function makeDateColumn<T extends Record<string, any>>(
         header: () => h("div", {}, label ?? key.toString()),
         cell: ({ row }) => {
             const raw = row.getValue(key as string) as Date
-            const formatted = raw.toLocaleDateString()
+            const formatted = getLocaleDateString(raw)
 
             return h("div", {}, formatted)
         },
