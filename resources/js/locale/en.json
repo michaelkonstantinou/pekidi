@@ -34,7 +34,10 @@
             "update_password_success": "Password has been updated successfully!",
             "update_user_profile_success": "Your profile has been updated successfully!"
         },
-        "incorrect_login": "Incorrect login credentials. Either the given e-mail or password is wrong"
+        "incorrect_login": "Incorrect login credentials. Either the given e-mail or password is wrong",
+        "actions": {
+            "create_success": "Record created successfully!"
+        }
     },
     "errors": {
         "unexpected": "ERROR: Unexpected error occurred for the given task. If the error persists, please contact your administrator"

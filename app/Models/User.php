@@ -4,11 +4,16 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
+/**
+ * @property Collection<Declaration> $declarations
+ */
 class User extends Authenticatable implements HasMedia
 {
     use InteractsWithMedia;
@@ -27,7 +32,7 @@ class User extends Authenticatable implements HasMedia
         'password',
         'born_at',
         'national_id',
-        'home_address'
+        'home_address',
     ];
 
     /**
@@ -39,6 +44,11 @@ class User extends Authenticatable implements HasMedia
         'password',
         'remember_token',
     ];
+
+    public function declarations(): HasMany
+    {
+        return $this->hasMany(Declaration::class);
+    }
 
     /**
      * Get the attributes that should be cast.

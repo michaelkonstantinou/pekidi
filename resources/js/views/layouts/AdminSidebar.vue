@@ -19,7 +19,7 @@ const authStore = useAuthStore()
 
 const items = [
     {
-        name: "Declarations", children: [{title: "All", route: "", icon: Home}],
+        name: "Declarations", children: [{title: "All", route: "admin.declarations.index", icon: Home}],
     },
     {
         name: "Settings", children: [{title: "Settings", route: "", icon: Home}]
@@ -52,7 +52,7 @@ const items = [
                         <SidebarMenu>
                             <SidebarMenuItem v-for="item in sidebarGroup.children" :key="item.title">
                                 <SidebarMenuButton asChild>
-                                    <router-link :to="item.route">
+                                    <router-link :to="{'name': item.route}">
                                         <component :is="item.icon" />
                                         <span>{{item.title}}</span>
                                     </router-link>

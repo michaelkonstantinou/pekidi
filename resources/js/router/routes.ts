@@ -44,6 +44,11 @@ const routes = [
                 component: () => import("@/views/admin/DashboardView.vue"),
             },
             {
+                path: "declarations",
+                name: "admin.declarations.index",
+                component: () => import("@/views/admin/declarations/DeclarationsIndexView.vue"),
+            },
+            {
                 path: "profile-settings",
                 name: "admin.profileSettings",
                 component: () => import("@/views/admin/ProfileSettingsView.vue"),
