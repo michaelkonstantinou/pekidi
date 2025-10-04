@@ -53,7 +53,6 @@ export default class AuthService {
             const res = await axios.get("api/user")
             return new User(res.data)
         } catch (err) {
-            console.error(err)
             return null
         }
     }
@@ -91,10 +90,13 @@ export default class AuthService {
      * Executes a PUT request to Fortify's update password route.
      * NOTE: The user must be logged in for this request to work
      */
-    static async userProfileInformationUpdate(newName: String, email: String) {
+    static async userProfileInformationUpdate(newName: String, email: String, bornAt?: String, homeAddress?: String, nationalId?: String) {
         return axios.put("/user/profile-information", {
             "name": newName,
             "email": email,
+            'national_id': nationalId,
+            'born_at': bornAt,
+            'home_address': homeAddress
         })
     }
 

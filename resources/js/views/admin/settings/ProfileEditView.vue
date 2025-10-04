@@ -38,7 +38,10 @@ const authStore = useAuthStore()
 const form: FormContext = useForm({
     "initialValues": {
         name: authStore.user?.name,
-        email: authStore.user?.email
+        email: authStore.user?.email,
+        born_at: authStore.user?.getBornAtAsInputString(),
+        home_address: authStore.user?.homeAddress,
+        national_id: authStore.user?.nationalId
     },
 })
 const {t} = useI18n()
@@ -47,18 +50,24 @@ const isLoading: Ref<boolean> = ref(false)
 const formFields: FormFieldItem[] = [
     new FormFieldItem("name", "Name"),
     new FormFieldItem("email", "E-mail", "email"),
+    new FormFieldItem("born_at", "Date of Birth", "date"),
+    new FormFieldItem("home_address", "Home address"),
+    new FormFieldItem("national_id", "National ID"),
 ]
 
 const onSubmit = form.handleSubmit(values => {
     isLoading.value = true
-    AuthService.userProfileInformationUpdate(values.name, values.email)
+    AuthService.userProfileInformationUpdate(values.name, values.email, values.born_at, values.home_address, values.national_id)
         .then(async () => {
             toast.success(t("messages.auth.update_user_profile_success"))
             await authStore.fetchUser()
             form.resetForm({
                 values: {
                     "name": authStore.user?.name,
-                    "email": authStore.user?.email
+                    "email": authStore.user?.email,
+                    "born_at": authStore.user?.getBornAtAsInputString(),
+                    "home_address": authStore.user?.homeAddress,
+                    "national_id": authStore.user?.nationalId
                 },
                 errors: {}
             })
