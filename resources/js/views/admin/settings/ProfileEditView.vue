@@ -73,7 +73,7 @@ const onSubmit = form.handleSubmit(values => {
     <HeadingSmall title="settings.update_profile" description="settings.update_profile_description" />
     <div class="flex justify-center">
             <FilePond
-                class="w-100"
+                class="w-50 max-w-[150px]"
                 name="image"
                 ref="user-profile-picture"
                 label-idle="Set profile picture..."
