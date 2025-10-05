@@ -40,7 +40,7 @@ const settingsRoutes = [
                                 :href="href"
                                 :class="[
                               'w-full justify-start',
-                              { 'bg-muted': isActive } // 👈 active styles
+                              { 'bg-primary/10 text-primary': isActive } // 👈 active styles
                             ]"
                                 @click="navigate"
                             >

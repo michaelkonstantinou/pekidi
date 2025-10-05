@@ -36,7 +36,8 @@
         },
         "incorrect_login": "Incorrect login credentials. Either the given e-mail or password is wrong",
         "actions": {
-            "create_success": "Record created successfully!"
+            "create_success": "Record created successfully!",
+            "save_success": "Data saved successfully!"
         }
     },
     "errors": {

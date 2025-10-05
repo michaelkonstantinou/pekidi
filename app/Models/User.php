@@ -12,6 +12,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
+ * @property int $id
  * @property Collection<Declaration> $declarations
  */
 class User extends Authenticatable implements HasMedia

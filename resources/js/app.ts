@@ -12,7 +12,7 @@ import {useColorMode} from "@vueuse/core";
 import {useDeclarationStore} from "@/stores/declarationStore";
 
 const i18n = createI18n({
-    locale: 'ja',
+    locale: 'en',
     fallbackLocale: 'en',
     messages: {
         en,

@@ -22,9 +22,20 @@ export const useDeclarationStore = defineStore('declaration', () => {
         return false;
     }
 
+    async function update(recordValues: any, id: number) {
+        recordValues.id = id
+        const response = await userDeclarationService.update(recordValues)
+        if (response !== null) {
+            await fetchAll()
+            return response;
+        }
+
+        return null;
+    }
+
     function fetchById(id: number) {
         return userDeclarationService.findById(id)
     }
 
-    return {declarations, fetchAll, create, fetchById}
+    return {declarations, fetchAll, create, fetchById, update}
 })
