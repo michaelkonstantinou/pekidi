@@ -21,5 +21,10 @@ export const useDeclarationStore = defineStore('declaration', () => {
 
         return false;
     }
-    return {declarations, fetchAll, create}
+
+    function fetchById(id: number) {
+        return userDeclarationService.findById(id)
+    }
+
+    return {declarations, fetchAll, create, fetchById}
 })

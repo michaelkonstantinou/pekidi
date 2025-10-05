@@ -11,12 +11,13 @@ import {
 } from "@/components/ui/breadcrumb";
 import {BreadcrumbItemType} from "@/types";
 import {Separator} from "@/components/ui/separator";
+import {PropType} from "vue";
 
 const props = defineProps({
     breadcrumbs: {
-        type: Array<BreadcrumbItemType>,
+        type: Array as PropType<BreadcrumbItemType[]>,
         required: false,
-        default: [],
+        default: []
     }
 })
 </script>

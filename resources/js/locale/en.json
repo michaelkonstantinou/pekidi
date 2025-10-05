@@ -41,5 +41,18 @@
     },
     "errors": {
         "unexpected": "ERROR: Unexpected error occurred for the given task. If the error persists, please contact your administrator"
+    },
+    "declarations": {
+        "title_edit": "Declaration Editor: {0}"
+    },
+    "buttons": {
+        "create": "Create",
+        "update": "Update",
+        "save": "Save",
+        "delete": "Delete"
+    },
+    "labels": {
+        "name": "Name",
+        "email": "E-mail"
     }
 }

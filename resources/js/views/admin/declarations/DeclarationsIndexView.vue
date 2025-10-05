@@ -21,6 +21,10 @@ const breadcrumbs: BreadcrumbItemType[] = [
         </div>
 
         <div class="flex flex-1 flex-col gap-4 p-4 pt-0">
+            <div class="flex gap-2">
+                <h3 class="scroll-m-20 text-2xl font-semibold tracking-tight">All Declarations</h3>
+            </div>
+
             <DeclarationsTable />
         </div>
 

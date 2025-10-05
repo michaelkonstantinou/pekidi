@@ -11,20 +11,33 @@ import {
     SidebarMenuItem,
     SidebarMenuButton
 } from '@/components/ui/sidebar'
-import {Home} from "lucide-vue-next";
+import {BookText, Home, Settings} from "lucide-vue-next";
 import AdminNavUser from "@/views/layouts/AdminNavUser.vue";
 import {useAuthStore} from "@/stores/authStore";
+import {useDeclarationStore} from "@/stores/declarationStore";
 
 const authStore = useAuthStore()
+const declarationStore = useDeclarationStore()
 
 const items = [
     {
-        name: "Declarations", children: [{title: "All", route: "admin.declarations.index", icon: Home}],
+        name: "Declarations", children: [{title: "All", route: "admin.declarations.index", icon: BookText, routeParams: {}}],
     },
     {
-        name: "Settings", children: [{title: "Settings", route: "", icon: Home}]
+        name: "Settings", children: [{title: "Settings", route: "admin.profileSettings", icon: Settings, routeParams: {}}]
     },
 ]
+
+// Append Declarations
+for (const declaration of declarationStore.declarations) {
+    items[0].children.push(
+        {
+            title: declaration.name,
+            route: "admin.declarations.edit",
+            routeParams: {'id': declaration.id},
+            icon: null
+        })
+}
 </script>
 
 <template>
@@ -46,14 +59,26 @@ const items = [
         </SidebarHeader>
         <SidebarContent>
             <SidebarContent>
+                <SidebarMenu>
+                    <SidebarMenuItem>
+                        <SidebarMenuButton asChild>
+                            <router-link :to="{'name': 'admin.dashboard'}">
+                                <component :is="Home" />
+                                <span>Dashboard</span>
+                            </router-link>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+                </SidebarMenu>
                 <SidebarGroup v-for="sidebarGroup in items" :key="sidebarGroup.name">
                     <SidebarGroupLabel>{{ sidebarGroup.name }}</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             <SidebarMenuItem v-for="item in sidebarGroup.children" :key="item.title">
                                 <SidebarMenuButton asChild>
-                                    <router-link :to="{'name': item.route}">
-                                        <component :is="item.icon" />
+                                    <router-link
+                                        active-class="bg-primary text-primary-foreground hover:bg-primary/90"
+                                        :to="{'name': item.route, 'params': item.routeParams}">
+                                        <component v-if="item.icon !== null" :is="item.icon" />
                                         <span>{{item.title}}</span>
                                     </router-link>
                                 </SidebarMenuButton>

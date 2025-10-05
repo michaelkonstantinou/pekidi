@@ -9,6 +9,7 @@ import {useAuthStore} from "@/stores/authStore";
 import router from "@/router";
 import { autoAnimatePlugin } from '@formkit/auto-animate/vue'
 import {useColorMode} from "@vueuse/core";
+import {useDeclarationStore} from "@/stores/declarationStore";
 
 const i18n = createI18n({
     locale: 'ja',
@@ -22,8 +23,11 @@ const i18n = createI18n({
 const pinia: Pinia = createPinia()
 const app = createApp(App).use(i18n).use(pinia).use(autoAnimatePlugin)
 const authStore = useAuthStore()
+const declarationStore = useDeclarationStore()
 useColorMode()
 
-authStore.fetchUser().finally(() => {
-    app.use(router).mount("#app")
-})
+authStore.fetchUser()
+    .then(() => declarationStore.fetchAll())
+    .finally(() => {
+        app.use(router).mount("#app")
+    })

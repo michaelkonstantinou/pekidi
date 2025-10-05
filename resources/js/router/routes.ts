@@ -49,9 +49,15 @@ const routes = [
                 component: () => import("@/views/admin/declarations/DeclarationsIndexView.vue"),
             },
             {
+                path: "declarations/:id/edit",
+                name: "admin.declarations.edit",
+                component: () => import("@/views/admin/declarations/DeclarationsEditView.vue"),
+            },
+            {
                 path: "profile-settings",
                 name: "admin.profileSettings",
                 component: () => import("@/views/admin/ProfileSettingsView.vue"),
+                redirect: { name: "admin.profileSettings.userInfo" },
                 children: [
                     {
                         path: "user-info",

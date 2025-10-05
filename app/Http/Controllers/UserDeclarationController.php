@@ -23,6 +23,21 @@ class UserDeclarationController
         return response()->json($user->declarations);
     }
 
+    public function show(Declaration $declaration): JsonResponse
+    {
+        /** @var ?User $user */
+        $user = Auth::user();
+        if ($user === null) {
+            return response()->json([], JsonResponse::HTTP_UNAUTHORIZED);
+        }
+
+        if ($declaration->user_id === $user->id) {
+            return response()->json($declaration);
+        }
+
+        return response()->json([], JsonResponse::HTTP_FORBIDDEN);
+    }
+
     public function store(DeclarationStore $request): JsonResponse
     {
         /** @var ?User $user */

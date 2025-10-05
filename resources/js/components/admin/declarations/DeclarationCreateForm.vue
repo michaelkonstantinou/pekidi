@@ -7,7 +7,6 @@ import {FormFieldItem} from "@/dataTypes";
 import {FormContext, useForm} from "vee-validate";
 import {useI18n} from "vue-i18n";
 import {ref, Ref} from "vue";
-import AuthService from "@/services/authService";
 import {toast} from "vue-sonner";
 import {updateFormErrors} from "@/helpers/formHelpers";
 import {useDeclarationStore} from "@/stores/declarationStore";
@@ -20,7 +19,7 @@ const emit = defineEmits(['saved'])
 const isLoading: Ref<boolean> = ref(false)
 
 const formFields: FormFieldItem[] = [
-    new FormFieldItem("name", "Name"),
+    new FormFieldItem("name", "labels.name"),
 ]
 
 const onSubmit = form.handleSubmit(values => {
@@ -44,7 +43,7 @@ const onSubmit = form.handleSubmit(values => {
                 :key="field.name"
                 :name="field.name">
                 <FormItem v-auto-animate>
-                    <FormLabel>{{ field.label }}</FormLabel>
+                    <FormLabel>{{ $t(field.label) }}</FormLabel>
                     <FormControl>
                         <Input :type="field.type" :placeholder="field.placeholder" v-bind="componentField" />
                     </FormControl>
