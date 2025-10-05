@@ -35,11 +35,11 @@ const emit = defineEmits(['saved'])
 const isLoading: Ref<boolean> = ref(false)
 
 const formFields: FormFieldItem[] = [
-    new FormFieldItem("name", "Name"),
-    new FormFieldItem("full_name", "Full name"),
-    new FormFieldItem("born_at", "Date of Birth", "date"),
-    new FormFieldItem("home_address", "Home address"),
-    new FormFieldItem("national_id", "National ID"),
+    new FormFieldItem("name", "labels.name"),
+    new FormFieldItem("full_name", "labels.full_name"),
+    new FormFieldItem("born_at", "labels.born_at", "date"),
+    new FormFieldItem("home_address", "labels.home_address"),
+    new FormFieldItem("national_id", "labels.national_id"),
 ]
 
 const onSubmit = form.handleSubmit(values => {
@@ -72,7 +72,7 @@ const onSubmit = form.handleSubmit(values => {
 </script>
 
 <template>
-    <HeadingSmall title="Personal Details" description="lorem ipsum"/>
+    <HeadingSmall title="declarations.personal_details" description="declarations.personal_details_description" />
     <form @submit.prevent="onSubmit">
     <div class="grid gap-6">
         <FormField
@@ -88,14 +88,10 @@ const onSubmit = form.handleSubmit(values => {
                 <FormMessage />
             </FormItem>
         </FormField>
-
     </div>
+
     <Button type="submit" class="mt-5" :disabled="isLoading">
         {{ $t("buttons.save") }}
     </Button>
     </form>
 </template>
-
-<style scoped>
-
-</style>

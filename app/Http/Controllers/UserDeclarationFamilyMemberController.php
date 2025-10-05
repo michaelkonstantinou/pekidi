@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeclarationFamilyMemberStore;
 use App\Http\Requests\DeclarationStore;
 use App\Models\Declaration;
+use App\Models\DeclarationFamilyMember;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Monolog\Logger;
 
-class UserDeclarationController
+class UserDeclarationFamilyMemberController
 {
-    public function index(): JsonResponse
+    public function index(Declaration $declaration): JsonResponse
     {
         /** @var ?User $user */
         $user = Auth::user();
@@ -18,7 +22,8 @@ class UserDeclarationController
             return response()->json([], JsonResponse::HTTP_UNAUTHORIZED);
         }
 
-        return response()->json($user->declarations);
+        Log::info("here");
+        return response()->json($declaration->familyMembers);
     }
 
     /**
@@ -44,21 +49,22 @@ class UserDeclarationController
     }
 
     /**
-     * Validates the user's input and creates a new Declaration for the authenticated user
-     * Returns unauthorized if the user is not logged in
+     * Validates the user's input and creates a new Declaration Family Member for the authenticated user and the given
+     * declaration object
+     * Returns unauthorized if the user is not logged in or the declaration object does not belong to the authed user
      *
      * @param DeclarationStore $request
      * @return JsonResponse
      */
-    public function store(DeclarationStore $request): JsonResponse
+    public function store(DeclarationFamilyMemberStore $request, Declaration $declaration): JsonResponse
     {
         /** @var ?User $user */
         $user = auth()->user();
-        if ($user === null) {
+        if ($user === null || $declaration->user_id !== $user->id) {
             return response()->json([], JsonResponse::HTTP_UNAUTHORIZED);
         }
 
-        $declaration = Declaration::createForUser($user, $request->name);
+        $declaration = DeclarationFamilyMember::create($request->all() + ['declaration_id' => $declaration->id]);
 
         return response()->json($declaration);
     }

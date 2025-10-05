@@ -3,11 +3,13 @@ export class FormFieldItem {
     type: string;
     label: string;
     placeholder: string;
+    options: Array<any>;
 
-    constructor(name: string, label: string, type: string = "text", placeholder: string = "") {
+    constructor(name: string, label: string, type: string = "text", placeholder: string = "", options: any = []) {
         this.name = name;
         this.type = type;
         this.label = label;
         this.placeholder = placeholder;
+        this.options = options
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property string $name
@@ -25,5 +26,10 @@ class Declaration extends Model
             'home_address' => $user->home_address,
             'national_id' => $user->national_id
         ]);
+    }
+
+    public function familyMembers(): HasMany
+    {
+        return $this->hasMany(DeclarationFamilyMember::class, 'declaration_id');
     }
 }

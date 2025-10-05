@@ -10,6 +10,7 @@ import {computed, onMounted, Ref, ref} from "vue";
 import Declaration from "@/models/declaration";
 import DeclarationPersonalDetailsEditor
     from "@/components/admin/declarations/editor/DeclarationPersonalDetailsEditor.vue";
+import DeclarationFamilyDetailsEditor from "@/components/admin/declarations/editor/DeclarationFamilyDetailsEditor.vue";
 
 const declarationStore = useDeclarationStore()
 const route = useRoute()
@@ -30,8 +31,8 @@ const breadcrumbs = computed(() => [
 
 
 const tabs = ref([
-    {'label': 'Personal Details', isActive: true, content: DeclarationPersonalDetailsEditor},
-    {'label': 'Family Details', isActive: false}
+    {'label': 'declarations.personal_details', isActive: true, content: DeclarationPersonalDetailsEditor},
+    {'label': 'declarations.family_details', isActive: false, content: DeclarationFamilyDetailsEditor}
 ])
 const activeTab = computed(() => tabs.value.find(tab => tab.isActive))
 
@@ -52,7 +53,11 @@ async function onSaved() {
 <template>
 <AdminLayout :breadcrumbs="breadcrumbs">
     <div class="px-4 py-6">
-        <Heading title="declarations.title_edit" :titleParams="[declaration?.name ?? '']" description="settings.description"/>
+        <Heading
+            title="declarations.title_edit"
+             :titleParams="[declaration?.name ?? '']"
+             description="declarations.description_edit"
+        />
 
         <Separator class="my-6" />
         <div class="flex flex-col lg:flex-row lg:space-x-12">
@@ -61,6 +66,7 @@ async function onSaved() {
                     <Button
                         v-for="(tab, index) in tabs"
                         :key="tab.label"
+                        class="cursor-pointer"
                         variant="ghost"
                         :class="[
                             'w-full justify-start',
@@ -69,7 +75,7 @@ async function onSaved() {
                         as-child
                         @click="navigateToTab(index)"
                     >
-                        <span>{{ tab.label }}</span>
+                        <span>{{ $t(tab.label) }}</span>
                     </Button>
                 </nav>
             </aside>
@@ -77,7 +83,7 @@ async function onSaved() {
             <Separator class="my-6 lg:hidden" />
 
             <div class="flex-1 md:max-w-2xl" v-if="declaration !== null && !isLoading">
-                <section class="max-w-xl space-y-12">
+                <section class="max-w-2xl space-y-12">
                     <component :is="activeTab.content" :declaration="declaration" @saved="onSaved"/>
                 </section>
             </div>

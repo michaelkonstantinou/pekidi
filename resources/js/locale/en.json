@@ -44,7 +44,11 @@
         "unexpected": "ERROR: Unexpected error occurred for the given task. If the error persists, please contact your administrator"
     },
     "declarations": {
-        "title_edit": "Declaration Editor: {0}"
+        "title_edit": "Declaration Editor: {0}",
+        "personal_details": "Personal Details",
+        "personal_details_description": "Fill in the necessary private information. Typically, this is the first page of the form",
+        "family_details": "Family Details",
+        "family_details_description": "Add the family members required for the form. You should add the details of your spouse and your non-adult children"
     },
     "buttons": {
         "create": "Create",
@@ -54,6 +58,13 @@
     },
     "labels": {
         "name": "Name",
-        "email": "E-mail"
+        "email": "E-mail",
+        "full_name": "Full name",
+        "born_at": "Date of Birth",
+        "created_at": "Created at",
+        "updated_at": "Last update",
+        "national_id": "National ID",
+        "profession": "Profession",
+        "home_address": "Home address"
     }
 }
