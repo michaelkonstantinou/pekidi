@@ -20,12 +20,13 @@ export const familyMembersTableColumns: ColumnDef<DeclarationFamilyMember>[] = [
             const instance = getCurrentInstance()
             return h(DataTableCrudActions, {
                 primaryKey: record.id,
+                onDeleteItem: (payload: any) => instance?.proxy?.$emit('deleteItem', payload),
                 onReload: (payload: any) => instance?.proxy?.$emit('reload', payload)
             }, {
-                editForm: h(DeclarationFamilyMemberForm, {
+                editForm: ({onReload}) => h(DeclarationFamilyMemberForm, {
                     record: record,
                     declarationId: record.declarationId,
-                    onSaved: (payload: any) => instance?.proxy?.$emit('reload', payload)
+                    onReload
                 })
             })
         },

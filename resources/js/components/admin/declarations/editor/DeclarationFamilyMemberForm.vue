@@ -17,7 +17,7 @@ const props = defineProps({
         default: null
     }
 })
-const emit = defineEmits(['saved'])
+const emit = defineEmits(['reload'])
 const declarationFamilyMembersService = new DeclarationFamilyMembersService(props.declarationId)
 
 const form = useForm()
@@ -46,7 +46,7 @@ const { onSubmit, isFormLoading } = useUpsertForm(
     form,
     declarationFamilyMembersService,
     props.record,
-    () => emit('saved')
+    () => emit('reload')
 )
 </script>
 

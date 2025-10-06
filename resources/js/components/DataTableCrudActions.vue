@@ -20,17 +20,12 @@ const props = defineProps({
     primaryKey: {required: true}
 })
 
-const emit = defineEmits(['reload'])
-
-function editItem() {
-    emit('reload')
-}
+const emit = defineEmits(['reload', 'deleteItem'])
 
 function deleteItem() {
-    showConfirmDeleteDialog.value = true
+    showConfirmDeleteDialog.value = false
+    emit('deleteItem', props.primaryKey)
 }
-
-
 </script>
 
 <template>
@@ -55,7 +50,7 @@ function deleteItem() {
                 <DialogHeader>
                     <DialogTitle>Edit record</DialogTitle>
                 </DialogHeader>
-                <slot name="editForm" />
+                <slot name="editForm" @reload="emit('reload')"/>
             </DialogContent>
         </Dialog>
     </DropdownMenu>

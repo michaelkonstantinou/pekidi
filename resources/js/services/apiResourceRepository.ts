@@ -39,7 +39,7 @@ export default abstract class ApiResourceRepository<TModel> {
 
             return true
         } catch (error) {
-            return false
+            throw error
         }
     }
 

@@ -26,6 +26,7 @@ const props = defineProps<{
     data: TData[],
     compact?: boolean
 }>()
+const emit = defineEmits(['deleteItem', 'reload'])
 
 const pageSize: Ref<number> = ref<number>(5)
 
@@ -38,6 +39,10 @@ const table = useVueTable({
 table.setPageSize(pageSize.value)
 
 watch(pageSize, (newValue) => table.setPageSize(newValue))
+
+function onDeleteItem(primaryKey) {
+    emit('deleteItem', primaryKey)
+}
 </script>
 
 <template>
@@ -67,7 +72,7 @@ watch(pageSize, (newValue) => table.setPageSize(newValue))
     </div>
 
     <div class="border rounded-md">
-        <Table >
+        <Table>
             <TableHeader>
                 <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
                     <TableHead v-for="header in headerGroup.headers" :key="header.id">
@@ -85,7 +90,7 @@ watch(pageSize, (newValue) => table.setPageSize(newValue))
                         :data-state="row.getIsSelected() ? 'selected' : undefined"
                     >
                         <TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
-                            <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()"/>
+                            <FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" @deleteItem="onDeleteItem" @reload="emit('reload')"/>
                         </TableCell>
                     </TableRow>
                 </template>

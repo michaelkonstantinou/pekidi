@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\DeclarationFamilyMemberStore;
+use App\Http\Requests\DeclarationFamilyMemberRequest;
 use App\Http\Requests\DeclarationStore;
 use App\Models\Declaration;
 use App\Models\DeclarationFamilyMember;
@@ -22,7 +22,6 @@ class UserDeclarationFamilyMemberController
             return response()->json([], JsonResponse::HTTP_UNAUTHORIZED);
         }
 
-        Log::info("here");
         return response()->json($declaration->familyMembers);
     }
 
@@ -56,7 +55,7 @@ class UserDeclarationFamilyMemberController
      * @param DeclarationStore $request
      * @return JsonResponse
      */
-    public function store(DeclarationFamilyMemberStore $request, Declaration $declaration): JsonResponse
+    public function store(DeclarationFamilyMemberRequest $request, Declaration $declaration): JsonResponse
     {
         /** @var ?User $user */
         $user = auth()->user();
@@ -73,10 +72,10 @@ class UserDeclarationFamilyMemberController
      * Validates the user's input and updated the given Declaration for the authenticated user
      * Returns unauthorized if the user is not logged in or the user does not own the given declaration
      *
-     * @param DeclarationStore $request
+     * @param DeclarationFamilyMemberRequest $request
      * @return JsonResponse
      */
-    public function update(DeclarationStore $request, Declaration $declaration): JsonResponse
+    public function update(DeclarationFamilyMemberRequest $request, Declaration $declaration, DeclarationFamilyMember $familyMember): JsonResponse
     {
         /** @var ?User $user */
         $user = auth()->user();
@@ -84,8 +83,21 @@ class UserDeclarationFamilyMemberController
             return response()->json([], JsonResponse::HTTP_UNAUTHORIZED);
         }
 
-        $declaration->update($request->all());
+        $familyMember->update($request->all());
 
-        return response()->json($declaration);
+        return response()->json($familyMember);
+    }
+
+    public function destroy(Declaration $declaration, DeclarationFamilyMember $familyMember): JsonResponse
+    {
+        /** @var ?User $user */
+        $user = auth()->user();
+        if ($user === null || $declaration->user_id !== $user->id) {
+            return response()->json([], JsonResponse::HTTP_UNAUTHORIZED);
+        }
+
+        $isDeleted = $familyMember->delete() === true;
+
+        return $isDeleted ? response()->json() : response()->json([], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

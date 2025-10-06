@@ -1,14 +1,6 @@
 <script setup lang="ts">
-import {FormContext, useForm} from "vee-validate";
 import {useI18n} from "vue-i18n";
 import {onMounted, ref, Ref} from "vue";
-import {FormFieldItem} from "@/dataTypes";
-import {toast} from "vue-sonner";
-import {updateFormErrors} from "@/helpers/formHelpers";
-import {useDeclarationStore} from "@/stores/declarationStore";
-import {FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
-import {Input} from "@/components/ui/input";
-import {Button} from "@/components/ui/button";
 import HeadingSmall from "@/components/HeadingSmall.vue";
 import Declaration from "@/models/declaration";
 import {tableColumns} from "@/components/admin/declarations/tableColumns";
@@ -20,6 +12,8 @@ import AlertError from "@/components/AlertError.vue";
 import {familyMembersTableColumns} from "@/components/admin/declarations/editor/familyMembersTableColumns";
 import DeclarationFamilyMemberForm from "@/components/admin/declarations/editor/DeclarationFamilyMemberForm.vue";
 import DeclarationFamilyMembersService from "@/services/declarationFamilyMembersService";
+import {useErrorMessager} from "@/composables/useErrorMessager";
+import {toast} from "vue-sonner";
 
 const props = defineProps({
     declaration: {
@@ -29,6 +23,7 @@ const props = defineProps({
 })
 
 const {t} = useI18n()
+const {toastApiErrors} = useErrorMessager()
 const emit = defineEmits(['saved'])
 
 const isLoading: Ref<boolean> = ref(false)
@@ -41,6 +36,7 @@ onMounted(async() => {
 })
 
 async function loadData() {
+    console.log('reloading')
     const data = await declarationFamilyMembersService.all()
     if (data === null) {
         errors.value.push(t("errors.could_not_load_data"))
@@ -49,14 +45,23 @@ async function loadData() {
     }
     isLoading.value = false;
 }
+
+function onDeleteItem(primaryKey: number) {
+    isLoading.value = true
+    declarationFamilyMembersService.deleteById(primaryKey).then(async () => {
+        toast.success(t("actions.delete_successful"));
+        await loadData()
+    }).catch(err => toastApiErrors(err))
+        .finally(() => isLoading.value=false)
+}
 </script>
 
 <template>
     <HeadingSmall title="declarations.family_details" description="declarations.family_details_description" />
     <AlertError :errors="errors"/>
-    <DataTable :data="rows" :columns="familyMembersTableColumns" :compact="true">
+    <DataTable :data="rows" :columns="familyMembersTableColumns" :compact="true" @reload="loadData" @deleteItem="onDeleteItem">
         <template #buttons>
-            <DataTableCreateDialog >
+            <DataTableCreateDialog :isLoading="isLoading">
                 <DeclarationFamilyMemberForm :declarationId="declaration.id" @saved="loadData"></DeclarationFamilyMemberForm>
             </DataTableCreateDialog>
         </template>

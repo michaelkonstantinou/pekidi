@@ -3,6 +3,7 @@
 import {DialogContent, Dialog, DialogTitle, DialogFooter, DialogHeader, DialogTrigger, DialogDescription} from "@/components/ui/dialog";
 import {Button} from "@/components/ui/button";
 import {Plus} from "lucide-vue-next";
+import { LoaderPinwheel } from 'lucide-vue-next';
 
 const props = defineProps({
     buttonLabel: {
@@ -20,13 +21,22 @@ const props = defineProps({
         required: false,
         default: null,
     },
+    isLoading: {
+        type: Boolean,
+        required: false,
+        default: false
+    }
 })
 </script>
 
 <template>
     <Dialog>
         <DialogTrigger>
-            <Button variant="default"><Plus />{{ props.buttonLabel }}</Button>
+            <Button variant="default" :disabled="isLoading">
+                <Plus v-show="!isLoading"/>
+                <LoaderPinwheel v-show="isLoading" class="animate-spin"/>
+                {{ props.buttonLabel }}
+            </Button>
         </DialogTrigger>
         <DialogContent>
             <DialogHeader>

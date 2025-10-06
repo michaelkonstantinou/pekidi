@@ -10,6 +10,7 @@ import {ref, Ref} from "vue";
 import {toast} from "vue-sonner";
 import {updateFormErrors} from "@/helpers/formHelpers";
 import {useDeclarationStore} from "@/stores/declarationStore";
+import {LoaderPinwheel} from "lucide-vue-next";
 
 const declarationStore = useDeclarationStore()
 const form: FormContext = useForm()
@@ -53,6 +54,7 @@ const onSubmit = form.handleSubmit(values => {
 
         </div>
         <Button type="submit" class="mt-5" :disabled="isLoading">
+            <LoaderPinwheel v-show="isLoading" class="animate-spin"/>
             {{ $t("buttons.create") }}
         </Button>
     </form>

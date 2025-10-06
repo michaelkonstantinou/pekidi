@@ -6,6 +6,7 @@ import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {FormFieldItem} from "@/dataTypes";
 import {useI18n} from "vue-i18n";
+import {LoaderPinwheel} from "lucide-vue-next";
 
 const {t} = useI18n()
 const emit = defineEmits(['submit'])
@@ -56,6 +57,7 @@ const props = defineProps({
         </div>
 
         <Button type="submit" class="mt-5" :disabled="isLoading">
+            <LoaderPinwheel v-show="isLoading" class="animate-spin"/>
             {{ $t("buttons.save") }}
         </Button>
     </form>
