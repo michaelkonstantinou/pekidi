@@ -5,3 +5,7 @@ export function getLocale(): string {
 export function getLocaleDateString(dateObject: Date): string {
     return dateObject.toLocaleDateString(getLocale());
 }
+
+export function getLocaleDateTimeString(dateObject: Date): string {
+    return dateObject.toLocaleString(getLocale());
+}

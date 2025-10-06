@@ -25,7 +25,9 @@ export function useUpsertForm<T>(form: FormContext,
         isFormLoading.value = true
         createOrUpdate(apiService, record, values).then(() => {
             toast.success(t(successMessage))
-            form.resetForm()
+            if (record === null) {
+                form.resetForm()
+            }
             onSuccess()
         }).catch(errors => {
             updateFormErrors(form, errors)

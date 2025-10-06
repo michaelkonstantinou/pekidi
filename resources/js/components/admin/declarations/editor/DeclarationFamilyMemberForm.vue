@@ -35,7 +35,7 @@ const formFields: FormFieldItem[] = [
 if (props.record instanceof DeclarationFamilyMember) {
     form.setValues({
         "full_name": props.record.fullName,
-        "born_at": props.record.bornAt,
+        "born_at": props.record.getBornAtAsInputString(),
         "national_id": props.record.nationalId,
         "profession": props.record.profession,
         "relationship": props.record.relationship

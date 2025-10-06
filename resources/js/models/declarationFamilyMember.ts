@@ -1,3 +1,6 @@
+import {ViewRecordRow} from "@/types";
+import {getLocaleDateString, getLocaleDateTimeString} from "@/helpers/localeHelpers";
+
 export default class DeclarationFamilyMember {
     id: number
     fullName: string
@@ -19,6 +22,18 @@ export default class DeclarationFamilyMember {
         this.createdAt = new Date(data.created_at)
         this.updatedAt = new Date(data.updated_at)
         this.bornAt = data.born_at !== null ? new Date(data.born_at) : null
+    }
+
+    toViewRecordData(): ViewRecordRow[] {
+        return [
+            {label: "labels.national_id", value: this.nationalId},
+            {label: "labels.full_name", value: this.fullName},
+            {label: "labels.relationship", value: this.relationship},
+            {label: "labels.profession", value: this.profession},
+            {label: "labels.born_at", value: this.bornAt !== null ? getLocaleDateString(this.bornAt) : ''},
+            {label: "labels.created_at", value: getLocaleDateTimeString(this.createdAt)},
+            {label: "labels.updated_at", value: getLocaleDateTimeString(this.updatedAt)},
+        ]
     }
 
     getBornAtAsInputString(): String | null {

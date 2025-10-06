@@ -54,7 +54,10 @@
         "create": "Create",
         "update": "Update",
         "save": "Save",
-        "delete": "Delete"
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "close": "Close",
+        "yes_proceed": "Yes, proceed"
     },
     "labels": {
         "name": "Name",
@@ -69,5 +72,13 @@
         "relationship": "Relationship",
         "spouse": "Spouse",
         "child": "Child"
+    },
+    "confirm_dialog": {
+        "title": "Are you sure?",
+        "delete_description": "This action cannot be reverted! Once you proceed with this action the record will be deleted from our system. Keep in mind that any associated records will be deleted as well."
+    },
+    "view_dialog": {
+        "title": "View details",
+        "description": "Please find below a detailed summary of the record's data"
     }
 }
