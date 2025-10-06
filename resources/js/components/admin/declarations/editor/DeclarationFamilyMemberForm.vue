@@ -1,21 +1,10 @@
 <script setup lang="ts">
-import { toTypedSchema } from "@vee-validate/zod"
 import { useForm } from "vee-validate"
-import {h, onMounted, ref} from "vue"
-import {toast} from "vue-sonner";
 import {FormFieldItem} from "@/dataTypes";
 import DeclarationFamilyMember from "@/models/declarationFamilyMember";
-import UserDeclarationService from "@/services/userDeclarationService";
-import Declaration from "@/models/declaration";
-import {updateFormErrors} from "@/helpers/formHelpers";
-import {useI18n} from "vue-i18n";
 import UpsertForm from "@/components/UpsertForm.vue";
-import {useErrorMessager} from "@/composables/useErrorMessager";
-
-const {t} = useI18n()
-const {toastApiErrors} = useErrorMessager()
-const userDeclarationService = new UserDeclarationService()
-const isLoading = ref(false)
+import DeclarationFamilyMembersService from "@/services/declarationFamilyMembersService";
+import {useUpsertForm} from "@/composables/useUpsertForm";
 
 const props = defineProps({
     declarationId: {
@@ -29,6 +18,7 @@ const props = defineProps({
     }
 })
 const emit = defineEmits(['saved'])
+const declarationFamilyMembersService = new DeclarationFamilyMembersService(props.declarationId)
 
 const form = useForm()
 const formFields: FormFieldItem[] = [
@@ -42,28 +32,24 @@ const formFields: FormFieldItem[] = [
     ]),
 ]
 
-if (props.record !== null) {
+if (props.record instanceof DeclarationFamilyMember) {
     form.setValues({
-        "first_name": props.record.firstName,
-        "last_name": props.record.lastName,
-        "email": props.record.email,
-        "telephone": props.record.telephone
+        "full_name": props.record.fullName,
+        "born_at": props.record.bornAt,
+        "national_id": props.record.nationalId,
+        "profession": props.record.profession,
+        "relationship": props.record.relationship
     })
 }
 
-const onSubmit = form.handleSubmit(values => {
-    isLoading.value = true
-    userDeclarationService.createFamilyMember(values, props.declarationId).then(() => {
-        toast.success(t("messages.actions.save_success"))
-        form.resetForm()
-        emit('saved')
-    }).catch(errors => {
-        updateFormErrors(form, errors)
-        toastApiErrors(errors)
-    }).finally(() => isLoading.value = false)
-})
+const { onSubmit, isFormLoading } = useUpsertForm(
+    form,
+    declarationFamilyMembersService,
+    props.record,
+    () => emit('saved')
+)
 </script>
 
 <template>
-    <UpsertForm :formFields="formFields" @submit="onSubmit"/>
+    <UpsertForm :formFields="formFields" @submit="onSubmit" :isLoading="isFormLoading"/>
 </template>

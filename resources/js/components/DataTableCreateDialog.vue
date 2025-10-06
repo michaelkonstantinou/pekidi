@@ -2,6 +2,7 @@
 
 import {DialogContent, Dialog, DialogTitle, DialogFooter, DialogHeader, DialogTrigger, DialogDescription} from "@/components/ui/dialog";
 import {Button} from "@/components/ui/button";
+import {Plus} from "lucide-vue-next";
 
 const props = defineProps({
     buttonLabel: {
@@ -25,7 +26,7 @@ const props = defineProps({
 <template>
     <Dialog>
         <DialogTrigger>
-            <Button variant="default">{{ props.buttonLabel }}</Button>
+            <Button variant="default"><Plus />{{ props.buttonLabel }}</Button>
         </DialogTrigger>
         <DialogContent>
             <DialogHeader>

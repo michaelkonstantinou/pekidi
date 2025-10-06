@@ -23,7 +23,8 @@ import {DropdownMenu, DropdownMenuRadioItem, DropdownMenuTrigger, DropdownMenuCo
 
 const props = defineProps<{
     columns: ColumnDef<TData, TValue>[]
-    data: TData[]
+    data: TData[],
+    compact?: boolean
 }>()
 
 const pageSize: Ref<number> = ref<number>(5)
@@ -40,10 +41,10 @@ watch(pageSize, (newValue) => table.setPageSize(newValue))
 </script>
 
 <template>
-    <div class="flex items-center justify-between py-4">
+    <div class="flex items-center justify-between py-4" :class="{'mb-0': compact === true}">
         <!-- Left side -->
         <div class="flex gap-2 items-center">
-            <DropdownMenu>
+            <DropdownMenu v-if="compact !== true">
                 <DropdownMenuTrigger as-child>
                     <Button variant="outline">
                         Showing {{ pageSize }} rows <ChevronDown class="ml-2 h-4 w-4" />
@@ -91,7 +92,7 @@ watch(pageSize, (newValue) => table.setPageSize(newValue))
                 <template v-else>
                     <TableRow>
                         <TableCell :colspan="columns.length" class="h-24 text-center">
-                            No results.
+                            No records to show. Click the button to add new records.
                         </TableCell>
                     </TableRow>
                 </template>

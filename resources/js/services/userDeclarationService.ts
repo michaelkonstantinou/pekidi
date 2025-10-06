@@ -11,7 +11,7 @@ export default class UserDeclarationService extends ApiResourceRepository<Declar
     async familyMembers(declarationId: number): Promise<DeclarationFamilyMember[] | null> {
         try {
             const { data } = await axios.get(this.routePrefix + '/' + declarationId + '/family-members')
-            return data.map((item: any) => new this.model(item))
+            return data.map((item: any) => new DeclarationFamilyMember(item))
         } catch (error) {
             return null
         }

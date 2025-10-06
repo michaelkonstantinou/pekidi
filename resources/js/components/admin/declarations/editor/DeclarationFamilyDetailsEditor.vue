@@ -11,7 +11,6 @@ import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import HeadingSmall from "@/components/HeadingSmall.vue";
 import Declaration from "@/models/declaration";
-import UserDeclarationService from "@/services/userDeclarationService";
 import {tableColumns} from "@/components/admin/declarations/tableColumns";
 import DeclarationCreateForm from "@/components/admin/declarations/DeclarationCreateForm.vue";
 import DataTableCreateDialog from "@/components/DataTableCreateDialog.vue";
@@ -20,6 +19,7 @@ import DeclarationFamilyMember from "@/models/declarationFamilyMember";
 import AlertError from "@/components/AlertError.vue";
 import {familyMembersTableColumns} from "@/components/admin/declarations/editor/familyMembersTableColumns";
 import DeclarationFamilyMemberForm from "@/components/admin/declarations/editor/DeclarationFamilyMemberForm.vue";
+import DeclarationFamilyMembersService from "@/services/declarationFamilyMembersService";
 
 const props = defineProps({
     declaration: {
@@ -32,7 +32,7 @@ const {t} = useI18n()
 const emit = defineEmits(['saved'])
 
 const isLoading: Ref<boolean> = ref(false)
-const userDeclarationService = new UserDeclarationService()
+const declarationFamilyMembersService = new DeclarationFamilyMembersService(props.declaration.id)
 const rows = ref<DeclarationFamilyMember[]>([]);
 const errors = ref<String[]>([])
 
@@ -41,7 +41,7 @@ onMounted(async() => {
 })
 
 async function loadData() {
-    const data = await userDeclarationService.familyMembers(props.declaration.id)
+    const data = await declarationFamilyMembersService.all()
     if (data === null) {
         errors.value.push(t("errors.could_not_load_data"))
     } else {
@@ -54,9 +54,9 @@ async function loadData() {
 <template>
     <HeadingSmall title="declarations.family_details" description="declarations.family_details_description" />
     <AlertError :errors="errors"/>
-    <DataTable :data="rows" :columns="familyMembersTableColumns">
+    <DataTable :data="rows" :columns="familyMembersTableColumns" :compact="true">
         <template #buttons>
-            <DataTableCreateDialog>
+            <DataTableCreateDialog >
                 <DeclarationFamilyMemberForm :declarationId="declaration.id" @saved="loadData"></DeclarationFamilyMemberForm>
             </DataTableCreateDialog>
         </template>

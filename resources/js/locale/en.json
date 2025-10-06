@@ -65,6 +65,9 @@
         "updated_at": "Last update",
         "national_id": "National ID",
         "profession": "Profession",
-        "home_address": "Home address"
+        "home_address": "Home address",
+        "relationship": "Relationship",
+        "spouse": "Spouse",
+        "child": "Child"
     }
 }
