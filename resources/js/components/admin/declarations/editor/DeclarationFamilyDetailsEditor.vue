@@ -36,7 +36,7 @@ onMounted(async() => {
 })
 
 async function loadData() {
-    console.log('reloading')
+    isLoading.value = true;
     const data = await declarationFamilyMembersService.all()
     if (data === null) {
         errors.value.push(t("errors.could_not_load_data"))

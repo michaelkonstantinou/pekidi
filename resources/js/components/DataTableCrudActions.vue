@@ -14,8 +14,11 @@ import {
 import {Pencil, Trash2, Eye} from "lucide-vue-next";
 import ConfirmDialog from "@/components/ConfirmDialog.vue";
 import {ref} from "vue";
+import ViewRecordDialog from "@/components/ViewRecordDialog.vue";
 
 const showConfirmDeleteDialog = ref(false)
+const showViewRecordDialog = ref(false)
+
 const props = defineProps({
     primaryKey: {required: true}
 })
@@ -40,7 +43,7 @@ function deleteItem() {
             <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem><Eye />View</DropdownMenuItem>
+                <DropdownMenuItem @click="showViewRecordDialog = true"><Eye />View</DropdownMenuItem>
                 <DialogTrigger asChild>
                     <DropdownMenuItem><Pencil />Edit</DropdownMenuItem>
                 </DialogTrigger>
@@ -55,5 +58,6 @@ function deleteItem() {
         </Dialog>
     </DropdownMenu>
 
+    <slot name="viewRecordDialog" :open="showViewRecordDialog" @close="showViewRecordDialog=false"/>
     <ConfirmDialog :open="showConfirmDeleteDialog" destructive @cancel="showConfirmDeleteDialog=false" @confirm="deleteItem"/>
 </template>

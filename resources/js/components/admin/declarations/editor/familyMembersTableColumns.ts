@@ -6,6 +6,8 @@ import {getCurrentInstance, h} from "vue";
 import DeclarationFamilyMember from "@/models/declarationFamilyMember";
 import DataTableCrudActions from "@/components/DataTableCrudActions.vue";
 import DeclarationFamilyMemberForm from "@/components/admin/declarations/editor/DeclarationFamilyMemberForm.vue";
+import viewRecordDialog from "@/components/ViewRecordDialog.vue";
+import ViewRecordDialog from "@/components/ViewRecordDialog.vue";
 
 export const familyMembersTableColumns: ColumnDef<DeclarationFamilyMember>[] = [
     makeTextColumn<DeclarationFamilyMember>("fullName", "Full name"),
@@ -27,6 +29,10 @@ export const familyMembersTableColumns: ColumnDef<DeclarationFamilyMember>[] = [
                     record: record,
                     declarationId: record.declarationId,
                     onReload
+                }),
+                viewRecordDialog: ({open, onClose}) => h(ViewRecordDialog, {
+                    open: open,
+                    onClose
                 })
             })
         },
