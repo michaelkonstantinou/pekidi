@@ -3,17 +3,20 @@ import { createApp } from 'vue'
 import App from "./App.vue";
 import { createI18n } from 'vue-i18n'
 import en from "@/locale/en.json"
-import el from "@/locale/en.json"
+import el from "@/locale/el.json"
 import {createPinia, Pinia} from "pinia";
 import {useAuthStore} from "@/stores/authStore";
 import router from "@/router";
 import { autoAnimatePlugin } from '@formkit/auto-animate/vue'
 import {useColorMode} from "@vueuse/core";
 import {useDeclarationStore} from "@/stores/declarationStore";
+import {getLocale} from "@/helpers/localeHelpers";
+
 
 const i18n = createI18n({
-    locale: 'en',
+    locale: getLocale(),
     fallbackLocale: 'en',
+    availableLocales: ['en', 'el'],
     messages: {
         en,
         el

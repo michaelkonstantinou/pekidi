@@ -1,5 +1,5 @@
 export function getLocale(): string {
-    return document.querySelector("html")?.getAttribute("lang") ?? "el-GR";
+    return document.querySelector("html")?.getAttribute("lang") ?? "el";
 }
 
 export function getLocaleDateString(dateObject: Date): string {
@@ -8,4 +8,8 @@ export function getLocaleDateString(dateObject: Date): string {
 
 export function getLocaleDateTimeString(dateObject: Date): string {
     return dateObject.toLocaleString(getLocale());
+}
+
+export function setHtmlLocale(locale: string): void {
+    document.querySelector("html")?.setAttribute('lang', locale);
 }

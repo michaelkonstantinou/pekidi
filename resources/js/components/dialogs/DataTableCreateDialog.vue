@@ -4,17 +4,19 @@ import {DialogContent, Dialog, DialogTitle, DialogFooter, DialogHeader, DialogTr
 import {Button} from "@/components/ui/button";
 import {Plus} from "lucide-vue-next";
 import { LoaderPinwheel } from 'lucide-vue-next';
+import {useI18n} from "vue-i18n";
+const {t} = useI18n()
 
 const props = defineProps({
     buttonLabel: {
         type: String,
         required: false,
-        default: "Add new",
+        default: "buttons.add_new",
     },
     title: {
         type: String,
         required: false,
-        default: "Add new",
+        default: "labels.add_new",
     },
     description: {
         type: String,
@@ -35,17 +37,16 @@ const props = defineProps({
             <Button variant="default" :disabled="isLoading">
                 <Plus v-show="!isLoading"/>
                 <LoaderPinwheel v-show="isLoading" class="animate-spin"/>
-                {{ props.buttonLabel }}
+                {{ $t(buttonLabel) }}
             </Button>
         </DialogTrigger>
         <DialogContent>
             <DialogHeader>
-                <DialogTitle>{{ props.title }}</DialogTitle>
-                <DialogDescription v-show="props.description !== null">
-                    {{ props.description}}
+                <DialogTitle>{{ $t(title) }}</DialogTitle>
+                <DialogDescription v-if="description !== null">
+                    {{ $t(description) }}
                 </DialogDescription>
             </DialogHeader>
-
             <slot />
         </DialogContent>
     </Dialog>

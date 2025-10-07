@@ -12,6 +12,7 @@ import {
 import {BreadcrumbItemType} from "@/types";
 import {Separator} from "@/components/ui/separator";
 import {PropType} from "vue";
+import AdminSwitchLocale from "@/views/layouts/AdminSwitchLocale.vue";
 
 const props = defineProps({
     breadcrumbs: {
@@ -47,6 +48,9 @@ const props = defineProps({
                     </template>
                 </BreadcrumbList>
             </Breadcrumb>
+            <div class="ml-auto">
+                <AdminSwitchLocale />
+            </div>
         </header>
         <Separator />
         <slot />

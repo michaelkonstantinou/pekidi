@@ -71,7 +71,7 @@ function onDeleteItem(primaryKey) {
         </div>
     </div>
 
-    <div class="border rounded-md">
+    <div class="border rounded-md" :class="{'mb-0': compact === true}">
         <Table>
             <TableHeader>
                 <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
@@ -103,6 +103,24 @@ function onDeleteItem(primaryKey) {
                 </template>
             </TableBody>
         </Table>
+    </div>
+    <div class="flex items-center justify-end py-4 space-x-2" v-if="data.length > pageSize">
+        <Button
+            variant="outline"
+            size="sm"
+            :disabled="!table.getCanPreviousPage()"
+            @click="table.previousPage()"
+        >
+            {{ $t('buttons.previous_page') }}
+        </Button>
+        <Button
+            variant="outline"
+            size="sm"
+            :disabled="!table.getCanNextPage()"
+            @click="table.nextPage()"
+        >
+            {{ $t('buttons.next_page') }}
+        </Button>
     </div>
 </template>
 

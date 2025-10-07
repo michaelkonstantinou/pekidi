@@ -3,7 +3,7 @@ import {onMounted} from "vue";
 import {useDeclarationStore} from "@/stores/declarationStore";
 import DataTable from "@/components/DataTable.vue";
 import {tableColumns} from "@/components/admin/declarations/tableColumns";
-import DataTableCreateDialog from "@/components/DataTableCreateDialog.vue";
+import DataTableCreateDialog from "@/components/dialogs/DataTableCreateDialog.vue";
 import DeclarationCreateForm from "@/components/admin/declarations/DeclarationCreateForm.vue";
 
 const declarationStore = useDeclarationStore()

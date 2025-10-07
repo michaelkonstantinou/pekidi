@@ -12,9 +12,8 @@ import {
     DialogDescription,
     DialogHeader} from "@/components/ui/dialog";
 import {Pencil, Trash2, Eye} from "lucide-vue-next";
-import ConfirmDialog from "@/components/ConfirmDialog.vue";
+import ConfirmDialog from "@/components/dialogs/ConfirmDialog.vue";
 import {ref} from "vue";
-import ViewRecordDialog from "@/components/ViewRecordDialog.vue";
 
 const showConfirmDeleteDialog = ref(false)
 const showViewRecordDialog = ref(false)

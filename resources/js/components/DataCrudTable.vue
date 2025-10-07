@@ -6,6 +6,7 @@ import {toast} from "vue-sonner";
 import AlertError from "@/components/AlertError.vue";
 import DataTable from "@/components/DataTable.vue";
 import ApiResourceRepository from "@/services/apiResourceRepository";
+import DataTableCreateDialog from "@/components/dialogs/DataTableCreateDialog.vue";
 
 const {t} = useI18n()
 const {toastApiErrors} = useErrorMessager()
@@ -25,7 +26,7 @@ const props = defineProps({
 })
 
 const isLoading: Ref<boolean> = ref(false)
-const rows = ref<Array>([]);
+const rows = ref([]);
 const errors = ref<String[]>([])
 
 onMounted(async() => {
@@ -57,7 +58,9 @@ function onDeleteItem(primaryKey: number) {
     <AlertError :errors="errors"/>
     <DataTable :data="rows" :columns="columns" :compact="compact" @reload="loadData" @deleteItem="onDeleteItem">
         <template #buttons>
-            <slot name="buttons"></slot>
+            <DataTableCreateDialog :isLoading="isLoading" >
+                <slot name="createForm"></slot>
+            </DataTableCreateDialog>
         </template>
     </DataTable>
 </template>

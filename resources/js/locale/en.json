@@ -57,7 +57,10 @@
         "delete": "Delete",
         "cancel": "Cancel",
         "close": "Close",
-        "yes_proceed": "Yes, proceed"
+        "yes_proceed": "Yes, proceed",
+        "add_new": "Add new",
+        "previous_page": "Previous",
+        "next_page": "Next"
     },
     "labels": {
         "name": "Name",
@@ -71,7 +74,8 @@
         "home_address": "Home address",
         "relationship": "Relationship",
         "spouse": "Spouse",
-        "child": "Child"
+        "child": "Child",
+        "add_new": "Add new"
     },
     "confirm_dialog": {
         "title": "Are you sure?",

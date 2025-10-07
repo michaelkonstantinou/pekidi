@@ -1,12 +1,10 @@
 import {makeDateColumn, makeTextColumn} from "@/helpers/columnHelpers";
 import {ColumnDef} from "@tanstack/vue-table";
-import Declaration from "@/models/declaration";
-import DeclarationsTableActions from "@/components/admin/declarations/DeclarationsTableActions.vue";
 import {getCurrentInstance, h} from "vue";
 import DeclarationFamilyMember from "@/models/declarationFamilyMember";
 import DataTableCrudActions from "@/components/DataTableCrudActions.vue";
 import DeclarationFamilyMemberForm from "@/components/admin/declarations/editor/DeclarationFamilyMemberForm.vue";
-import ViewRecordDialog from "@/components/ViewRecordDialog.vue";
+import ViewRecordDialog from "@/components/dialogs/ViewRecordDialog.vue";
 
 export const familyMembersTableColumns: ColumnDef<DeclarationFamilyMember>[] = [
     makeTextColumn<DeclarationFamilyMember>("fullName", "Full name"),
