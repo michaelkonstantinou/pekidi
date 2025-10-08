@@ -18,6 +18,10 @@ Route::middleware(LocaleHandler::class)->group(function () {
         return response()->json();
     });
 
+    Route::get('/login', function () {
+        return view('index');
+    })->name('login');
+
     Route::get('/{any?}', function () {
         return view('index');
     })->where('any', '.*');
