@@ -15,8 +15,10 @@ import {ref, Ref} from "vue";
 import {useRouter} from "vue-router";
 import {useAuthStore} from "@/stores/authStore";
 import {toast} from "vue-sonner";
+import {useDeclarationStore} from "@/stores/declarationStore";
 
 const authStore = useAuthStore()
+const declarationStore = useDeclarationStore()
 const router = useRouter()
 
 // Variables
@@ -27,6 +29,7 @@ async function onSubmit() {
     try {
         await AuthService.login(email.value, password.value)
         await authStore.fetchUser()
+        await declarationStore.fetchAll()
         await router.push({ name: "admin.dashboard" })
     } catch (error: any) {
         if (error.response && error.response.status === 422) {
