@@ -48,7 +48,13 @@
         "personal_details": "Personal Details",
         "personal_details_description": "Fill in the necessary private information. Typically, this is the first page of the form",
         "family_details": "Family Details",
-        "family_details_description": "Add the family members required for the form. You should add the details of your spouse and your non-adult children"
+        "family_details_description": "Add the family members required for the form. You should add the details of your spouse and your non-adult children",
+        "personal_assets": "Personal Assets",
+        "personal_assets_description": "Add assets or liabilities that are registered to your account",
+        "spouse_assets": "Spouse Assets",
+        "spouse_assets_description": "Add assets or liabilities that are registered to your spouse's account",
+        "children_assets": "Children Assets",
+        "children_assets_description": "Add assets or liabilities that are registered to your non-adult children"
     },
     "buttons": {
         "create": "Create",
@@ -97,6 +103,8 @@
     },
     "view_dialog": {
         "title": "View details",
-        "description": "Please find below a detailed summary of the record's data"
+        "description": "Please find below a detailed summary of the record's data",
+        "field": "Field",
+        "value": "Value"
     }
 }

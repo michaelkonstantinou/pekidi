@@ -34,16 +34,16 @@ export default class DeclarationRealEstate {
 
     toViewRecordData(): ViewRecordRow[] {
         return [
-            {label: "labels.location", value: this.location},
-            {label: "labels.real_estate_type", value: this.realEstateType},
-            {label: "labels.area", value: this.area.toString()},
-            {label: "labels.acquisition_type", value: this.acquisitionType},
-            {label: "labels.acquisition_year", value: this.acquisitionYear.toString()},
-            {label: "labels.acquisition_value", value: this.acquisitionValue.toString()},
-            {label: "labels.current_value", value: this.currentValue.toString()},
-            {label: "labels.rights_encumbrances", value: this.rightsEncumbrances},
-            {label: "labels.created_at", value: getLocaleDateTimeString(this.createdAt)},
-            {label: "labels.updated_at", value: getLocaleDateTimeString(this.updatedAt)},
+            {label: "labels.location", value: this.location, isLongText: false},
+            {label: "labels.real_estate_type", value: this.realEstateType, isLongText: false},
+            {label: "labels.area", value: this.area.toString(), isLongText: false},
+            {label: "labels.acquisition_type", value: this.acquisitionType, isLongText: false},
+            {label: "labels.acquisition_year", value: this.acquisitionYear.toString(), isLongText: false},
+            {label: "labels.acquisition_value", value: this.acquisitionValue.toString(), isLongText: false},
+            {label: "labels.current_value", value: this.currentValue.toString(), isLongText: false},
+            {label: "labels.rights_encumbrances", value: this.rightsEncumbrances, isLongText: true},
+            {label: "labels.created_at", value: getLocaleDateTimeString(this.createdAt), isLongText: false},
+            {label: "labels.updated_at", value: getLocaleDateTimeString(this.updatedAt), isLongText: false},
         ]
     }
 }

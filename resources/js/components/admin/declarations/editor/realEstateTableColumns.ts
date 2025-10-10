@@ -1,4 +1,4 @@
-import {makeDateColumn, makeTextColumn} from "@/helpers/columnHelpers";
+import {makeCurrencyColumn, makeDateColumn, makeTextColumn} from "@/helpers/columnHelpers";
 import {ColumnDef} from "@tanstack/vue-table";
 import {getCurrentInstance, h} from "vue";
 import DeclarationFamilyMember from "@/models/declarationFamilyMember";
@@ -13,9 +13,10 @@ export function useRealEstateTableColumns() {
     const {t} = useI18n()
 
     const realEstateColumns: ColumnDef<DeclarationRealEstate>[] = [
-        makeTextColumn<DeclarationRealEstate>("location", t("labels.location")),
         makeTextColumn<DeclarationRealEstate>("realEstateType", t("labels.real_estate_type")),
         makeTextColumn<DeclarationRealEstate>("acquisitionType", t("labels.acquisition_type")),
+        makeTextColumn<DeclarationRealEstate>("acquisitionYear", t("labels.acquisition_year")),
+        makeCurrencyColumn<DeclarationRealEstate>("currentValue", t("labels.current_value")),
         {
             id: 'actions',
             enableHiding: false,

@@ -5,5 +5,6 @@ export interface BreadcrumbItemType {
 
 export interface ViewRecordRow {
     label: string,
-    value: string
+    value: string,
+    isLongText: boolean,
 }

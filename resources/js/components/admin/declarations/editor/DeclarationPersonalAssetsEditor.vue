@@ -41,7 +41,7 @@ const declarationRealEstateService = new DeclarationRealEstateService(props.decl
     <HeadingSmall title="declarations.personal_assets" description="declarations.personal_assets_description" />
     <DataCrudTable :columns="realEstateColumns" :apiService="declarationRealEstateService" :key="tableRender">
         <template #createForm>
-            <DeclarationRealEstateForm :declarationId="declaration.id" owner="self" @reload="reRenderTable" />
+            <DeclarationRealEstateForm :declarationId="declaration.id" :owner="owner" @reload="reRenderTable" />
         </template>
     </DataCrudTable>
 </template>

@@ -54,13 +54,24 @@ const emit = defineEmits(['close'])
                 </TableHeader>
                 <TableBody>
                     <TableRow v-for="row in data" :key="row.label">
-                        <TableCell class="font-medium">
-                            {{ $t(row.label) }}
-                        </TableCell>
-                        <TableCell>{{ row.value }}</TableCell>
+                        <template v-if="!row.isLongText">
+                            <TableCell class="font-medium">
+                                {{ $t(row.label) }}
+                            </TableCell>
+                            <TableCell>{{ row.value }}</TableCell>
+                        </template>
                     </TableRow>
                 </TableBody>
             </Table>
+
+            <template v-for="row in data" :key="row.label">
+                <div v-if="row.isLongText">
+                    <h4 class="scroll-m-20 text-xl font-semibold tracking-tight mb-2">
+                        {{ $t(row.label) }}
+                    </h4>
+                    <p>{{ row.value }}</p>
+                </div>
+            </template>
 
             <DialogFooter>
                 <Button variant="outline" @click="emit('close')">
