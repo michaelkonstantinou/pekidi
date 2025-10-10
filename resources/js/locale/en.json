@@ -75,7 +75,21 @@
         "relationship": "Relationship",
         "spouse": "Spouse",
         "child": "Child",
-        "add_new": "Add new"
+        "add_new": "Add new",
+        "location": "Location",
+        "area": "Area (sq.m)",
+        "acquisition_type": "Type of Acquisition",
+        "acquisition_year": "Year of Acquisition",
+        "acquisition_value": "Value when acquired",
+        "current_value": "Current value",
+        "real_estate_type": "Real estate type",
+        "rights_encumbrances": "Rights and Encumbrances"
+    },
+    "placeholders": {
+        "location": "Full address of real estate",
+        "acquisition_type": "Inheritance, Purchase...",
+        "real_estate_type": "Studio, Apartment...",
+        "rights_encumbrances": "Any rights or obligations in or not in favor of the owner"
     },
     "confirm_dialog": {
         "title": "Are you sure?",

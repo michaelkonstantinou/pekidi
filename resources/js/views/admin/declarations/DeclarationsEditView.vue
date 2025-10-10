@@ -11,6 +11,8 @@ import Declaration from "@/models/declaration";
 import DeclarationPersonalDetailsEditor
     from "@/components/admin/declarations/editor/DeclarationPersonalDetailsEditor.vue";
 import DeclarationFamilyDetailsEditor from "@/components/admin/declarations/editor/DeclarationFamilyDetailsEditor.vue";
+import DeclarationPersonalAssetsEditor
+    from "@/components/admin/declarations/editor/DeclarationPersonalAssetsEditor.vue";
 
 const declarationStore = useDeclarationStore()
 const route = useRoute()
@@ -32,7 +34,9 @@ const breadcrumbs = computed(() => [
 
 const tabs = ref([
     {'label': 'declarations.personal_details', isActive: true, content: DeclarationPersonalDetailsEditor},
-    {'label': 'declarations.family_details', isActive: false, content: DeclarationFamilyDetailsEditor}
+    {'label': 'declarations.family_details', isActive: false, content: DeclarationFamilyDetailsEditor},
+    {'label': 'declarations.personal_assets', isActive: false, content: DeclarationPersonalAssetsEditor, owner: 'self'},
+    {'label': 'declarations.spouse_assets', isActive: false, content: DeclarationPersonalAssetsEditor, owner: 'spouse'}
 ])
 const activeTab = computed(() => tabs.value.find(tab => tab.isActive))
 
@@ -84,7 +88,7 @@ async function onSaved() {
 
             <div class="flex-1 md:max-w-2xl" v-if="declaration !== null && !isLoading">
                 <section class="max-w-2xl space-y-12">
-                    <component :is="activeTab.content" :declaration="declaration" @saved="onSaved"/>
+                    <component :key="activeTab.label" :is="activeTab.content" :declaration="declaration" :owner="activeTab?.owner" @saved="onSaved"/>
                 </section>
             </div>
         </div>

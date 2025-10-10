@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Types\OwnerType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
 /**
  * @property string $name
@@ -34,5 +36,15 @@ class Declaration extends Model
     public function familyMembers(): HasMany
     {
         return $this->hasMany(DeclarationFamilyMember::class, 'declaration_id');
+    }
+
+    public function realEstates(): HasMany
+    {
+        return $this->hasMany(DeclarationRealEstate::class, 'declaration_id');
+    }
+
+    public function realEstatesOfOwner(OwnerType $owner): Collection
+    {
+        return $this->realEstates()->where('owner', $owner)->get();
     }
 }
