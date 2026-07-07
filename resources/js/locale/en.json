@@ -13,7 +13,9 @@
         "register_title": "Register to PEKIDI",
         "register_description": "Create a new account by filling the following details.",
         "reset_password_link_sent": "Reset password link has been sent to your mail",
-        "update_profile": "Update profile"
+        "update_profile": "Update profile",
+        "forgot_password_title": "Reset your password",
+        "forgot_password_description": "Enter your e-mail and we will send you instructions to reset your password."
     },
     "settings": {
         "title": "Profile Settings",
@@ -89,13 +91,16 @@
         "acquisition_value": "Value when acquired",
         "current_value": "Current value",
         "real_estate_type": "Real estate type",
-        "rights_encumbrances": "Rights and Encumbrances"
+        "rights_encumbrances": "Rights and Encumbrances",
+        "description": "Description",
+        "value": "Value"
     },
     "placeholders": {
         "location": "Full address of real estate",
         "acquisition_type": "Inheritance, Purchase...",
         "real_estate_type": "Studio, Apartment...",
-        "rights_encumbrances": "Any rights or obligations in or not in favor of the owner"
+        "rights_encumbrances": "Any rights or obligations in or not in favor of the owner",
+        "vehicle_description": "Brand, type..."
     },
     "confirm_dialog": {
         "title": "Are you sure?",
@@ -106,5 +111,9 @@
         "description": "Please find below a detailed summary of the record's data",
         "field": "Field",
         "value": "Value"
+    },
+    "titles": {
+        "real_estate": "Real estates",
+        "vehicles": "Vehicles"
     }
 }
