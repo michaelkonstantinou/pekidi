@@ -43,6 +43,8 @@
         }
     },
     "errors": {
+        "title": "ERROR!",
+        "fetching_data": "An error occurred when fetching your data. Please try again later.",
         "unexpected": "ERROR: Unexpected error occurred for the given task. If the error persists, please contact your administrator"
     },
     "declarations": {

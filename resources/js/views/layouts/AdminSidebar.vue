@@ -11,7 +11,7 @@ import {
     SidebarMenuItem,
     SidebarMenuButton
 } from '@/components/ui/sidebar'
-import {BookText, Home, Settings} from "lucide-vue-next";
+import {BookText, Home, Settings, BriefcaseBusiness} from "lucide-vue-next";
 import AdminNavUser from "@/views/layouts/AdminNavUser.vue";
 import {useAuthStore} from "@/stores/authStore";
 import {useDeclarationStore} from "@/stores/declarationStore";
@@ -21,7 +21,7 @@ const declarationStore = useDeclarationStore()
 
 const items = [
     {
-        name: "Declarations", children: [{title: "All", route: "admin.declarations.index", icon: BookText, routeParams: {}}],
+        name: "Declarations", children: [{title: "All", route: "admin.declarations.index", icon: BriefcaseBusiness, routeParams: {}}],
     },
     {
         name: "Settings", children: [{title: "Settings", route: "admin.profileSettings", icon: Settings, routeParams: {}}]
@@ -35,7 +35,7 @@ for (const declaration of declarationStore.declarations) {
             title: declaration.name,
             route: "admin.declarations.edit",
             routeParams: {'id': declaration.id},
-            icon: null
+            icon: BookText
         })
 }
 </script>
@@ -54,8 +54,7 @@ for (const declaration of declarationStore.declarations) {
                                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSLxoe-Lj8DZY62bOFosJVdl4zLwjUSmP_DUN3_qCaXrDZLQg5ze94iEAzMZREO7De6-rhKjratyO_614iX9haU1pk5UhvYhUs0lJXguJogwyi9ZAO_3YWA89h8Mox2TQLsGoYidE6wkuPmoHsNgTzCW1OfUFme3XGzuqGQc2TFzCxqYjmoedSLuQQn9A8GWY8rNFCW6APohu9VmSOuAhKZQs4zqpi2RtwMUUo98amgNbZashqy_nAcOFH42Xtj6lSkpuOXtb-U1Q"
                             />
                             <div class="grid flex-1 text-left leading-tight">
-                                <h1 class="text-primary-foreground font-bold text-[20px] font-sans tracking-tight leading-tight">Asset Management</h1>
-                                <p class="text-muted-foreground/70 text-xs font-sans mt-0.5">Republic of Cyprus</p>
+                                <h1 class="text-primary-foreground font-bold text-[20px] font-sans tracking-tight leading-tight">ΠΕΚΥΔΗ</h1>
                             </div>
                         </router-link>
                     </SidebarMenuButton>

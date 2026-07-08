@@ -37,7 +37,8 @@ const tabs = ref([
     {'label': 'declarations.personal_details', isActive: true, content: DeclarationPersonalDetailsEditor},
     {'label': 'declarations.family_details', isActive: false, content: DeclarationFamilyDetailsEditor},
     {'label': 'declarations.personal_assets', isActive: false, content: DeclarationPersonalAssetsEditor, owner: 'self'},
-    {'label': 'declarations.spouse_assets', isActive: false, content: DeclarationPersonalAssetsEditor, owner: 'spouse'}
+    {'label': 'declarations.spouse_assets', isActive: false, content: DeclarationPersonalAssetsEditor, owner: 'spouse'},
+    {'label': 'declarations.children_assets', isActive: false, content: DeclarationPersonalAssetsEditor, owner: 'child'}
 ])
 const activeTab = computed(() => tabs.value.find(tab => tab.isActive))
 
