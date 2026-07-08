@@ -34,7 +34,7 @@ const emit = defineEmits(['close'])
                 </DialogDescription>
             </div>
         </div>
-        <div class="p-5">
+        <div class="p-5 max-h-[85vh] overflow-y-scroll">
             <slot />
         </div>
 

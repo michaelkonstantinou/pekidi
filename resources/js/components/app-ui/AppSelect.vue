@@ -25,7 +25,7 @@ defineProps({
                     v-for="option in field.options"
                     :key="option.value"
                     :value="option.value"
-                    class="h-11 hover:bg-neutral-50 focus:bg-neutral-50 cursor-pointer"
+                    class="h-11 hover:bg-neutral-50 focus:bg-neutral-50 data-[state=checked]:bg-neutral-200/50 data-[state=checked]:text-neutral-900 data-[state=checked]:font-semibold cursor-pointer"
                 >
                     {{ $t(option.label) }}
                 </SelectItem>

@@ -15,7 +15,7 @@ Route::middleware(LocaleHandler::class)->group(function () {
         App::setLocale($locale);
         Session::put('locale', $locale);
 
-        return response()->json();
+        return response()->json(['locale' => $locale]);
     });
 
     Route::get('/login', function () {

@@ -5,11 +5,10 @@ use App\Http\Controllers\UserDeclarationController;
 use App\Http\Controllers\UserDeclarationFamilyMemberController;
 use App\Http\Controllers\UserDeclarationRealEstateController;
 use App\Http\Controllers\UserDeclarationVehicleController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
+use App\Http\Middleware\LocaleHandler;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware("auth:sanctum")->group(function () {
+Route::middleware(["auth:sanctum", LocaleHandler::class])->group(function () {
     Route::get("/user", [AuthUserController::class, "getUser"]);
     Route::post("/user/upload-profile-picture", [AuthUserController::class, "uploadProfilePicture"]);
     Route::resource('/user/declarations', UserDeclarationController::class)->except(['edit', 'create']);
