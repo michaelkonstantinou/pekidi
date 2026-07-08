@@ -82,7 +82,7 @@ const onSubmit = form.handleSubmit(values => {
                       :key="field.name" />
     </div>
 
-    <Button type="submit" class="mt-5" size="lg" :disabled="isLoading">
+    <Button type="submit" class="mt-5" size="xl" :disabled="isLoading">
         {{ $t("buttons.save") }}
     </Button>
     </form>

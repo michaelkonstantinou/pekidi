@@ -71,7 +71,7 @@ async function onSaved() {
 
             <div class="flex flex-col md:flex-row min-w-0 gap-6 w-full items-start">
 
-                <aside class="w-full md:w-64 shrink-0">
+                <aside class="py-6 md:py-8 w-full md:w-56 shrink-0 min-w-0">
                     <nav class="flex flex-col space-y-1">
                         <Button
                             v-for="(tab, index) in tabs"
