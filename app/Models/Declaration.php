@@ -43,8 +43,18 @@ class Declaration extends Model
         return $this->hasMany(DeclarationRealEstate::class, 'declaration_id');
     }
 
+    public function vehicles(): HasMany
+    {
+        return $this->hasMany(DeclarationVehicle::class, 'declaration_id');
+    }
+
     public function realEstatesOfOwner(OwnerType $owner): Collection
     {
         return $this->realEstates()->where('owner', $owner)->get();
+    }
+
+    public function vehiclesOfOwner(OwnerType $owner): Collection
+    {
+        return $this->vehicles()->where('owner', $owner)->get();
     }
 }

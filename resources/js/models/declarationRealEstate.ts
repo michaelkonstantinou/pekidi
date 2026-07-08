@@ -42,8 +42,8 @@ export default class DeclarationRealEstate {
             {label: "labels.acquisition_value", value: this.acquisitionValue.toString(), isLongText: false},
             {label: "labels.current_value", value: this.currentValue.toString(), isLongText: false},
             {label: "labels.rights_encumbrances", value: this.rightsEncumbrances, isLongText: true},
-            {label: "labels.created_at", value: getLocaleDateTimeString(this.createdAt), isLongText: false},
-            {label: "labels.updated_at", value: getLocaleDateTimeString(this.updatedAt), isLongText: false},
+            {label: "labels.created_at", value: getLocaleDateTimeString(this.createdAt), isLongText: false, isMeta: true},
+            {label: "labels.updated_at", value: getLocaleDateTimeString(this.updatedAt), isLongText: false, isMeta: true},
         ]
     }
 }

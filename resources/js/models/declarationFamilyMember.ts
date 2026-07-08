@@ -31,8 +31,8 @@ export default class DeclarationFamilyMember {
             {label: "labels.relationship", value: this.relationship, isLongText: false},
             {label: "labels.profession", value: this.profession, isLongText: false},
             {label: "labels.born_at", value: this.bornAt !== null ? getLocaleDateString(this.bornAt) : '', isLongText: false},
-            {label: "labels.created_at", value: getLocaleDateTimeString(this.createdAt), isLongText: false},
-            {label: "labels.updated_at", value: getLocaleDateTimeString(this.updatedAt), isLongText: false},
+            {label: "labels.created_at", value: getLocaleDateTimeString(this.createdAt), isLongText: false, isMeta: true},
+            {label: "labels.updated_at", value: getLocaleDateTimeString(this.updatedAt), isLongText: false, isMeta: true},
         ]
     }
 
