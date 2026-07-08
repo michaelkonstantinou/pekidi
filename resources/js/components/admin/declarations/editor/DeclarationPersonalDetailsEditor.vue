@@ -11,6 +11,7 @@ import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import HeadingSmall from "@/components/HeadingSmall.vue";
 import Declaration from "@/models/declaration";
+import AppFormField from "@/components/app-ui/AppFormField.vue";
 
 const props = defineProps({
     declaration: {
@@ -75,22 +76,13 @@ const onSubmit = form.handleSubmit(values => {
     <HeadingSmall title="declarations.personal_details" description="declarations.personal_details_description" />
     <form @submit.prevent="onSubmit">
     <div class="grid gap-6">
-        <FormField
-            v-for="field in formFields"
-            v-slot="{ componentField }"
-            :key="field.name"
-            :name="field.name">
-            <FormItem v-auto-animate>
-                <FormLabel>{{ $t(field.label) }}</FormLabel>
-                <FormControl>
-                    <Input :type="field.type" :placeholder="field.placeholder" v-bind="componentField" />
-                </FormControl>
-                <FormMessage />
-            </FormItem>
-        </FormField>
+        <AppFormField v-for="field in formFields"
+                      :field="field"
+                      v-slot="{ componentField }"
+                      :key="field.name" />
     </div>
 
-    <Button type="submit" class="mt-5" :disabled="isLoading">
+    <Button type="submit" class="mt-5" size="lg" :disabled="isLoading">
         {{ $t("buttons.save") }}
     </Button>
     </form>

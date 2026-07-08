@@ -4,6 +4,7 @@ import Heading from "@/components/Heading.vue";
 import AdminLayout from "@/views/layouts/AdminLayout.vue";
 import {Separator} from "@/components/ui/separator";
 import {BreadcrumbItemType} from "@/types";
+import { PlusCircle, Filter } from 'lucide-vue-next'
 import DeclarationsTable from "@/components/admin/declarations/DeclarationsTable.vue";
 
 const breadcrumbs: BreadcrumbItemType[] = [

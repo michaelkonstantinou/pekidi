@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
-import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {FormFieldItem} from "@/dataTypes";
 import {FormContext, useForm} from "vee-validate";
@@ -11,6 +10,8 @@ import {toast} from "vue-sonner";
 import {updateFormErrors} from "@/helpers/formHelpers";
 import {useDeclarationStore} from "@/stores/declarationStore";
 import {LoaderPinwheel} from "lucide-vue-next";
+import AppInput from "@/components/app-ui/AppInput.vue";
+import AppFormField from "@/components/app-ui/AppFormField.vue";
 
 const declarationStore = useDeclarationStore()
 const form: FormContext = useForm()
@@ -38,22 +39,13 @@ const onSubmit = form.handleSubmit(values => {
 <template>
     <form @submit.prevent="onSubmit">
         <div class="grid gap-6">
-            <FormField
-                v-for="field in formFields"
-                v-slot="{ componentField }"
-                :key="field.name"
-                :name="field.name">
-                <FormItem v-auto-animate>
-                    <FormLabel>{{ $t(field.label) }}</FormLabel>
-                    <FormControl>
-                        <Input :type="field.type" :placeholder="field.placeholder" v-bind="componentField" />
-                    </FormControl>
-                    <FormMessage />
-                </FormItem>
-            </FormField>
+            <AppFormField v-for="field in formFields"
+                          :field="field"
+                          v-slot="{ componentField }"
+                          :key="field.name" />
 
         </div>
-        <Button type="submit" class="mt-5" :disabled="isLoading">
+        <Button type="submit" class="mt-5 w-full" size="xl" :disabled="isLoading">
             <LoaderPinwheel v-show="isLoading" class="animate-spin"/>
             {{ $t("buttons.create") }}
         </Button>

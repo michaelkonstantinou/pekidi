@@ -22,6 +22,10 @@ const props = defineProps({
         required: false,
         type: Boolean,
         default: true
+    },
+    title: {
+        required: false,
+        type: String,
     }
 })
 
@@ -56,7 +60,7 @@ function onDeleteItem(primaryKey: number) {
 
 <template>
     <AlertError :errors="errors"/>
-    <DataTable :data="rows" :columns="columns" :compact="compact" @reload="loadData" @deleteItem="onDeleteItem">
+    <DataTable :data="rows" :columns="columns" :compact="compact" @reload="loadData" @deleteItem="onDeleteItem" :title="title">
         <template #buttons>
             <DataTableCreateDialog :isLoading="isLoading" >
                 <slot name="createForm"></slot>

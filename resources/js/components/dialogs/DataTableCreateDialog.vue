@@ -34,7 +34,7 @@ const props = defineProps({
 <template>
     <Dialog>
         <DialogTrigger>
-            <Button variant="default" :disabled="isLoading">
+            <Button variant="default" :disabled="isLoading" size="xl">
                 <Plus v-show="!isLoading"/>
                 <LoaderPinwheel v-show="isLoading" class="animate-spin"/>
                 {{ $t(buttonLabel) }}
