@@ -35,12 +35,13 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     >
       <slot />
 
-      <DialogClose @click="emits('close')"
-        class="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
-      >
-        <X />
-        <span class="sr-only">Close</span>
-      </DialogClose>
+        <DialogClose
+            @click="emits('close')"
+            class="absolute top-4 right-4 text-white/70 hover:text-white hover:bg-white/10 p-1.5 rounded-md transition-colors cursor-pointer flex items-center justify-center outline-none disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-[18px]"
+        >
+            <X />
+            <span class="sr-only">Close</span>
+        </DialogClose>
     </DialogContent>
   </DialogPortal>
 </template>

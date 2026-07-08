@@ -41,24 +41,15 @@ const emit = defineEmits(['close'])
         <!-- Professional Modal Container Box Wrapper -->
         <DialogContent
             @close="emit('close')"
-        class="bg-white w-full max-w-2xl rounded-sm border-0 shadow-xl overflow-hidden p-0 gap-0 transition-all duration-200"
+            class="bg-white w-full max-w-2xl rounded-sm border-0 shadow-xl overflow-hidden p-0 gap-0 transition-all duration-200"
         >
         <!-- Modal Header -->
-        <!-- CHANGED: Added 'border-t border-primary' so the top edge seamlessly matches your exact header background color -->
         <div class="bg-primary px-6 py-4 flex justify-between items-center border-t border-primary">
             <div class="flex items-center space-x-3">
                 <DialogTitle class="text-base font-bold font-sans tracking-tight text-white/90">
                     {{ $t('view_dialog.title') }}
                 </DialogTitle>
             </div>
-
-            <!-- Refined Close Button Target Area -->
-            <button
-                class="text-white/70 hover:text-white hover:bg-white/10 p-1.5 rounded-md transition-colors cursor-pointer flex items-center justify-center"
-                @click="emit('close')"
-            >
-                <X />
-            </button>
         </div>
 
             <!-- Modal Body Area Canvas -->
