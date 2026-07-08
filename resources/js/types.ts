@@ -7,4 +7,5 @@ export interface ViewRecordRow {
     label: string,
     value: string,
     isLongText: boolean,
+    isMeta: boolean,
 }

@@ -110,7 +110,9 @@
         "title": "View details",
         "description": "Please find below a detailed summary of the record's data",
         "field": "Field",
-        "value": "Value"
+        "value": "Value",
+        "section_data": "Input data",
+        "section_meta": "Metadata"
     },
     "titles": {
         "real_estate": "Real estates",
