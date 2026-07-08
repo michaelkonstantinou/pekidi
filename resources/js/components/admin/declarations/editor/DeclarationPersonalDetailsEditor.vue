@@ -12,6 +12,7 @@ import {Button} from "@/components/ui/button";
 import HeadingSmall from "@/components/HeadingSmall.vue";
 import Declaration from "@/models/declaration";
 import AppFormField from "@/components/app-ui/AppFormField.vue";
+import AppSubmitButton from "@/components/app-ui/AppSubmitButton.vue";
 
 const props = defineProps({
     declaration: {
@@ -82,8 +83,6 @@ const onSubmit = form.handleSubmit(values => {
                       :key="field.name" />
     </div>
 
-    <Button type="submit" class="mt-5" size="xl" :disabled="isLoading">
-        {{ $t("buttons.save") }}
-    </Button>
+        <AppSubmitButton :isLoading="isLoading"/>
     </form>
 </template>

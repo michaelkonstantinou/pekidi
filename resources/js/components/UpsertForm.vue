@@ -1,13 +1,12 @@
 <script setup lang="ts">
 
-import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
-import {Input} from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea"
-import {Button} from "@/components/ui/button";
 import {FormFieldItem} from "@/dataTypes";
 import {useI18n} from "vue-i18n";
-import {LoaderPinwheel} from "lucide-vue-next";
+import AppInput from "@/components/app-ui/AppInput.vue";
+import AppSelect from "@/components/app-ui/AppSelect.vue";
+import AppTextarea from "@/components/app-ui/AppTextarea.vue";
+import AppSubmitButton from "@/components/app-ui/AppSubmitButton.vue";
 
 const {t} = useI18n()
 const emit = defineEmits(['submit'])
@@ -34,36 +33,20 @@ const props = defineProps({
                 :name="field.name">
                 <FormItem v-auto-animate>
                     <FormLabel>{{ $t(field.label) }}</FormLabel>
-                    <Select v-if="field.type === 'select'" v-bind="componentField">
-                        <FormControl class="w-full">
-                            <SelectTrigger>
-                                <SelectValue :placeholder="field.placeholder" />
-                            </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                            <SelectGroup>
-                                <SelectItem v-for="option in field.options" :value="option.value">
-                                    {{ $t(option.label) }}
-                                </SelectItem>
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
+                    <AppSelect :field="field" v-if="field.type === 'select'" v-bind="componentField" />
 
                     <FormControl v-if="field.type === 'textarea'">
-                        <Textarea :type="field.type" :placeholder="$t(field.placeholder)" v-bind="componentField" />
+                        <AppTextarea :field="field" v-bind="componentField" />
                     </FormControl>
 
                     <FormControl v-if="field.type !== 'select' && field.type !== 'textarea'">
-                        <Input :type="field.type" :placeholder="$t(field.placeholder)" v-bind="componentField" />
+                        <AppInput v-bind="componentField" :field="field"/>
                     </FormControl>
                     <FormMessage />
                 </FormItem>
             </FormField>
         </div>
 
-        <Button type="submit" class="mt-5" :disabled="isLoading">
-            <LoaderPinwheel v-show="isLoading" class="animate-spin"/>
-            {{ $t("buttons.save") }}
-        </Button>
+        <AppSubmitButton :isLoading="isLoading"/>
     </form>
 </template>

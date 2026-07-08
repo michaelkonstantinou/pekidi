@@ -159,7 +159,7 @@ function onDeleteItem(primaryKey) {
                     @click="table.previousPage()"
                 >
                     <ChevronLeft class="h-3.5 w-3.5 mr-1 shrink-0" />
-                    {{ $t('buttons.previous_page' || 'Previous') }}
+                    {{ $t('buttons.previous_page') }}
                 </Button>
                 <Button
                     variant="outline"
@@ -168,7 +168,7 @@ function onDeleteItem(primaryKey) {
                     :disabled="!table.getCanNextPage()"
                     @click="table.nextPage()"
                 >
-                    {{ $t('buttons.next_page' || 'Next') }}
+                    {{ $t('buttons.next_page') }}
                     <ChevronRight class="h-3.5 w-3.5 ml-1 shrink-0" />
                 </Button>
             </div>

@@ -2,21 +2,15 @@
 import { MoreHorizontal } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import {
-    DialogClose,
-    Dialog,
-    DialogContent,
-    DialogFooter,
-    DialogTitle,
-    DialogTrigger,
-    DialogDescription,
-    DialogHeader} from "@/components/ui/dialog";
+import { Dialog, DialogTrigger} from "@/components/ui/dialog";
 import {Pencil, Trash2, Eye} from "lucide-vue-next";
 import ConfirmDialog from "@/components/dialogs/ConfirmDialog.vue";
 import {ref} from "vue";
+import DataTableUpsertDialog from "@/components/dialogs/DataTableUpsertDialog.vue";
 
 const showConfirmDeleteDialog = ref(false)
 const showViewRecordDialog = ref(false)
+const showEditRecordDialog = ref(false)
 
 const props = defineProps({
     primaryKey: {required: true}
@@ -27,6 +21,11 @@ const emit = defineEmits(['reload', 'deleteItem'])
 function deleteItem() {
     showConfirmDeleteDialog.value = false
     emit('deleteItem', props.primaryKey)
+}
+
+function onReload() {
+    showEditRecordDialog.value = false
+    emit('reload')
 }
 </script>
 
@@ -64,6 +63,7 @@ function deleteItem() {
                 <!-- Edit Dialog Action Trigger -->
                 <DialogTrigger asChild>
                     <DropdownMenuItem
+                        @click="showEditRecordDialog = true"
                         class="flex items-center gap-2 px-2.5 py-2 text-sm text-neutral-700 font-medium rounded-sm cursor-pointer hover:bg-neutral-50 focus:bg-neutral-50 transition-colors duration-100 outline-none"
                     >
                         <Pencil class="h-4 w-4 text-neutral-400 shrink-0" />
@@ -82,14 +82,11 @@ function deleteItem() {
             </DropdownMenuContent>
 
             <!-- Edit Form Dialog Window Context Frame -->
-            <DialogContent class="bg-white rounded-default border border-neutral-200 shadow-lg max-w-lg p-6 font-sans">
-                <DialogHeader class="mb-4">
-                    <DialogTitle class="text-lg font-bold text-neutral-800 tracking-tight">
-                        Edit record
-                    </DialogTitle>
-                </DialogHeader>
-                <slot name="editForm" @reload="emit('reload')"/>
-            </DialogContent>
+            <Dialog :open="showEditRecordDialog" >
+                <DataTableUpsertDialog buttonLabel="buttons.save" title="!Edit record" @close="showEditRecordDialog = false">
+                    <slot name="editForm" @reload="onReload"/>
+                </DataTableUpsertDialog>
+            </Dialog>
         </Dialog>
     </DropdownMenu>
 
