@@ -1,6 +1,7 @@
 import {AbstractDeclarationOwnerPosition} from "@/models/abstractDeclarationOwnerPosition";
 import {ViewRecordRow} from "@/types";
 import {FormFieldItem} from "@/dataTypes";
+import {getLocaleCurrencyString, getLocaleDateTimeString} from "@/helpers/localeHelpers";
 
 export default class DeclarationInvestment extends AbstractDeclarationOwnerPosition {
     name: string
@@ -50,5 +51,17 @@ export default class DeclarationInvestment extends AbstractDeclarationOwnerPosit
             {label: "labels.created_at", value: getLocaleDateTimeString(this.createdAt), isLongText: false, isMeta: true},
             {label: "labels.updated_at", value: getLocaleDateTimeString(this.updatedAt), isLongText: false, isMeta: true},
         ]
+    }
+
+    override toFormValues(): Object {
+        return {
+            "name": this.name,
+            "registration_number": this.registrationNumber,
+            "country": this.country,
+            "quantity": this.quantity,
+            "acquisition_type": this.acquisitionType,
+            "acquisition_year": this.acquisitionYear,
+            "value": this.value,
+        }
     }
 }

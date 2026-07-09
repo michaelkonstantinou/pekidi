@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\AuthUserController;
+use App\Http\Controllers\UserDeclarationAdditionalAssetController;
 use App\Http\Controllers\UserDeclarationBusinessController;
 use App\Http\Controllers\UserDeclarationController;
+use App\Http\Controllers\UserDeclarationDepositController;
 use App\Http\Controllers\UserDeclarationFamilyMemberController;
+use App\Http\Controllers\UserDeclarationInvestmentController;
 use App\Http\Controllers\UserDeclarationRealEstateController;
 use App\Http\Controllers\UserDeclarationVehicleController;
 use App\Http\Middleware\LocaleHandler;
@@ -17,6 +20,9 @@ Route::middleware(["auth:sanctum", LocaleHandler::class])->group(function () {
     Route::resource('/user/declarations/{declaration}/{owner}/real-estates', UserDeclarationRealEstateController::class)->except(['edit', 'create']);
     Route::resource('/user/declarations/{declaration}/{owner}/vehicles', UserDeclarationVehicleController::class)->except(['edit', 'create']);
     Route::resource('/user/declarations/{declaration}/{owner}/businesses', UserDeclarationBusinessController::class)->except(['edit', 'create']);
+    Route::resource('/user/declarations/{declaration}/{owner}/deposits', UserDeclarationDepositController::class)->except(['edit', 'create']);
+    Route::resource('/user/declarations/{declaration}/{owner}/investments', UserDeclarationInvestmentController::class)->except(['edit', 'create']);
+    Route::resource('/user/declarations/{declaration}/{owner}/additional-assets', UserDeclarationAdditionalAssetController::class)->except(['edit', 'create']);
 });
 
 

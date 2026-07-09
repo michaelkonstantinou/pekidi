@@ -4,8 +4,9 @@ import {useI18n} from "vue-i18n";
 import DeclarationRealEstate from "@/models/declarationRealEstate";
 import DeclarationOwnerPositionForm from "@/components/admin/declarations/forms/DeclarationOwnerPositionForm.vue";
 import DeclarationRealEstateService from "@/services/declarationRealEstateService";
+import ApiResourceRepository from "@/services/apiResourceRepository";
 
-export function useRealEstateTableColumns() {
+export function useRealEstateTableColumns(apiService: ApiResourceRepository<any>) {
     const {t} = useI18n()
 
     const realEstateColumns: ColumnDef<DeclarationRealEstate>[] = [
@@ -17,7 +18,7 @@ export function useRealEstateTableColumns() {
             DeclarationOwnerPositionForm,
             (record) => ({
                 record: record,
-                service: new DeclarationRealEstateService(record.declarationId, record.owner),
+                service: apiService,
                 formFields: DeclarationRealEstate.getFormFieldItems()
             })
         )

@@ -53,6 +53,21 @@ class Declaration extends Model
         return $this->hasMany(DeclarationBusiness::class, 'declaration_id');
     }
 
+    public function investments(): HasMany
+    {
+        return $this->hasMany(DeclarationInvestment::class, 'declaration_id');
+    }
+
+    public function deposits(): HasMany
+    {
+        return $this->hasMany(DeclarationDeposit::class, 'declaration_id');
+    }
+
+    public function additionalAssets(): HasMany
+    {
+        return $this->hasMany(DeclarationAdditionalAsset::class, 'declaration_id');
+    }
+
     public function realEstatesOfOwner(OwnerType $owner): Collection
     {
         return $this->realEstates()->where('owner', $owner)->get();
@@ -66,5 +81,20 @@ class Declaration extends Model
     public function businessesOfOwner(OwnerType $owner): Collection
     {
         return $this->businesses()->where('owner', $owner)->get();
+    }
+
+    public function investmentsOfOwner(OwnerType $owner): Collection
+    {
+        return $this->investments()->where('owner', $owner)->get();
+    }
+
+    public function depositsOfOwner(OwnerType $owner): Collection
+    {
+        return $this->deposits()->where('owner', $owner)->get();
+    }
+
+    public function additionalAssetsOfOwner(OwnerType $owner): Collection
+    {
+        return $this->additionalAssets()->where('owner', $owner)->get();
     }
 }

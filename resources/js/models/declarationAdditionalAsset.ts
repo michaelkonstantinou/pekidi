@@ -35,6 +35,17 @@ export default class DeclarationAdditionalAsset extends AbstractDeclarationOwner
         ]
     }
 
+    override toFormValues(): Object {
+        return {
+            "name": this.name,
+            "asset_type": this.assetType,
+            "registration_number": this.registrationNumber,
+            "acquisition_type": this.acquisitionType,
+            "acquisition_year": this.acquisitionYear,
+            "value": this.value,
+        }
+    }
+
     static override getFormFieldItems(): FormFieldItem[] {
         return [
             new FormFieldItem("name", "labels.name", "text", "placeholders.asset_name"),

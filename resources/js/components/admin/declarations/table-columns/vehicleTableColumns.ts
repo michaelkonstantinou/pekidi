@@ -4,8 +4,9 @@ import {useI18n} from "vue-i18n";
 import DeclarationVehicle from "@/models/declarationVehicle";
 import DeclarationOwnerPositionForm from "@/components/admin/declarations/forms/DeclarationOwnerPositionForm.vue";
 import DeclarationVehicleService from "@/services/declarationVehicleService";
+import ApiResourceRepository from "@/services/apiResourceRepository";
 
-export function useVehicleColumns() {
+export function useVehicleColumns(apiService: ApiResourceRepository<any>) {
     const {t} = useI18n()
 
     const vehicleColumns: ColumnDef<DeclarationVehicle>[] = [
@@ -16,7 +17,7 @@ export function useVehicleColumns() {
             DeclarationOwnerPositionForm,
             (record) => ({
                 record: record,
-                service: new DeclarationVehicleService(record.declarationId, record.owner),
+                service: apiService,
                 formFields: DeclarationVehicle.getFormFieldItems()
             })
         )
