@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Types\OwnerType;
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int $id
@@ -12,9 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $description
  * @property int $value
  */
-class DeclarationVehicle extends Model
+class DeclarationVehicle extends AbstractDeclarationOwnerAsset
 {
     protected $fillable = ['declaration_id', 'owner', 'description', 'value'];
-
-    protected $casts = ['owner' => OwnerType::class];
 }

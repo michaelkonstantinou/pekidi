@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthUserController;
+use App\Http\Controllers\UserDeclarationBusinessController;
 use App\Http\Controllers\UserDeclarationController;
 use App\Http\Controllers\UserDeclarationFamilyMemberController;
 use App\Http\Controllers\UserDeclarationRealEstateController;
@@ -15,6 +16,7 @@ Route::middleware(["auth:sanctum", LocaleHandler::class])->group(function () {
     Route::resource('/user/declarations/{declaration}/family-members', UserDeclarationFamilyMemberController::class)->except(['edit', 'create']);
     Route::resource('/user/declarations/{declaration}/{owner}/real-estates', UserDeclarationRealEstateController::class)->except(['edit', 'create']);
     Route::resource('/user/declarations/{declaration}/{owner}/vehicles', UserDeclarationVehicleController::class)->except(['edit', 'create']);
+    Route::resource('/user/declarations/{declaration}/{owner}/businesses', UserDeclarationBusinessController::class)->except(['edit', 'create']);
 });
 
 

@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $current_value
  * @property string $rights_encumbrances
  */
-class DeclarationRealEstate extends Model
+class DeclarationRealEstate extends AbstractDeclarationOwnerAsset
 {
     protected $fillable = [
         'declaration_id',
@@ -32,6 +32,4 @@ class DeclarationRealEstate extends Model
         'current_value',
         'rights_encumbrances'
     ];
-
-    protected $casts = ['owner' => OwnerType::class];
 }

@@ -1,4 +1,4 @@
-import {makeCurrencyColumn, makeDateColumn, makeTextColumn} from "@/helpers/columnHelpers";
+import {makeActionsColumn, makeCurrencyColumn, makeDateColumn, makeTextColumn} from "@/helpers/columnHelpers";
 import {ColumnDef} from "@tanstack/vue-table";
 import {getCurrentInstance, h} from "vue";
 import DeclarationFamilyMember from "@/models/declarationFamilyMember";
@@ -18,31 +18,14 @@ export function useVehicleColumns() {
         makeTextColumn<DeclarationVehicle>("description", t("labels.description")),
         makeCurrencyColumn<DeclarationVehicle>("value", t("labels.value")),
         makeDateColumn<DeclarationVehicle>("updatedAt", t("labels.updated_at")),
-        {
-            id: 'actions',
-            enableHiding: false,
-            cell: ({ row }) => {
-                const record = row.original
-                const instance = getCurrentInstance()
-                return h(DataTableCrudActions, {
-                    primaryKey: record.id,
-                    onDeleteItem: (payload: any) => instance?.proxy?.$emit('deleteItem', payload),
-                    onReload: (payload: any) => instance?.proxy?.$emit('reload', payload)
-                }, {
-                    editForm: ({onReload}) => h(DeclarationVehicleForm, {
-                        record: record,
-                        declarationId: record.declarationId,
-                        owner: record.owner,
-                        onReload
-                    }),
-                    viewRecordDialog: ({open, onClose}) => h(ViewRecordDialog, {
-                        open: open,
-                        data: record.toViewRecordData(),
-                        onClose
-                    })
-                })
-            },
-        },
+        makeActionsColumn(
+            DeclarationVehicleForm,
+            (record) => ({
+                record: record,
+                declarationId: record.declarationId,
+                owner: record.owner,
+            })
+        )
     ]
 
     return {vehicleColumns}

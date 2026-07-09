@@ -9,6 +9,7 @@ use App\Models\Declaration;
 use App\Models\DeclarationFamilyMember;
 use App\Models\DeclarationRealEstate;
 use App\Models\User;
+use App\Services\DeclarationAssetService;
 use App\Types\OwnerType;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,7 @@ class UserDeclarationRealEstateController
     {
         /** @var ?User $user */
         $user = Auth::user();
-        if ($user === null) {
+        if ($user === null || $user->id !== $declaration->user_id) {
             return response()->json([], JsonResponse::HTTP_UNAUTHORIZED);
         }
 
@@ -51,7 +52,7 @@ class UserDeclarationRealEstateController
     }
 
     /**
-     * Validates the user's input and creates a new Declaration Family Member for the authenticated user and the given
+     * Validates the user's input and creates a new Declaration Real Estate for the authenticated user and the given
      * declaration object
      * Returns unauthorized if the user is not logged in or the declaration object does not belong to the authed user
      *
@@ -60,15 +61,9 @@ class UserDeclarationRealEstateController
      */
     public function store(DeclarationRealEstateRequest $request, Declaration $declaration, OwnerType $owner): JsonResponse
     {
-        /** @var ?User $user */
-        $user = auth()->user();
-        if ($user === null || $declaration->user_id !== $user->id) {
-            return response()->json([], JsonResponse::HTTP_UNAUTHORIZED);
-        }
+        $service = new DeclarationAssetService($declaration);
 
-        $record = DeclarationRealEstate::create($request->all() + ['declaration_id' => $declaration->id, 'owner' => $owner]);
-
-        return response()->json($record);
+        return $service->create($request, $owner, DeclarationRealEstate::class);
     }
 
     /**
@@ -80,27 +75,15 @@ class UserDeclarationRealEstateController
      */
     public function update(DeclarationRealEstateRequest $request, Declaration $declaration, OwnerType $owner, DeclarationRealEstate $realEstate): JsonResponse
     {
-        /** @var ?User $user */
-        $user = auth()->user();
-        if ($user === null || $declaration->user_id !== $user->id || $realEstate->declaration_id !== $declaration->id) {
-            return response()->json([], JsonResponse::HTTP_UNAUTHORIZED);
-        }
+        $service = new DeclarationAssetService($declaration);
 
-        $realEstate->update($request->all());
-
-        return response()->json($realEstate);
+        return $service->update($request, $owner, $realEstate);
     }
 
     public function destroy(Declaration $declaration, OwnerType $owner, DeclarationRealEstate $realEstate): JsonResponse
     {
-        /** @var ?User $user */
-        $user = auth()->user();
-        if ($user === null || $declaration->user_id !== $user->id || $realEstate->declaration_id !== $declaration->id) {
-            return response()->json([], JsonResponse::HTTP_UNAUTHORIZED);
-        }
+        $service = new DeclarationAssetService($declaration);
 
-        $isDeleted = $realEstate->delete() === true;
-
-        return $isDeleted ? response()->json() : response()->json([], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        return $service->destroy($owner, $realEstate);
     }
 }

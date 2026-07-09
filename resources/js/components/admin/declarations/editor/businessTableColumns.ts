@@ -8,18 +8,22 @@ import ViewRecordDialog from "@/components/dialogs/ViewRecordDialog.vue";
 import {useI18n} from "vue-i18n";
 import DeclarationRealEstate from "@/models/declarationRealEstate";
 import DeclarationRealEstateForm from "@/components/admin/declarations/editor/DeclarationRealEstateForm.vue";
+import DeclarationVehicle from "@/models/declarationVehicle";
+import DeclarationVehicleForm from "@/components/admin/declarations/editor/DeclarationVehicleForm.vue";
+import DeclarationBusiness from "@/models/declarationBusiness";
 import DeclarationBusinessForm from "@/components/admin/declarations/editor/DeclarationBusinessForm.vue";
 
-export function useRealEstateTableColumns() {
+export function useBusinessColumns() {
     const {t} = useI18n()
 
-    const realEstateColumns: ColumnDef<DeclarationRealEstate>[] = [
-        makeTextColumn<DeclarationRealEstate>("realEstateType", t("labels.real_estate_type")),
-        makeTextColumn<DeclarationRealEstate>("acquisitionType", t("labels.acquisition_type")),
-        makeTextColumn<DeclarationRealEstate>("acquisitionYear", t("labels.acquisition_year")),
-        makeCurrencyColumn<DeclarationRealEstate>("currentValue", t("labels.current_value")),
+    const businessColumns: ColumnDef<DeclarationBusiness>[] = [
+        makeTextColumn<DeclarationBusiness>("name", t("labels.name")),
+        makeTextColumn<DeclarationBusiness>("businessType", t("labels.business_type")),
+        makeTextColumn<DeclarationBusiness>("involvementType", t("labels.involvement_type")),
+        makeCurrencyColumn<DeclarationBusiness>("value", t("labels.value")),
+        makeDateColumn<DeclarationBusiness>("updatedAt", t("labels.updated_at")),
         makeActionsColumn(
-            DeclarationRealEstateForm,
+            DeclarationBusinessForm,
             (record) => ({
                 record: record,
                 declarationId: record.declarationId,
@@ -28,6 +32,6 @@ export function useRealEstateTableColumns() {
         )
     ]
 
-    return {realEstateColumns}
+    return {businessColumns}
 }
 

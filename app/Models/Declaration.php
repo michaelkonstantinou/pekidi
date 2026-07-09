@@ -48,6 +48,11 @@ class Declaration extends Model
         return $this->hasMany(DeclarationVehicle::class, 'declaration_id');
     }
 
+    public function businesses(): HasMany
+    {
+        return $this->hasMany(DeclarationBusiness::class, 'declaration_id');
+    }
+
     public function realEstatesOfOwner(OwnerType $owner): Collection
     {
         return $this->realEstates()->where('owner', $owner)->get();
@@ -56,5 +61,10 @@ class Declaration extends Model
     public function vehiclesOfOwner(OwnerType $owner): Collection
     {
         return $this->vehicles()->where('owner', $owner)->get();
+    }
+
+    public function businessesOfOwner(OwnerType $owner): Collection
+    {
+        return $this->businesses()->where('owner', $owner)->get();
     }
 }

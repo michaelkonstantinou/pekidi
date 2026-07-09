@@ -8,11 +8,15 @@ import DeclarationRealEstateService from "@/services/declarationRealEstateServic
 import {useRealEstateTableColumns} from "@/components/admin/declarations/editor/realEstateTableColumns";
 import DeclarationRealEstateForm from "@/components/admin/declarations/editor/DeclarationRealEstateForm.vue";
 import DeclarationVehicleService from "@/services/declarationVehicleService";
+import DeclarationBusinessService    from "@/services/declarationBusinessService";
 import {useVehicleColumns} from "@/components/admin/declarations/editor/vehicleTableColumns";
 import DeclarationVehicleForm from "@/components/admin/declarations/editor/DeclarationVehicleForm.vue";
+import {useBusinessColumns} from "@/components/admin/declarations/editor/businessTableColumns";
+import DeclarationBusinessForm from "@/components/admin/declarations/editor/DeclarationBusinessForm.vue";
 
 const {realEstateColumns} = useRealEstateTableColumns()
 const {vehicleColumns} = useVehicleColumns()
+const {businessColumns} = useBusinessColumns()
 
 const tableRender = ref(0)
 
@@ -37,6 +41,7 @@ function reRenderTable() {
 
 const declarationRealEstateService = new DeclarationRealEstateService(props.declaration.id, props.owner)
 const declarationVehicleService = new DeclarationVehicleService(props.declaration.id, props.owner)
+const declarationBusinessService = new DeclarationBusinessService(props.declaration.id, props.owner)
 </script>
 
 <template>
@@ -53,6 +58,14 @@ const declarationVehicleService = new DeclarationVehicleService(props.declaratio
     <DataCrudTable title="titles.vehicles" :columns="vehicleColumns" :apiService="declarationVehicleService" :key="tableRender">
         <template #createForm>
             <DeclarationVehicleForm :declarationId="declaration.id" :owner="owner" @reload="reRenderTable" />
+        </template>
+    </DataCrudTable>
+
+    <div class="mb-20"></div>
+
+    <DataCrudTable title="titles.businesses" :columns="businessColumns" :apiService="declarationBusinessService" :key="tableRender">
+        <template #createForm>
+            <DeclarationBusinessForm :declarationId="declaration.id" :owner="owner" @reload="reRenderTable" />
         </template>
     </DataCrudTable>
 </template>
