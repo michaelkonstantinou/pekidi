@@ -6,7 +6,7 @@ use App\Http\Requests\DeclarationBusinessRequest;
 use App\Models\Declaration;
 use App\Models\DeclarationBusiness;
 use App\Models\User;
-use App\Services\DeclarationAssetService;
+use App\Services\DeclarationOwnerPositionService;
 use App\Types\OwnerType;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -34,7 +34,7 @@ class UserDeclarationBusinessController
      */
     public function store(DeclarationBusinessRequest $request, Declaration $declaration, OwnerType $owner): JsonResponse
     {
-        $service = new DeclarationAssetService($declaration);
+        $service = new DeclarationOwnerPositionService($declaration);
 
         return $service->create($request, $owner, DeclarationBusiness::class);
     }
@@ -48,14 +48,14 @@ class UserDeclarationBusinessController
      */
     public function update(DeclarationBusinessRequest $request, Declaration $declaration, OwnerType $owner, DeclarationBusiness $business): JsonResponse
     {
-        $service = new DeclarationAssetService($declaration);
+        $service = new DeclarationOwnerPositionService($declaration);
 
         return $service->update($request, $owner, $business);
     }
 
     public function destroy(Declaration $declaration, OwnerType $owner, DeclarationBusiness $business): JsonResponse
     {
-        $service = new DeclarationAssetService($declaration);
+        $service = new DeclarationOwnerPositionService($declaration);
 
         return $service->destroy($owner, $business);
     }

@@ -11,7 +11,7 @@ use App\Types\OwnerType;
  * @property string $description
  * @property int $value
  */
-class DeclarationVehicle extends AbstractDeclarationOwnerAsset
+class DeclarationVehicle extends AbstractDeclarationOwnerPosition
 {
     protected $fillable = ['declaration_id', 'owner', 'description', 'value'];
 }

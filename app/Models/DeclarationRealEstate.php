@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $current_value
  * @property string $rights_encumbrances
  */
-class DeclarationRealEstate extends AbstractDeclarationOwnerAsset
+class DeclarationRealEstate extends AbstractDeclarationOwnerPosition
 {
     protected $fillable = [
         'declaration_id',

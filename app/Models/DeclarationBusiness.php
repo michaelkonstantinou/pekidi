@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $involvement_type
  * @property int $value
  */
-class DeclarationBusiness extends AbstractDeclarationOwnerAsset
+class DeclarationBusiness extends AbstractDeclarationOwnerPosition
 {
     protected $fillable = ['declaration_id', 'owner', 'name', 'business_type', 'involvement_type', 'value'];
 }

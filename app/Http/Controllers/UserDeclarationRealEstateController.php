@@ -9,7 +9,7 @@ use App\Models\Declaration;
 use App\Models\DeclarationFamilyMember;
 use App\Models\DeclarationRealEstate;
 use App\Models\User;
-use App\Services\DeclarationAssetService;
+use App\Services\DeclarationOwnerPositionService;
 use App\Types\OwnerType;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -61,7 +61,7 @@ class UserDeclarationRealEstateController
      */
     public function store(DeclarationRealEstateRequest $request, Declaration $declaration, OwnerType $owner): JsonResponse
     {
-        $service = new DeclarationAssetService($declaration);
+        $service = new DeclarationOwnerPositionService($declaration);
 
         return $service->create($request, $owner, DeclarationRealEstate::class);
     }
@@ -75,14 +75,14 @@ class UserDeclarationRealEstateController
      */
     public function update(DeclarationRealEstateRequest $request, Declaration $declaration, OwnerType $owner, DeclarationRealEstate $realEstate): JsonResponse
     {
-        $service = new DeclarationAssetService($declaration);
+        $service = new DeclarationOwnerPositionService($declaration);
 
         return $service->update($request, $owner, $realEstate);
     }
 
     public function destroy(Declaration $declaration, OwnerType $owner, DeclarationRealEstate $realEstate): JsonResponse
     {
-        $service = new DeclarationAssetService($declaration);
+        $service = new DeclarationOwnerPositionService($declaration);
 
         return $service->destroy($owner, $realEstate);
     }
