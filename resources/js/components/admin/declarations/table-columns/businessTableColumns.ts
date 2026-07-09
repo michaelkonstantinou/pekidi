@@ -1,17 +1,9 @@
 import {makeActionsColumn, makeCurrencyColumn, makeDateColumn, makeTextColumn} from "@/helpers/columnHelpers";
 import {ColumnDef} from "@tanstack/vue-table";
-import {getCurrentInstance, h} from "vue";
-import DeclarationFamilyMember from "@/models/declarationFamilyMember";
-import DataTableCrudActions from "@/components/DataTableCrudActions.vue";
-import DeclarationFamilyMemberForm from "@/components/admin/declarations/forms/DeclarationFamilyMemberForm.vue";
-import ViewRecordDialog from "@/components/dialogs/ViewRecordDialog.vue";
 import {useI18n} from "vue-i18n";
-import DeclarationRealEstate from "@/models/declarationRealEstate";
-import DeclarationRealEstateForm from "@/components/admin/declarations/forms/DeclarationRealEstateForm.vue";
-import DeclarationVehicle from "@/models/declarationVehicle";
-import DeclarationVehicleForm from "@/components/admin/declarations/forms/DeclarationVehicleForm.vue";
 import DeclarationBusiness from "@/models/declarationBusiness";
-import DeclarationBusinessForm from "@/components/admin/declarations/forms/DeclarationBusinessForm.vue";
+import DeclarationOwnerPositionForm from "@/components/admin/declarations/forms/DeclarationOwnerPositionForm.vue";
+import DeclarationBusinessService from "@/services/declarationBusinessService";
 
 export function useBusinessColumns() {
     const {t} = useI18n()
@@ -23,11 +15,11 @@ export function useBusinessColumns() {
         makeCurrencyColumn<DeclarationBusiness>("value", t("labels.value")),
         makeDateColumn<DeclarationBusiness>("updatedAt", t("labels.updated_at")),
         makeActionsColumn(
-            DeclarationBusinessForm,
+            DeclarationOwnerPositionForm,
             (record) => ({
                 record: record,
-                declarationId: record.declarationId,
-                owner: record.owner,
+                service: new DeclarationBusinessService(record.declarationId, record.owner),
+                formFields: DeclarationBusiness.getFormFieldItems()
             })
         )
     ]

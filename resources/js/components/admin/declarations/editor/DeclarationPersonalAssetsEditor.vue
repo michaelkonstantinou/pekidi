@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import {useI18n} from "vue-i18n";
 import {onMounted, ref, Ref} from "vue";
 import HeadingSmall from "@/components/HeadingSmall.vue";
 import Declaration from "@/models/declaration";
 import DataCrudTable from "@/components/DataCrudTable.vue";
 import DeclarationRealEstateService from "@/services/declarationRealEstateService";
 import {useRealEstateTableColumns} from "@/components/admin/declarations/table-columns/realEstateTableColumns";
-import DeclarationRealEstateForm from "@/components/admin/declarations/forms/DeclarationRealEstateForm.vue";
 import DeclarationVehicleService from "@/services/declarationVehicleService";
 import DeclarationBusinessService    from "@/services/declarationBusinessService";
 import {useVehicleColumns} from "@/components/admin/declarations/table-columns/vehicleTableColumns";
-import DeclarationVehicleForm from "@/components/admin/declarations/forms/DeclarationVehicleForm.vue";
 import {useBusinessColumns} from "@/components/admin/declarations/table-columns/businessTableColumns";
-import DeclarationBusinessForm from "@/components/admin/declarations/forms/DeclarationBusinessForm.vue";
+import DeclarationOwnerPositionForm from "@/components/admin/declarations/forms/DeclarationOwnerPositionForm.vue";
+import DeclarationVehicle from "@/models/declarationVehicle";
+import DeclarationBusiness from "@/models/declarationBusiness";
+import DeclarationRealEstate from "@/models/declarationRealEstate";
 
 const {realEstateColumns} = useRealEstateTableColumns()
 const {vehicleColumns} = useVehicleColumns()
@@ -49,7 +49,9 @@ const declarationBusinessService = new DeclarationBusinessService(props.declarat
 
     <DataCrudTable title="titles.real_estate" :columns="realEstateColumns" :apiService="declarationRealEstateService" :key="tableRender">
         <template #createForm>
-            <DeclarationRealEstateForm :declarationId="declaration.id" :owner="owner" @reload="reRenderTable" />
+            <DeclarationOwnerPositionForm @reload="reRenderTable"
+                                          :formFields="DeclarationRealEstate.getFormFieldItems()"
+                                          :service="declarationRealEstateService"/>
         </template>
     </DataCrudTable>
 
@@ -57,7 +59,9 @@ const declarationBusinessService = new DeclarationBusinessService(props.declarat
 
     <DataCrudTable title="titles.vehicles" :columns="vehicleColumns" :apiService="declarationVehicleService" :key="tableRender">
         <template #createForm>
-            <DeclarationVehicleForm :declarationId="declaration.id" :owner="owner" @reload="reRenderTable" />
+            <DeclarationOwnerPositionForm @reload="reRenderTable"
+                                          :formFields="DeclarationVehicle.getFormFieldItems()"
+                                          :service="declarationVehicleService"/>
         </template>
     </DataCrudTable>
 
@@ -65,7 +69,9 @@ const declarationBusinessService = new DeclarationBusinessService(props.declarat
 
     <DataCrudTable title="titles.businesses" :columns="businessColumns" :apiService="declarationBusinessService" :key="tableRender">
         <template #createForm>
-            <DeclarationBusinessForm :declarationId="declaration.id" :owner="owner" @reload="reRenderTable" />
+            <DeclarationOwnerPositionForm @reload="reRenderTable"
+                                          :formFields="DeclarationBusiness.getFormFieldItems()"
+                                          :service="declarationBusinessService"/>
         </template>
     </DataCrudTable>
 </template>

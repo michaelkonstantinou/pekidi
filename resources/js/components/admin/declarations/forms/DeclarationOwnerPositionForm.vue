@@ -7,43 +7,32 @@ import DeclarationFamilyMembersService from "@/services/declarationFamilyMembers
 import {useUpsertForm} from "@/composables/useUpsertForm";
 import DeclarationRealEstate from "@/models/declarationRealEstate";
 import DeclarationRealEstateService from "@/services/declarationRealEstateService";
-import DeclarationVehicleService from "@/services/declarationVehicleService";
-import DeclarationVehicle from "@/models/declarationVehicle";
+import {AbstractDeclarationOwnerPosition} from "@/models/abstractDeclarationOwnerPosition";
+import ApiResourceRepository from "@/services/apiResourceRepository";
 
 const props = defineProps({
-    declarationId: {
-      required: true,
-      type: Number
-    },
-    owner: {
-        required: true,
-        type: String
-    },
+    service: ApiResourceRepository,
     record: {
         required: false,
-        type: DeclarationVehicle,
+        type: AbstractDeclarationOwnerPosition,
         default: null
+    },
+    formFields: {
+        required: true,
+        type: Array<FormFieldItem>
     }
 })
 const emit = defineEmits(['reload'])
-const service = new DeclarationVehicleService(props.declarationId, props.owner)
 
 const form = useForm()
-const formFields: FormFieldItem[] = [
-    new FormFieldItem("description", "labels.description", "text", "placeholders.vehicle_description"),
-    new FormFieldItem("value", "labels.value", "number", "", [], {"min": 0}),
-]
 
-if (props.record instanceof DeclarationVehicle) {
-    form.setValues({
-        "value": props.record.value,
-        "description": props.record.description,
-    })
+if (props.record instanceof AbstractDeclarationOwnerPosition) {
+    form.setValues(props.record.toFormValues())
 }
 
 const { onSubmit, isFormLoading } = useUpsertForm(
     form,
-    service,
+    props.service,
     props.record,
     () => emit('reload')
 )

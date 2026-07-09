@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Types\RelationshipType;
-use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -19,7 +18,7 @@ class DeclarationFamilyMemberRequest extends FormRequest
         return [
             'full_name' => 'required|string|min:3',
             'national_id' => ['string', 'min:6', 'required'],
-            'born_at' => ['required', 'date'],
+            'born_at' => ['required', 'date', 'before_or_equal:today', 'after_or_equal:' . now()->subYears(200)->toDateString()],
             'profession' => 'required|string|min:3',
             'relationship' => ['required', Rule::enum(RelationshipType::class)]
         ];

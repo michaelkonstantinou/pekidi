@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Monolog\Logger;
 
-class UserDeclarationVehicleController
+class UserDeclarationInvestmentController
 {
     public function index(Declaration $declaration, OwnerType $owner): JsonResponse
     {

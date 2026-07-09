@@ -12,13 +12,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('declaration_businesses', function (Blueprint $table) {
+        Schema::create('declaration_additional_assets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('declaration_id')->constrained();
             $table->enum('owner', OwnerType::values());
             $table->string('name');
-            $table->string('business_type');
-            $table->string('involvement_type');
+            $table->string('asset_type');
+            $table->string('registration_number')->nullable();
+            $table->string('acquisition_type')->nullable();
+            $table->unsignedSmallInteger('acquisition_year')->nullable();
             $table->unsignedBigInteger('value')->default(0);
             $table->timestamps();
         });
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('declaration_businesses');
+        Schema::dropIfExists('declaration_additional_assets');
     }
 };

@@ -1,5 +1,6 @@
 <?php
 
+use App\Types\OwnerType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +15,7 @@ return new class extends Migration
         Schema::create('declaration_real_estates', function (Blueprint $table) {
             $table->id();
             $table->foreignId('declaration_id')->constrained();
-            $table->enum('owner', ['self', 'spouse', 'child']);
+            $table->enum('owner', OwnerType::values());
             $table->string('location');
             $table->string('real_estate_type');
             $table->unsignedInteger('area')->comment('square meters');
