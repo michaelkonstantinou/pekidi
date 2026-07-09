@@ -3,7 +3,7 @@ import {ColumnDef} from "@tanstack/vue-table";
 import {getCurrentInstance, h} from "vue";
 import DeclarationFamilyMember from "@/models/declarationFamilyMember";
 import DataTableCrudActions from "@/components/DataTableCrudActions.vue";
-import DeclarationFamilyMemberForm from "@/components/admin/declarations/editor/DeclarationFamilyMemberForm.vue";
+import DeclarationFamilyMemberForm from "@/components/admin/declarations/forms/DeclarationFamilyMemberForm.vue";
 import ViewRecordDialog from "@/components/dialogs/ViewRecordDialog.vue";
 import {useI18n} from "vue-i18n";
 

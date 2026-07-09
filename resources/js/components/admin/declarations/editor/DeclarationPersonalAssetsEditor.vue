@@ -5,14 +5,14 @@ import HeadingSmall from "@/components/HeadingSmall.vue";
 import Declaration from "@/models/declaration";
 import DataCrudTable from "@/components/DataCrudTable.vue";
 import DeclarationRealEstateService from "@/services/declarationRealEstateService";
-import {useRealEstateTableColumns} from "@/components/admin/declarations/editor/realEstateTableColumns";
-import DeclarationRealEstateForm from "@/components/admin/declarations/editor/DeclarationRealEstateForm.vue";
+import {useRealEstateTableColumns} from "@/components/admin/declarations/table-columns/realEstateTableColumns";
+import DeclarationRealEstateForm from "@/components/admin/declarations/forms/DeclarationRealEstateForm.vue";
 import DeclarationVehicleService from "@/services/declarationVehicleService";
 import DeclarationBusinessService    from "@/services/declarationBusinessService";
-import {useVehicleColumns} from "@/components/admin/declarations/editor/vehicleTableColumns";
-import DeclarationVehicleForm from "@/components/admin/declarations/editor/DeclarationVehicleForm.vue";
-import {useBusinessColumns} from "@/components/admin/declarations/editor/businessTableColumns";
-import DeclarationBusinessForm from "@/components/admin/declarations/editor/DeclarationBusinessForm.vue";
+import {useVehicleColumns} from "@/components/admin/declarations/table-columns/vehicleTableColumns";
+import DeclarationVehicleForm from "@/components/admin/declarations/forms/DeclarationVehicleForm.vue";
+import {useBusinessColumns} from "@/components/admin/declarations/table-columns/businessTableColumns";
+import DeclarationBusinessForm from "@/components/admin/declarations/forms/DeclarationBusinessForm.vue";
 
 const {realEstateColumns} = useRealEstateTableColumns()
 const {vehicleColumns} = useVehicleColumns()

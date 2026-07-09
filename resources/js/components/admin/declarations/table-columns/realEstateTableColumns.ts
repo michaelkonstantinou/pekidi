@@ -3,12 +3,12 @@ import {ColumnDef} from "@tanstack/vue-table";
 import {getCurrentInstance, h} from "vue";
 import DeclarationFamilyMember from "@/models/declarationFamilyMember";
 import DataTableCrudActions from "@/components/DataTableCrudActions.vue";
-import DeclarationFamilyMemberForm from "@/components/admin/declarations/editor/DeclarationFamilyMemberForm.vue";
+import DeclarationFamilyMemberForm from "@/components/admin/declarations/forms/DeclarationFamilyMemberForm.vue";
 import ViewRecordDialog from "@/components/dialogs/ViewRecordDialog.vue";
 import {useI18n} from "vue-i18n";
 import DeclarationRealEstate from "@/models/declarationRealEstate";
-import DeclarationRealEstateForm from "@/components/admin/declarations/editor/DeclarationRealEstateForm.vue";
-import DeclarationBusinessForm from "@/components/admin/declarations/editor/DeclarationBusinessForm.vue";
+import DeclarationRealEstateForm from "@/components/admin/declarations/forms/DeclarationRealEstateForm.vue";
+import DeclarationBusinessForm from "@/components/admin/declarations/forms/DeclarationBusinessForm.vue";
 
 export function useRealEstateTableColumns() {
     const {t} = useI18n()

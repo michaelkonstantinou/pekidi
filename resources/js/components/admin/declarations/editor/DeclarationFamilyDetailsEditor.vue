@@ -3,10 +3,10 @@ import {useI18n} from "vue-i18n";
 import {onMounted, ref, Ref} from "vue";
 import HeadingSmall from "@/components/HeadingSmall.vue";
 import Declaration from "@/models/declaration";
-import DeclarationFamilyMemberForm from "@/components/admin/declarations/editor/DeclarationFamilyMemberForm.vue";
+import DeclarationFamilyMemberForm from "@/components/admin/declarations/forms/DeclarationFamilyMemberForm.vue";
 import DeclarationFamilyMembersService from "@/services/declarationFamilyMembersService";
 import DataCrudTable from "@/components/DataCrudTable.vue";
-import {useFamilyMembersTableColumns} from "@/components/admin/declarations/editor/familyMembersTableColumns";
+import {useFamilyMembersTableColumns} from "@/components/admin/declarations/table-columns/familyMembersTableColumns";
 
 const {columns} = useFamilyMembersTableColumns()
 const tableRender = ref(0)
