@@ -46,17 +46,17 @@ class UserDeclarationBusinessController
      * @param DeclarationBusinessRequest $request
      * @return JsonResponse
      */
-    public function update(DeclarationBusinessRequest $request, Declaration $declaration, OwnerType $owner, DeclarationBusiness $vehicle): JsonResponse
+    public function update(DeclarationBusinessRequest $request, Declaration $declaration, OwnerType $owner, DeclarationBusiness $business): JsonResponse
     {
         $service = new DeclarationAssetService($declaration);
 
-        return $service->update($request, $owner, $vehicle);
+        return $service->update($request, $owner, $business);
     }
 
-    public function destroy(Declaration $declaration, OwnerType $owner, DeclarationBusiness $vehicle): JsonResponse
+    public function destroy(Declaration $declaration, OwnerType $owner, DeclarationBusiness $business): JsonResponse
     {
         $service = new DeclarationAssetService($declaration);
 
-        return $service->destroy($owner, $vehicle);
+        return $service->destroy($owner, $business);
     }
 }

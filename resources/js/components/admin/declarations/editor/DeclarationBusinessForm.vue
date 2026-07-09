@@ -35,7 +35,7 @@ const formFields: FormFieldItem[] = [
     new FormFieldItem("name", "labels.name", "text", "placeholders.business_name"),
     new FormFieldItem("business_type", "labels.business_type", "text", "placeholders.business_type"),
     new FormFieldItem("involvement_type", "labels.involvement_type", "text", "placeholders.involvement_type"),
-    new FormFieldItem("value", "labels.value", "number"),
+    new FormFieldItem("value", "labels.value", "number", "", [], {"min": 0}),
 ]
 
 if (props.record instanceof DeclarationBusiness) {

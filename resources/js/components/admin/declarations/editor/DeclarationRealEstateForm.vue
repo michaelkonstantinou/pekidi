@@ -33,8 +33,8 @@ const formFields: FormFieldItem[] = [
     new FormFieldItem("real_estate_type", "labels.real_estate_type", "text", "placeholders.real_estate_type"),
     new FormFieldItem("acquisition_type", "labels.acquisition_type", "text", "placeholders.acquisition_type"),
     new FormFieldItem("acquisition_year", "labels.acquisition_year", "number"),
-    new FormFieldItem("acquisition_value", "labels.acquisition_value", "number"),
-    new FormFieldItem("current_value", "labels.current_value", "number"),
+    new FormFieldItem("acquisition_value", "labels.acquisition_value", "number", "", [], {"min": 0}),
+    new FormFieldItem("current_value", "labels.current_value", "number", "", [], {"min": 0}),
     new FormFieldItem("rights_encumbrances", "labels.rights_encumbrances", 'textarea', "placeholders.rights_encumbrances"),
 ]
 

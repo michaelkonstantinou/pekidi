@@ -31,7 +31,7 @@ const service = new DeclarationVehicleService(props.declarationId, props.owner)
 const form = useForm()
 const formFields: FormFieldItem[] = [
     new FormFieldItem("description", "labels.description", "text", "placeholders.vehicle_description"),
-    new FormFieldItem("value", "labels.value", "number"),
+    new FormFieldItem("value", "labels.value", "number", "", [], {"min": 0}),
 ]
 
 if (props.record instanceof DeclarationVehicle) {

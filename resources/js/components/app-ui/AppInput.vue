@@ -14,5 +14,7 @@ defineProps({
 <template>
     <Input :type="field.type"
            :placeholder="$t(field.placeholder)"
-           class="h-11 border-neutral-300 focus-visible:ring-primary/70 rounded-default"/>
+           class="h-11 border-neutral-300 focus-visible:ring-primary/70 rounded-default"
+           v-bind="field.attributes ?? {}"
+    />
 </template>

@@ -4,12 +4,14 @@ export class FormFieldItem {
     label: string;
     placeholder: string;
     options: Array<any>;
+    attributes: Object<any>;
 
-    constructor(name: string, label: string, type: string = "text", placeholder: string = "", options: any = []) {
+    constructor(name: string, label: string, type: string = "text", placeholder: string = "", options: any = [], attributes: any = {}) {
         this.name = name;
         this.type = type;
         this.label = label;
         this.placeholder = placeholder;
         this.options = options
+        this.attributes = attributes
     }
 }
