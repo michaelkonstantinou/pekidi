@@ -10,7 +10,7 @@ export function useAdditionalAssetColumns(apiService: ApiResourceRepository<any>
 
     const additionalAssetColumns: ColumnDef<DeclarationAdditionalAsset>[] = [
         makeTextColumn<DeclarationAdditionalAsset>("name", t("labels.name")),
-        makeTextColumn<DeclarationAdditionalAsset>("account_number", t("labels.account_number")),
+        makeTextColumn<DeclarationAdditionalAsset>("assetType", t("labels.asset_type")),
         makeCurrencyColumn<DeclarationAdditionalAsset>("value", t("labels.value")),
         makeDateColumn<DeclarationAdditionalAsset>("updatedAt", t("labels.updated_at")),
         makeActionsColumn(

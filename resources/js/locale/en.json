@@ -97,7 +97,14 @@
         "description": "Description",
         "value": "Value",
         "business_type": "Business type",
-        "involvement_type": "Involvement type"
+        "involvement_type": "Involvement type",
+        "registration_number": "Registration number",
+        "country": "Country",
+        "quantity": "Quantity",
+        "deposit_name": "Deposit",
+        "account_number": "Account number",
+        "asset_type": "Asset type",
+        "asset_name": "Asset name"
     },
     "placeholders": {
         "location": "Full address of real estate",
@@ -107,7 +114,15 @@
         "vehicle_description": "Brand, type...",
         "business_name": "Official name of business",
         "business_type": "Business type",
-        "involvement_type": "Person's involvement with this business"
+        "involvement_type": "Person's involvement with this business",
+        "registration_number": "Registration number",
+        "country": "Country",
+        "quantity": "Quantity",
+        "deposit_name": "Deposit",
+        "account_number": "Account number",
+        "asset_type": "Boat, Hunting rifle, collection items...",
+        "asset_name": "Asset name",
+        "acquisition_year": "Acquisition year"
     },
     "confirm_dialog": {
         "title": "Are you sure?",
@@ -124,6 +139,9 @@
     "titles": {
         "real_estate": "Real estates",
         "vehicles": "Vehicles",
-        "businesses": "Businesses"
+        "businesses": "Businesses",
+        "deposits": "Deposits",
+        "investments": "Investments",
+        "additional_assets": "Additional Assets"
     }
 }
