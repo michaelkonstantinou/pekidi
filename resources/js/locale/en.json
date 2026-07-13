@@ -70,7 +70,8 @@
         "yes_proceed": "Yes, proceed",
         "add_new": "Add new",
         "previous_page": "Previous",
-        "next_page": "Next"
+        "next_page": "Next",
+        "help": "Help"
     },
     "labels": {
         "name": "Name",
@@ -142,6 +143,12 @@
         "businesses": "Businesses",
         "deposits": "Deposits",
         "investments": "Investments",
-        "additional_assets": "Additional Assets"
+        "additional_assets": "Additional Assets",
+        "edit_record": "Edit record",
+        "help_dialog": "Help",
+        "help_dialog_tip": "Tip"
+    },
+    "help_content": {
+        "real_estate": "Declare every property in which you have an ownership or other legal interest, including houses, apartments, plots of land, commercial properties, agricultural land, parking spaces, or any similar immovable property. For each property, provide its location, type, area, how and when it was acquired, its acquisition value, its estimated current value, and any rights or encumbrances (such as mortgages) affecting it."
     }
 }

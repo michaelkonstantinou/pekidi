@@ -2,23 +2,13 @@
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog'
 import {Button} from "@/components/ui/button";
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
 import {ViewRecordRow} from "@/types";
 import {useI18n} from "vue-i18n";
-import {X} from "lucide-vue-next";
+import AppDialogContent from "@/components/app-ui/AppDialogContent.vue";
+import {FileText} from "lucide-vue-next";
 
 const {t} = useI18n()
 
@@ -39,19 +29,7 @@ const emit = defineEmits(['close'])
 <template>
     <Dialog :open="open">
         <!-- Professional Modal Container Box Wrapper -->
-        <DialogContent
-            @close="emit('close')"
-            class="bg-white w-full max-w-2xl rounded-sm border-0 shadow-xl overflow-hidden p-0 gap-0 transition-all duration-200"
-        >
-        <!-- Modal Header -->
-        <div class="bg-primary px-6 py-4 flex justify-between items-center border-t border-primary">
-            <div class="flex items-center space-x-3">
-                <DialogTitle class="text-base font-bold font-sans tracking-tight text-white/90">
-                    {{ $t('view_dialog.title') }}
-                </DialogTitle>
-            </div>
-        </div>
-
+        <AppDialogContent title="view_dialog.title" :icon="FileText" @close="emit('close')">
             <!-- Modal Body Area Canvas -->
             <div class="p-6 space-y-8 bg-surface-container-lowest max-h-[70vh] overflow-y-auto">
 
@@ -114,17 +92,6 @@ const emit = defineEmits(['close'])
                     </div>
                 </div>
             </div>
-
-            <!-- Modal Footer -->
-            <div class="bg-white border-t border-outline-variant px-6 py-4 flex justify-end">
-                <Button
-                    type="button"
-                    class="bg-primary text-white px-8 h-10 rounded-lg font-medium text-sm hover:bg-primary-container transition-all shadow-md active:scale-95 cursor-pointer"
-                    @click="emit('close')"
-                >
-                    {{ $t('buttons.close') }}
-                </Button>
-            </div>
-        </DialogContent>
+        </AppDialogContent>
     </Dialog>
 </template>

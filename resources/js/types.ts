@@ -9,3 +9,8 @@ export interface ViewRecordRow {
     isLongText: boolean,
     isMeta: boolean,
 }
+
+export interface HelpContent {
+    main: string,
+    tip: string | null
+}

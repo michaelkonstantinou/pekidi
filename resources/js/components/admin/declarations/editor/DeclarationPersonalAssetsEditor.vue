@@ -22,6 +22,7 @@ import {useDepositColumns} from "@/components/admin/declarations/table-columns/d
 import DeclarationDeposit from "@/models/declarationDeposit";
 import {useAdditionalAssetColumns} from "@/components/admin/declarations/table-columns/additionalAssetTableColumns";
 import DeclarationAdditionalAsset from "@/models/declarationAdditionalAsset";
+import {HelpContent} from "@/types";
 
 const props = defineProps({
     declaration: {
@@ -57,12 +58,18 @@ const tableRender = ref(0)
 function reRenderTable() {
     tableRender.value += 1;
 }
+
+const realEstateHelpContent: HelpContent = {main: "help_content.real_estate", tip: "help_content.real_estate_tip"}
 </script>
 
 <template>
     <HeadingSmall title="declarations.personal_assets" description="declarations.personal_assets_description" />
 
-    <DataCrudTable title="titles.real_estate" :columns="realEstateColumns" :apiService="declarationRealEstateService" :key="tableRender">
+    <DataCrudTable title="titles.real_estate"
+                   :helpContent="realEstateHelpContent"
+                   :columns="realEstateColumns"
+                   :apiService="declarationRealEstateService"
+                   :key="tableRender">
         <template #createForm>
             <DeclarationOwnerPositionForm @reload="reRenderTable"
                                           :formFields="DeclarationRealEstate.getFormFieldItems()"
@@ -92,7 +99,10 @@ function reRenderTable() {
 
     <div class="mb-20"></div>
 
-    <DataCrudTable title="titles.investments" :columns="investmentColumns" :apiService="declarationInvestmentService" :key="tableRender">
+    <DataCrudTable title="titles.investments"
+                   :columns="investmentColumns"
+                   :apiService="declarationInvestmentService"
+                   :key="tableRender">
         <template #createForm>
             <DeclarationOwnerPositionForm @reload="reRenderTable"
                                           :formFields="DeclarationInvestment.getFormFieldItems()"

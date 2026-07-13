@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import {useI18n} from "vue-i18n";
 import {useErrorMessager} from "@/composables/useErrorMessager";
-import {onMounted, ref, Ref} from "vue";
+import {onMounted, PropType, ref, Ref} from "vue";
 import {toast} from "vue-sonner";
 import AlertError from "@/components/AlertError.vue";
 import DataTable from "@/components/DataTable.vue";
 import ApiResourceRepository from "@/services/apiResourceRepository";
 import DataTableCreateDialog from "@/components/dialogs/DataTableCreateDialog.vue";
+import {Button} from "@/components/ui/button";
+import {CircleQuestionMark} from "lucide-vue-next"
+import DataTableHelpDialog from "@/components/dialogs/DataTableHelpDialog.vue";
+import {HelpContent} from "@/types";
 
 const {t} = useI18n()
 const {toastApiErrors} = useErrorMessager()
@@ -26,6 +30,11 @@ const props = defineProps({
     title: {
         required: false,
         type: String,
+    },
+    helpContent: {
+        required: false,
+        type: Object as PropType<HelpContent>,
+        default: null
     }
 })
 
@@ -58,6 +67,8 @@ function onDeleteItem(primaryKey: number) {
     }).catch(err => toastApiErrors(err))
         .finally(() => isLoading.value=false)
 }
+
+const isHelpDialogOpen = ref(false)
 </script>
 
 <template>
@@ -67,6 +78,11 @@ function onDeleteItem(primaryKey: number) {
             <DataTableCreateDialog :isLoading="isLoading" >
                 <slot name="createForm"></slot>
             </DataTableCreateDialog>
+            <DataTableHelpDialog v-if="helpContent !== null"
+                                 :content="helpContent"
+                                 @open="isHelpDialogOpen = true"
+                                 @close="isHelpDialogOpen = false"
+                                 :isOpen="isHelpDialogOpen"/>
         </template>
     </DataTable>
 </template>

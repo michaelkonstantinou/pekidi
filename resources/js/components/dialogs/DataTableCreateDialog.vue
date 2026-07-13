@@ -2,7 +2,7 @@
 
 import {DialogContent, Dialog, DialogTitle, DialogFooter, DialogHeader, DialogTrigger, DialogDescription} from "@/components/ui/dialog";
 import {Button} from "@/components/ui/button";
-import {Plus, X} from "lucide-vue-next";
+import {CirclePlus, Plus} from "lucide-vue-next";
 import { LoaderPinwheel } from 'lucide-vue-next';
 import {useI18n} from "vue-i18n";
 import DataTableUpsertDialog from "@/components/dialogs/DataTableUpsertDialog.vue";
@@ -41,7 +41,7 @@ const props = defineProps({
                 {{ $t(buttonLabel) }}
             </Button>
         </DialogTrigger>
-        <DataTableUpsertDialog :title="title" :description="description">
+        <DataTableUpsertDialog :title="title" :icon="CirclePlus">
             <slot />
         </DataTableUpsertDialog>
     </Dialog>
