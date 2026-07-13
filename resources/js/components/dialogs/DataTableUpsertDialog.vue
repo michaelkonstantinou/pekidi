@@ -23,10 +23,6 @@ const emit = defineEmits(['close'])
 
 <template>
     <AppDialogContent @close="emit('close')" :icon="icon" :title="title" :noFooter="true">
-        <div class="p-5 max-h-[85vh] overflow-y-scroll">
-            <slot />
-        </div>
-
-        <template #footer><span></span></template>
+        <slot />
     </AppDialogContent>
 </template>

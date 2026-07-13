@@ -26,17 +26,13 @@ const emit = defineEmits(['open', 'close'])
             </Button>
         </DialogTrigger>
         <AppDialogContent title="titles.help_dialog" :icon="CircleQuestionMark" @close="emit('close')">
-            <div class="p-5 max-h-[85vh] overflow-y-scroll">
-                {{ $t(content.main) }}
+            {{ $t(content.main) }}
 
-                <AppInfoCard v-if="content.tip !== null"
-                             class="mt-5 mb-3"
-                             title="titles.help_dialog_tip"
-                             :content="content.tip"
-                             :icon="Lightbulb"/>
-            </div>
-
-
+            <AppInfoCard v-if="content.tip !== null"
+                         class="mt-5 mb-3"
+                         title="titles.help_dialog_tip"
+                         :content="content.tip"
+                         :icon="Lightbulb"/>
         </AppDialogContent>
     </Dialog>
 </template>

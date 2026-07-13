@@ -31,7 +31,7 @@ const emit = defineEmits(['close'])
         <!-- Professional Modal Container Box Wrapper -->
         <AppDialogContent title="view_dialog.title" :icon="FileText" @close="emit('close')">
             <!-- Modal Body Area Canvas -->
-            <div class="p-6 space-y-8 bg-surface-container-lowest max-h-[70vh] overflow-y-auto">
+            <div class="bg-surface-container-lowest">
 
                 <!-- Standard Fields View: Dynamic Data Block mapped to 1 Clean Column -->
                 <div>

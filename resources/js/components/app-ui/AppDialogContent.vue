@@ -37,7 +37,9 @@ const emit = defineEmits(['close'])
         </div>
 
         <!-- Dialog Body -->
-        <slot></slot>
+        <div class="p-5 max-h-[85vh] overflow-y-scroll">
+            <slot></slot>
+        </div>
 
         <!-- Dialog Footer -->
         <div class="bg-accent px-6 py-4 flex justify-end" v-if="!noFooter">
