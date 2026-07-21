@@ -68,6 +68,12 @@ class Declaration extends Model
         return $this->hasMany(DeclarationAdditionalAsset::class, 'declaration_id');
     }
 
+    public function debts(): HasMany
+    {
+        return $this->hasMany(DeclarationDebt::class, 'declaration_id');
+    }
+
+
     public function realEstatesOfOwner(OwnerType $owner): Collection
     {
         return $this->realEstates()->where('owner', $owner)->get();
@@ -96,5 +102,10 @@ class Declaration extends Model
     public function additionalAssetsOfOwner(OwnerType $owner): Collection
     {
         return $this->additionalAssets()->where('owner', $owner)->get();
+    }
+
+    public function debtsOfOwner(OwnerType $owner): Collection
+    {
+        return $this->debts()->where('owner', $owner)->get();
     }
 }

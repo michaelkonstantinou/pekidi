@@ -67,7 +67,7 @@ function onReload() {
                         class="flex items-center gap-2 px-2.5 py-2 text-sm text-neutral-700 font-medium rounded-sm cursor-pointer hover:bg-neutral-50 focus:bg-neutral-50 transition-colors duration-100 outline-none"
                     >
                         <Pencil class="h-4 w-4 text-neutral-400 shrink-0" />
-                        <span>Edit</span>
+                        <span>{{ $t('actions.edit') }}</span>
                     </DropdownMenuItem>
                 </DialogTrigger>
 
@@ -77,13 +77,13 @@ function onReload() {
                     class="flex items-center gap-2 px-2.5 py-2 text-sm text-destructive hover:bg-destructive/5 focus:bg-destructive/5 font-medium rounded-sm cursor-pointer transition-colors duration-100 outline-none"
                 >
                     <Trash2 class="h-4 w-4 text-destructive/70 shrink-0" />
-                    <span>Delete</span>
+                    <span>{{ $t('actions.delete') }}</span>
                 </DropdownMenuItem>
             </DropdownMenuContent>
 
             <!-- Edit Form Dialog Window Context Frame -->
             <Dialog :open="showEditRecordDialog" >
-                <DataTableUpsertDialog buttonLabel="buttons.save" title="!Edit record" @close="showEditRecordDialog = false">
+                <DataTableUpsertDialog :icon="Pencil" buttonLabel="buttons.save" title="titles.edit_record" @close="showEditRecordDialog = false">
                     <slot name="editForm" @reload="onReload"/>
                 </DataTableUpsertDialog>
             </Dialog>

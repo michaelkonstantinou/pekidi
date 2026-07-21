@@ -23,6 +23,9 @@ import DeclarationDeposit from "@/models/declarationDeposit";
 import {useAdditionalAssetColumns} from "@/components/admin/declarations/table-columns/additionalAssetTableColumns";
 import DeclarationAdditionalAsset from "@/models/declarationAdditionalAsset";
 import {HelpContent} from "@/types";
+import DeclarationDebtService from "@/services/declarationDebtService";
+import {useDebtColumns} from "@/components/admin/declarations/table-columns/debtTableColumns";
+import DeclarationDebt from "@/models/declarationDebt";
 
 const props = defineProps({
     declaration: {
@@ -41,6 +44,7 @@ const declarationBusinessService = new DeclarationBusinessService(props.declarat
 const declarationInvestmentService = new DeclarationInvestmentService(props.declaration.id, props.owner)
 const declarationDepositService = new DeclarationDepositService(props.declaration.id, props.owner)
 const declarationAdditionalAssetService = new DeclarationAdditionalAssetService(props.declaration.id, props.owner)
+const declarationDebtService = new DeclarationDebtService(props.declaration.id, props.owner)
 
 const {realEstateColumns} = useRealEstateTableColumns(declarationRealEstateService)
 const {vehicleColumns} = useVehicleColumns(declarationVehicleService)
@@ -48,6 +52,7 @@ const {businessColumns} = useBusinessColumns(declarationBusinessService)
 const {investmentColumns} = useInvestmentColumns(declarationInvestmentService)
 const {depositColumns} = useDepositColumns(declarationDepositService)
 const {additionalAssetColumns} = useAdditionalAssetColumns(declarationAdditionalAssetService)
+const {debtColumns} = useDebtColumns(declarationDebtService)
 
 const tableRender = ref(0)
 
@@ -127,6 +132,16 @@ const realEstateHelpContent: HelpContent = {main: "help_content.real_estate", ti
             <DeclarationOwnerPositionForm @reload="reRenderTable"
                                           :formFields="DeclarationAdditionalAsset.getFormFieldItems()"
                                           :service="declarationAdditionalAssetService"/>
+        </template>
+    </DataCrudTable>
+
+    <div class="mb-20"></div>
+
+    <DataCrudTable title="titles.debts" :columns="debtColumns" :apiService="declarationDebtService" :key="tableRender">
+        <template #createForm>
+            <DeclarationOwnerPositionForm @reload="reRenderTable"
+                                          :formFields="DeclarationDebt.getFormFieldItems()"
+                                          :service="declarationDebtService"/>
         </template>
     </DataCrudTable>
 </template>

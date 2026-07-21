@@ -47,6 +47,9 @@ const props = defineProps({
             </FormField>
         </div>
 
-        <AppSubmitButton :isLoading="isLoading"/>
+        <div class="flex justify-end">
+            <AppSubmitButton :isLoading="isLoading"/>
+        </div>
+
     </form>
 </template>

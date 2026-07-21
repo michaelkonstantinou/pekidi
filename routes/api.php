@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthUserController;
 use App\Http\Controllers\UserDeclarationAdditionalAssetController;
 use App\Http\Controllers\UserDeclarationBusinessController;
 use App\Http\Controllers\UserDeclarationController;
+use App\Http\Controllers\UserDeclarationDebtController;
 use App\Http\Controllers\UserDeclarationDepositController;
 use App\Http\Controllers\UserDeclarationFamilyMemberController;
 use App\Http\Controllers\UserDeclarationInvestmentController;
@@ -23,6 +24,7 @@ Route::middleware(["auth:sanctum", LocaleHandler::class])->group(function () {
     Route::resource('/user/declarations/{declaration}/{owner}/deposits', UserDeclarationDepositController::class)->except(['edit', 'create']);
     Route::resource('/user/declarations/{declaration}/{owner}/investments', UserDeclarationInvestmentController::class)->except(['edit', 'create']);
     Route::resource('/user/declarations/{declaration}/{owner}/additional-assets', UserDeclarationAdditionalAssetController::class)->except(['edit', 'create']);
+    Route::resource('/user/declarations/{declaration}/{owner}/debts', UserDeclarationDebtController::class)->except(['edit', 'create']);
 });
 
 

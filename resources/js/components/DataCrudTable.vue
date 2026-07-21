@@ -49,7 +49,6 @@ onMounted(async() => {
 async function loadData() {
     isLoading.value = true;
     const data = await props.apiService.all()
-    console.log(data)
 
     if (data === null) {
         errors.value.push(t("errors.could_not_load_data"))

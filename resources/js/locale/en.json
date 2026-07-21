@@ -105,7 +105,9 @@
         "deposit_name": "Deposit",
         "account_number": "Account number",
         "asset_type": "Asset type",
-        "asset_name": "Asset name"
+        "asset_name": "Asset name",
+        "creditor_name": "Creditor name",
+        "debt_type": "Debt type"
     },
     "placeholders": {
         "location": "Full address of real estate",
@@ -123,7 +125,9 @@
         "account_number": "Account number",
         "asset_type": "Boat, Hunting rifle, collection items...",
         "asset_name": "Asset name",
-        "acquisition_year": "Acquisition year"
+        "acquisition_year": "Acquisition year",
+        "creditor_name": "Bank name, Organization name...",
+        "debt_type": "Housing loan, Business loan..."
     },
     "confirm_dialog": {
         "title": "Are you sure?",
