@@ -14,6 +14,8 @@ import DeclarationFamilyDetailsEditor from "@/components/admin/declarations/edit
 import DeclarationPersonalAssetsEditor
     from "@/components/admin/declarations/editor/DeclarationPersonalAssetsEditor.vue";
 import {CloudLightning, FileText, LoaderPinwheel} from "lucide-vue-next";
+import AppVerticalTab from "@/components/app-ui/AppVerticalTab.vue";
+import DeclarationOverview from "@/components/admin/declarations/DeclarationOverview.vue";
 
 const declarationStore = useDeclarationStore()
 const route = useRoute()
@@ -38,8 +40,10 @@ const tabs = ref([
     {'label': 'declarations.family_details', isActive: false, content: DeclarationFamilyDetailsEditor},
     {'label': 'declarations.personal_assets', isActive: false, content: DeclarationPersonalAssetsEditor, owner: 'self'},
     {'label': 'declarations.spouse_assets', isActive: false, content: DeclarationPersonalAssetsEditor, owner: 'spouse'},
-    {'label': 'declarations.children_assets', isActive: false, content: DeclarationPersonalAssetsEditor, owner: 'child'}
+    {'label': 'declarations.children_assets', isActive: false, content: DeclarationPersonalAssetsEditor, owner: 'child'},
+    {'label': 'declarations.overview', isActive: false, content: DeclarationOverview},
 ])
+
 const activeTab = computed(() => tabs.value.find(tab => tab.isActive))
 
 function navigateToTab(index: number): void {
@@ -74,25 +78,24 @@ async function onSaved() {
 
                 <aside class="py-6 md:py-8 w-full md:w-56 shrink-0 min-w-0">
                     <nav class="flex flex-col space-y-1">
-                        <Button
-                            v-for="(tab, index) in tabs"
+                        <AppVerticalTab
+                            v-for="(tab, index) in tabs.slice(0, -1)"
                             :key="tab.label"
-                            variant="ghost"
-                            :class="[
-                                'w-full justify-start gap-3 px-4 py-2.5 h-auto font-medium text-sm rounded-default transition-all duration-150 cursor-pointer',
-                                tab.isActive
-                                  ? 'bg-primary text-primary-foreground font-semibold shadow-sm hover:bg-primary hover:text-primary-foreground'
-                                  : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-200/50 focus:bg-neutral-200/50'
-                            ]"
+                            :icon="tab.icon || FileText"
+                            :active="tab.isActive"
+                            :label="tab.label"
                             @click="navigateToTab(index)"
-                        >
-                            <component
-                                :is="tab.icon || FileText"
-                                class="h-4 w-4 shrink-0"
-                                :class="tab.isActive ? 'text-current' : 'text-neutral-400'"
-                            />
-                            <span>{{ $t(tab.label) }}</span>
-                        </Button>
+                        />
+                        <Separator class="my-4" />
+
+                        <AppVerticalTab
+                            v-if="tabs.length"
+                            :key="tabs[tabs.length - 1].label"
+                            :icon="tabs[tabs.length - 1].icon || FileText"
+                            :active="tabs[tabs.length - 1].isActive"
+                            :label="tabs[tabs.length - 1].label"
+                            @click="navigateToTab(tabs.length - 1)"
+                        />
                     </nav>
                 </aside>
 

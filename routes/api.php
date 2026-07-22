@@ -8,6 +8,7 @@ use App\Http\Controllers\UserDeclarationDebtController;
 use App\Http\Controllers\UserDeclarationDepositController;
 use App\Http\Controllers\UserDeclarationFamilyMemberController;
 use App\Http\Controllers\UserDeclarationInvestmentController;
+use App\Http\Controllers\UserDeclarationOverviewController;
 use App\Http\Controllers\UserDeclarationRealEstateController;
 use App\Http\Controllers\UserDeclarationVehicleController;
 use App\Http\Middleware\LocaleHandler;
@@ -25,6 +26,7 @@ Route::middleware(["auth:sanctum", LocaleHandler::class])->group(function () {
     Route::resource('/user/declarations/{declaration}/{owner}/investments', UserDeclarationInvestmentController::class)->except(['edit', 'create']);
     Route::resource('/user/declarations/{declaration}/{owner}/additional-assets', UserDeclarationAdditionalAssetController::class)->except(['edit', 'create']);
     Route::resource('/user/declarations/{declaration}/{owner}/debts', UserDeclarationDebtController::class)->except(['edit', 'create']);
+    Route::get('/user/declarations/{id}/overview', [UserDeclarationOverviewController::class, 'show']);
 });
 
 
