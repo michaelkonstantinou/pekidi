@@ -8,6 +8,17 @@ class DeclarationTotalService
 {
     private Declaration $declarationUnderReview;
 
+    // Define standard debt types recognized by the backend (sync with front-end)
+    protected const ALLOWED_DEBT_TYPES = [
+        'mortgage',
+        'home_loan',
+        'vehicle_loan',
+        'business_loan',
+        'student_loan',
+        'credit_card',
+        'tax_debt',
+    ];
+
     /**
      * Map of camelCase relation names to their database value column.
      */
@@ -58,9 +69,9 @@ class DeclarationTotalService
     public function calculateTotalValues(): array
     {
         $totalAssetsValue = 0.0;
-        $totalLiabilitiesValue = 0.0;
         $totalValuePerRelation = [];
 
+        // 1. Calculate all assets
         foreach ($this->relationColumns as $relation => $column) {
             $snakeRelation = str($relation)->snake()->toString();
 
@@ -72,11 +83,45 @@ class DeclarationTotalService
 
             if ($relation !== 'debts') {
                 $totalAssetsValue += $totalRelationValue;
-            } else {
-                $totalLiabilitiesValue += $totalRelationValue;
             }
 
         }
+
+        // Fetch debts for the declaration
+        $debts = $this->declarationUnderReview->debts()->get();
+
+        $debtsBreakdown = [];
+        $totalDebtsCount = 0;
+        $totalLiabilitiesValue = 0.0;
+
+        // Iterate and normalize debt_type to 'other' if not recognized
+        foreach ($debts as $debt) {
+            $rawType = $debt->debt_type;
+            $normalizedType = in_array($rawType, self::ALLOWED_DEBT_TYPES, true)
+                ? $rawType
+                : 'other';
+
+            if (!isset($debtsBreakdown[$normalizedType])) {
+                $debtsBreakdown[$normalizedType] = [
+                    'count' => 0,
+                    'total_value' => 0.0,
+                ];
+            }
+
+            $debtValue = (float) $debt->value;
+
+            $debtsBreakdown[$normalizedType]['count'] += 1;
+            $debtsBreakdown[$normalizedType]['total_value'] += $debtValue;
+
+            $totalDebtsCount += 1;
+            $totalLiabilitiesValue += $debtValue;
+        }
+
+        $totalValuePerRelation['debts'] = [
+            'count' => $totalDebtsCount,
+            'total_value' => $totalLiabilitiesValue,
+            'by_type' => $debtsBreakdown,
+        ];
 
         return [
             'totals_per_relation' => $totalValuePerRelation,

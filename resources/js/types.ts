@@ -16,3 +16,6 @@ export interface HelpContent {
     main: string,
     tip: string | null
 }
+
+export type FinancialRiskLevel = "low" | "balanced" | "high" | "insolvent";
+

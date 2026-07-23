@@ -110,7 +110,9 @@
         "asset_name": "Asset name",
         "creditor_name": "Creditor name",
         "debt_type": "Debt type",
-        "other": "Other"
+        "other": "Other",
+        "debt_to_asset_ratio": "Debt-to-asset ratio",
+        "risk": "Risk"
     },
     "placeholders": {
         "location": "Full address of real estate",
@@ -180,6 +182,16 @@
         "view": "View",
         "edit": "Edit",
         "delete": "Delete"
+    },
+    "risk": {
+        "low": "Low Risk",
+        "low_tooltip": "Your debts make up less than half of your total assets. You have a strong equity position and low financial leverage.",
+        "balanced": "Balanced",
+        "balanced_tooltip": "Your debts equal half of your total assets (50%). Half of what you own is funded by borrowing.",
+        "high": "High Risk",
+        "high_tooltip": "More than half of your total assets are financed through debt. Higher liability load increases vulnerability to market downturns.",
+        "insolvent": "Critical / Insolvent",
+        "insolvent_tooltip": "Your liabilities equal or exceed your total assets (100%+). Debt payments consume your asset equity, indicating financial strain."
     },
     "help_content": {
         "real_estate": "Declare every property in which you have an ownership or other legal interest, including houses, apartments, plots of land, commercial properties, agricultural land, parking spaces, or any similar immovable property. For each property, provide its location, type, area, how and when it was acquired, its acquisition value, its estimated current value, and any rights or encumbrances (such as mortgages) affecting it."

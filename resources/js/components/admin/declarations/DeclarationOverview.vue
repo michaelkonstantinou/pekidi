@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import {Banknote, Building2, CreditCard, Download, Landmark, Printer, Wallet} from 'lucide-vue-next'
+import {Banknote, Info, Building2, CreditCard, Download, Landmark, Printer, Wallet} from 'lucide-vue-next'
 import {Button} from '@/components/ui/button'
 import Declaration from "@/models/declaration";
 import HeadingSmall from "@/components/HeadingSmall.vue";
-import {onMounted, Ref, ref} from "vue";
+import {computed, onMounted, Ref, ref} from "vue";
 import DeclarationOverviewService from "@/services/declarationOverviewService";
 import {DeclarationOverview} from "@/models/declarationOverview";
 import {useErrorMessager} from "@/composables/useErrorMessager";
 import {getLocaleCurrencyString} from "@/helpers/localeHelpers";
+import DebtToAssetRatioBadge from "@/components/app-ui/declarations/DebtToAssetRatioBadge.vue";
 
 const {toastApiErrors} = useErrorMessager()
 
@@ -37,12 +38,6 @@ async function loadData() {
         isLoading.value = false;
     }
 }
-
-const liabilities = [
-    { label: 'Mortgages', amount: '$1,850,000', icon: Building2 },
-    { label: 'Commercial Loans', amount: '$520,000', icon: Banknote },
-    { label: 'Private Debts', amount: '$104,800', icon: Landmark },
-]
 
 const assetDistribution = [
     { label: 'Real Estate', percentage: '45%', color: 'bg-primary' },
@@ -96,7 +91,7 @@ const handlePrint = () => {
                     <span class="font-sans font-bold text-2xl text-foreground">{{ getLocaleCurrencyString(overview?.totalAssetsValue ?? 0) }}</span>
                 </div>
 
-                <!-- Assets List (6 Items) -->
+                <!-- Assets List -->
                 <div class="space-y-2.5">
                     <div
                         v-for="item in overview?.getAssets()"
@@ -136,38 +131,50 @@ const handlePrint = () => {
                         <CreditCard class="h-6 w-6 text-destructive shrink-0" />
                         Total Liabilities
                     </h3>
-                    <span class="font-sans font-bold text-2xl text-foreground">{{ getLocaleCurrencyString(overview?.totalLiabilitiesValue ?? 0) }}</span>
+                    <span class="font-sans font-bold text-2xl text-destructive">{{ getLocaleCurrencyString(overview?.totalLiabilitiesValue ?? 0) }}</span>
                 </div>
 
                 <!-- Liabilities List -->
                 <div class="space-y-2.5">
                     <div
-                        v-for="item in liabilities"
-                        :key="item.label"
-                        class="flex justify-between items-center p-3.5 rounded-xl bg-transparent"
+                        v-for="item in overview?.getLiabilities()"
+                        :key="item.typeKey"
+                        class="group flex justify-between items-center p-3.5 rounded-xl bg-transparent hover:bg-destructive/10 transition-colors duration-200"
                     >
                         <div class="flex items-center gap-4">
-                            <!-- Light Destructive Tint Badge for Liabilities -->
-                            <div class="w-10 h-10 rounded-lg bg-destructive/10 text-destructive flex items-center justify-center">
+                            <!-- Destructive Tint Badge -->
+                            <div class="w-10 h-10 rounded-lg bg-destructive/15 text-destructive flex items-center justify-center transition-colors group-hover:bg-destructive group-hover:text-destructive-foreground">
                                 <component :is="item.icon" class="h-5 w-5 shrink-0" />
                             </div>
-                            <span class="text-sm font-semibold text-muted-foreground">
-                              {{ item.label }}
-                            </span>
+
+                            <div class="flex flex-col justify-center">
+                                <span class="text-sm font-semibold text-muted-foreground group-hover:text-foreground transition-colors">
+                                    {{ $t(item.label) }}
+                                </span>
+
+                                <!-- Units Subtitle -->
+                                <span
+                                    class="text-xs font-medium text-muted-foreground/70 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                                >
+                                    {{ item.units }} {{ item.units === 1 ? 'unit' : 'units' }}
+                                </span>
+                            </div>
                         </div>
-                        <span class="text-sm font-bold text-foreground">{{ item.amount }}</span>
+
+                        <span class="text-sm font-bold text-destructive">{{ item.amount }}</span>
+                    </div>
+
+                    <!-- Empty State if no liabilities are present -->
+                    <div
+                        v-if="!overview?.getLiabilities().length"
+                        class="p-6 text-center text-sm font-medium text-muted-foreground bg-neutral-50/50 rounded-xl border border-dashed border-neutral-200"
+                    >
+                        {{ $t('labels.no_liabilities') }}
                     </div>
                 </div>
 
                 <!-- Debt-to-Asset Ratio Pill -->
-                <div class="mt-6 pt-4 flex justify-end">
-                    <div class="bg-primary/5 border border-primary/20 px-4 py-2 rounded-full flex items-center gap-3">
-                        <p class="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                            Debt-to-Asset Ratio
-                        </p>
-                        <p class="text-sm font-bold text-foreground">16.05%</p>
-                    </div>
-                </div>
+                <DebtToAssetRatioBadge :overview="overview" />
             </div>
 
         </div>
