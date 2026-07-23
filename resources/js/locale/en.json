@@ -109,7 +109,8 @@
         "asset_type": "Asset type",
         "asset_name": "Asset name",
         "creditor_name": "Creditor name",
-        "debt_type": "Debt type"
+        "debt_type": "Debt type",
+        "other": "Other"
     },
     "placeholders": {
         "location": "Full address of real estate",
@@ -129,7 +130,27 @@
         "asset_name": "Asset name",
         "acquisition_year": "Acquisition year",
         "creditor_name": "Bank name, Organization name...",
-        "debt_type": "Housing loan, Business loan..."
+        "debt_type": "Housing loan, Business loan...",
+        "please_specify": "Please specify..."
+    },
+    "debt_types": {
+        "mortgage": "Mortgage",
+        "home_loan": "Home Loan",
+        "personal_loan": "Personal Loan",
+        "vehicle_loan": "Vehicle Loan",
+        "business_loan": "Business Loan",
+        "student_loan": "Student Loan",
+        "credit_card": "Credit Card",
+        "overdraft": "Overdraft / Credit Line",
+        "consumer_finance": "Consumer Finance / Hire Purchase",
+        "tax_debt": "Tax or Government Debt",
+        "utility_debt": "Utility Debt",
+        "medical_debt": "Medical Debt",
+        "private_loan": "Private Loan (Family/Friends)",
+        "employer_loan": "Employer Loan",
+        "guarantee_liability": "Guarantee / Surety Obligation",
+        "other": "Other",
+        "other_with_value": "Other ({0})"
     },
     "confirm_dialog": {
         "title": "Are you sure?",
@@ -152,7 +173,13 @@
         "additional_assets": "Additional Assets",
         "edit_record": "Edit record",
         "help_dialog": "Help",
-        "help_dialog_tip": "Tip"
+        "help_dialog_tip": "Tip",
+        "debts": "Debts"
+    },
+    "actions": {
+        "view": "View",
+        "edit": "Edit",
+        "delete": "Delete"
     },
     "help_content": {
         "real_estate": "Declare every property in which you have an ownership or other legal interest, including houses, apartments, plots of land, commercial properties, agricultural land, parking spaces, or any similar immovable property. For each property, provide its location, type, area, how and when it was acquired, its acquisition value, its estimated current value, and any rights or encumbrances (such as mortgages) affecting it."

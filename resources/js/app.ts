@@ -13,7 +13,7 @@ import {useDeclarationStore} from "@/stores/declarationStore";
 import {getLocale} from "@/helpers/localeHelpers";
 
 
-const i18n = createI18n({
+export const i18n = createI18n({
     locale: getLocale(),
     fallbackLocale: 'en',
     availableLocales: ['en', 'el'],
@@ -21,7 +21,7 @@ const i18n = createI18n({
         en,
         el
     }
-})
+});
 
 const pinia: Pinia = createPinia()
 const app = createApp(App).use(i18n).use(pinia).use(autoAnimatePlugin)

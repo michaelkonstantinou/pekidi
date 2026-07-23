@@ -26,11 +26,11 @@ export default class DeclarationFamilyMember {
 
     toViewRecordData(): ViewRecordRow[] {
         return [
-            {label: "labels.national_id", value: this.nationalId, isLongText: false},
-            {label: "labels.full_name", value: this.fullName, isLongText: false},
-            {label: "labels.relationship", value: this.relationship, isLongText: false},
-            {label: "labels.profession", value: this.profession, isLongText: false},
-            {label: "labels.born_at", value: this.bornAt !== null ? getLocaleDateString(this.bornAt) : '', isLongText: false},
+            {label: "labels.national_id", value: this.nationalId, isLongText: false, isMeta: false},
+            {label: "labels.full_name", value: this.fullName, isLongText: false, isMeta: false},
+            {label: "labels.relationship", value: "labels." + this.relationship, isLongText: false, isMeta: false, isTranslatable: true},
+            {label: "labels.profession", value: this.profession, isLongText: false, isMeta: false},
+            {label: "labels.born_at", value: this.bornAt !== null ? getLocaleDateString(this.bornAt) : '', isLongText: false, isMeta: false},
             {label: "labels.created_at", value: getLocaleDateTimeString(this.createdAt), isLongText: false, isMeta: true},
             {label: "labels.updated_at", value: getLocaleDateTimeString(this.updatedAt), isLongText: false, isMeta: true},
         ]

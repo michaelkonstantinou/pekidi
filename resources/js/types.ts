@@ -8,6 +8,8 @@ export interface ViewRecordRow {
     value: string,
     isLongText: boolean,
     isMeta: boolean,
+    isTranslatable?: boolean,
+    translatableOptions?: string[]
 }
 
 export interface HelpContent {

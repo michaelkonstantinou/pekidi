@@ -50,7 +50,8 @@ const emit = defineEmits(['close'])
                                 {{ $t(row.label) }}
                             </p>
                             <p class="text-sm font-semibold text-on-surface font-sans break-words">
-                                {{ row.value || '—' }}
+                                <span v-if="row.isTranslatable">{{ $t(row.value, row.translatableOptions ?? []) }}</span>
+                                <span v-else>{{ row.value || '—' }}</span>
                             </p>
                         </div>
                     </div>
@@ -86,7 +87,8 @@ const emit = defineEmits(['close'])
                                 {{ $t(row.label) }}
                             </p>
                             <p class="text-sm font-semibold text-on-surface font-sans break-words">
-                                {{ row.value || '—' }}
+                                <span v-if="row.isTranslatable">{{ $t(row.value) }}</span>
+                                <span v-else>{{ row.value || '—' }}</span>
                             </p>
                         </div>
                     </div>

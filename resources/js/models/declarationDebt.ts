@@ -1,6 +1,6 @@
 import {AbstractDeclarationOwnerPosition} from "@/models/abstractDeclarationOwnerPosition";
 import {ViewRecordRow} from "@/types";
-import {FormFieldItem} from "@/dataTypes";
+import {DebtType, FormFieldItem} from "@/dataTypes";
 import {
     getLocaleCurrencyString,
     getLocaleDateTimeString
@@ -38,8 +38,9 @@ export default class DeclarationDebt extends AbstractDeclarationOwnerPosition {
             new FormFieldItem(
                 "debt_type",
                 "labels.debt_type",
-                "text",
-                "placeholders.debt_type"
+                "select",
+                "placeholders.debt_type",
+                DebtType.getFormOptions()
             ),
             new FormFieldItem(
                 "value",
@@ -62,9 +63,11 @@ export default class DeclarationDebt extends AbstractDeclarationOwnerPosition {
             },
             {
                 label: "labels.debt_type",
-                value: this.debtType,
+                value: this.getDebtTypeTranslated(),
                 isLongText: false,
-                isMeta: false
+                isMeta: false,
+                isTranslatable: true,
+                translatableOptions: [this.debtType]
             },
             {
                 label: "labels.value",
@@ -85,5 +88,20 @@ export default class DeclarationDebt extends AbstractDeclarationOwnerPosition {
                 isMeta: true
             },
         ]
+    }
+
+    /**
+     * Returns the debt type in a human-readable format
+     * In case the provided value is not one of the DebtType options, then it will return Other (<the human input here>)
+     * In case the user has selected a value from the options, it will return the option translated
+     *
+     * @private
+     */
+    getDebtTypeTranslated(): string {
+        if (DebtType.isOther(this.debtType)) {
+            return `${DebtType.TRANSLATION_PREFIX}.other_with_value`
+        }
+
+        return `${DebtType.TRANSLATION_PREFIX}.${this.debtType}`;
     }
 }

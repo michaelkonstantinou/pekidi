@@ -7,7 +7,7 @@ import {onMounted, Ref, ref} from "vue";
 import DeclarationOverviewService from "@/services/declarationOverviewService";
 import {DeclarationOverview} from "@/models/declarationOverview";
 import {useErrorMessager} from "@/composables/useErrorMessager";
-import {getLocaleCurrencyString} from "../../../helpers/localeHelpers";
+import {getLocaleCurrencyString} from "@/helpers/localeHelpers";
 
 const {toastApiErrors} = useErrorMessager()
 
@@ -101,7 +101,7 @@ const handlePrint = () => {
                     <div
                         v-for="item in overview?.getAssets()"
                         :key="item.label"
-                        class="group flex justify-between items-center p-3.5 rounded-xl bg-transparent hover:bg-secondary/10 transition-colors duration-200 cursor-pointer"
+                        class="group flex justify-between items-center p-3.5 rounded-xl bg-transparent hover:bg-secondary/10 transition-colors duration-200"
                     >
                         <div class="flex items-center gap-4">
                             <!-- Light Secondary Tint Badge -->
