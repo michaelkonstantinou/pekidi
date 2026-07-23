@@ -112,7 +112,10 @@
         "debt_type": "Debt type",
         "other": "Other",
         "debt_to_asset_ratio": "Debt-to-asset ratio",
-        "risk": "Risk"
+        "risk": "Risk",
+        "personal_net_worth": "Personal",
+        "joint_net_worth": "Joint",
+        "family_net_worth": "Family"
     },
     "placeholders": {
         "location": "Full address of real estate",
@@ -176,7 +179,8 @@
         "edit_record": "Edit record",
         "help_dialog": "Help",
         "help_dialog_tip": "Tip",
-        "debts": "Debts"
+        "debts": "Debts",
+        "net_worth_analysis": "NET worth analysis"
     },
     "actions": {
         "view": "View",
@@ -195,5 +199,10 @@
     },
     "help_content": {
         "real_estate": "Declare every property in which you have an ownership or other legal interest, including houses, apartments, plots of land, commercial properties, agricultural land, parking spaces, or any similar immovable property. For each property, provide its location, type, area, how and when it was acquired, its acquisition value, its estimated current value, and any rights or encumbrances (such as mortgages) affecting it."
+    },
+    "descriptions": {
+        "personal_net_worth_desc": "Individual assets minus individual liabilities registered directly under your name.",
+        "joint_net_worth_desc": "Combined assets and liabilities co-owned with a spouse or domestic partner.",
+        "family_net_worth_desc": "Aggregated total net worth across all declared household members and dependents."
     }
 }

@@ -9,6 +9,8 @@ import {DeclarationOverview} from "@/models/declarationOverview";
 import {useErrorMessager} from "@/composables/useErrorMessager";
 import {getLocaleCurrencyString} from "@/helpers/localeHelpers";
 import DebtToAssetRatioBadge from "@/components/app-ui/declarations/DebtToAssetRatioBadge.vue";
+import DeclarationNetWorthOverview from "@/components/app-ui/declarations/DeclarationNetWorthOverview.vue";
+import AppSectionHeader from "@/components/app-ui/AppSectionHeader.vue";
 
 const {toastApiErrors} = useErrorMessager()
 
@@ -82,14 +84,13 @@ const handlePrint = () => {
 
             <!-- Total Assets Section -->
             <div class="p-6 bg-transparent w-full">
-                <!-- Section Header -->
-                <div class="pb-4 border-b border-border/50 flex justify-between items-center mb-6">
-                    <h3 class="font-sans font-bold text-xl text-primary flex items-center gap-3">
-                        <Wallet class="h-6 w-6 text-primary shrink-0" />
-                        Total Assets
-                    </h3>
-                    <span class="font-sans font-bold text-2xl text-foreground">{{ getLocaleCurrencyString(overview?.totalAssetsValue ?? 0) }}</span>
-                </div>
+
+                <AppSectionHeader
+                    title="Total Assets"
+                    :icon="Wallet"
+                    variant="primary"
+                    :value="getLocaleCurrencyString(overview?.totalAssetsValue ?? 0)"
+                />
 
                 <!-- Assets List -->
                 <div class="space-y-2.5">
@@ -125,14 +126,12 @@ const handlePrint = () => {
 
             <!-- Total Liabilities Section -->
             <div class="p-6 bg-transparent w-full">
-                <!-- Section Header -->
-                <div class="pb-4 border-b border-border/50 flex justify-between items-center mb-6">
-                    <h3 class="font-sans font-bold text-xl text-destructive flex items-center gap-3">
-                        <CreditCard class="h-6 w-6 text-destructive shrink-0" />
-                        Total Liabilities
-                    </h3>
-                    <span class="font-sans font-bold text-2xl text-destructive">{{ getLocaleCurrencyString(overview?.totalLiabilitiesValue ?? 0) }}</span>
-                </div>
+                <AppSectionHeader
+                    title="Total Liabilities"
+                    :icon="CreditCard"
+                    variant="destructive"
+                    :value="getLocaleCurrencyString(overview?.totalLiabilitiesValue ?? 0)"
+                />
 
                 <!-- Liabilities List -->
                 <div class="space-y-2.5">
@@ -177,6 +176,12 @@ const handlePrint = () => {
                 <DebtToAssetRatioBadge :overview="overview" />
             </div>
 
+        </div>
+
+        <div class="p-6 bg-transparent w-full">
+            <div class="">
+                <DeclarationNetWorthOverview :netWorth="overview?.netWorth" />
+            </div>
         </div>
 
             <!-- Evaluation Section Grid -->

@@ -19,3 +19,8 @@ export interface HelpContent {
 
 export type FinancialRiskLevel = "low" | "balanced" | "high" | "insolvent";
 
+export interface DeclarationNetWorth {
+    personal: number,
+    joint: number,
+    family: number
+}

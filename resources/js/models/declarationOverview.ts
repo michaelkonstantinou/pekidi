@@ -13,7 +13,8 @@ import {
     AlertCircle
 } from "lucide-vue-next";
 import { getLocaleCurrencyString } from "@/helpers/localeHelpers";
-import { DebtType } from "@/dataTypes"; // Adjust path if needed
+import { DebtType } from "@/dataTypes";
+import {DeclarationNetWorth} from "@/types";
 
 // Structure for a single relation's stats (in lowerCamelCase)
 export interface RelationSummary {
@@ -60,6 +61,7 @@ export interface DeclarationOverviewApiPayload {
     totals_per_relation?: TotalsPerRelationPayload;
     total_assets_value?: number;
     total_liabilities_value?: number;
+    net_worth: DeclarationNetWorth;
 
     // Support camelCase variants
     totalsPerRelation?: TotalsPerRelationPayload;
@@ -78,6 +80,7 @@ export class DeclarationOverview {
 
     totalAssetsValue: number = 0;
     totalLiabilitiesValue: number = 0;
+    netWorth: DeclarationNetWorth = { personal: 0, family: 0, joint: 0};
 
     constructor(init?: DeclarationOverviewApiPayload) {
         if (init) {
@@ -94,6 +97,7 @@ export class DeclarationOverview {
 
             this.totalAssetsValue = init.totalAssetsValue ?? init.total_assets_value ?? 0;
             this.totalLiabilitiesValue = init.totalLiabilitiesValue ?? init.total_liabilities_value ?? 0;
+            this.netWorth = init.net_worth
         }
     }
 

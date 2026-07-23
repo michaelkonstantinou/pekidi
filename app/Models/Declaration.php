@@ -14,6 +14,7 @@ use Illuminate\Support\Collection;
  * @property string $home_address
  * @property string $national_id
  * @property int $user_id
+ * @property Collection<DeclarationDebt> $debts
  */
 class Declaration extends Model
 {
