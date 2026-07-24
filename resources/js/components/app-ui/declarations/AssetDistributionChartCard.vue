@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/chart";
 import { DeclarationAssetDistributionChart } from "@/types";
 import { getLocaleCurrencyString } from "@/helpers/localeHelpers";
+import AppCard from "@/components/app-ui/AppCard.vue";
 
 const { t } = useI18n();
 
@@ -65,85 +66,72 @@ type ChartDataItem = typeof formattedChartData.value[number];
 </script>
 
 <template>
-    <Card class="flex flex-col h-full bg-card border-neutral-200/80 dark:border-border/50 shadow-ambient rounded-default">
-        <!-- Card Header -->
-        <CardHeader class="pb-2">
-            <CardTitle class="flex items-center gap-2.5 text-base font-semibold text-foreground tracking-tight">
-                <div class="p-2 rounded-default bg-primary/10 text-primary">
-                    <PieChartIcon class="h-4 w-4 shrink-0" />
-                </div>
-                <span>{{ $t('titles.asset_distribution') }}</span>
-            </CardTitle>
-        </CardHeader>
-
-        <!-- Chart Content -->
-        <CardContent class="flex-1 flex flex-col justify-between pt-2">
-            <div class="flex-1 flex items-center justify-center min-h-[200px] my-2">
-                <template v-if="formattedChartData.length > 0">
-                    <ChartContainer
-                        :config="chartConfig"
-                        class="mx-auto aspect-square max-h-[220px] w-full"
-                        :style="{
+    <AppCard :icon="PieChartIcon" title="titles.asset_distribution">
+        <div class="flex-1 flex items-center justify-center min-h-[200px] my-2">
+            <template v-if="formattedChartData.length > 0">
+                <ChartContainer
+                    :config="chartConfig"
+                    class="mx-auto aspect-square max-h-[220px] w-full"
+                    :style="{
                             '--vis-donut-central-label-font-size': '1rem',
                             '--vis-donut-central-label-font-weight': '700',
                             '--vis-donut-central-label-text-color': 'var(--foreground)',
                             '--vis-donut-central-sub-label-text-color': 'var(--muted-foreground)',
                         }"
+                >
+                    <VisSingleContainer
+                        :data="formattedChartData"
+                        :margin="{ top: 10, bottom: 10, left: 10, right: 10 }"
                     >
-                        <VisSingleContainer
-                            :data="formattedChartData"
-                            :margin="{ top: 10, bottom: 10, left: 10, right: 10 }"
-                        >
-                            <VisDonut
-                                :value="(d: ChartDataItem) => d.value"
-                                :color="(d: ChartDataItem) => d.color"
-                                :arc-width="28"
-                                :central-label-offset-y="5"
-                                :central-label="getLocaleCurrencyString(chartData?.total_assets_value ?? 0)"
-                                :central-sub-label="$t('titles.total_assets')"
-                            />
-                            <ChartTooltip
-                                :triggers="{
+                        <VisDonut
+                            :value="(d: ChartDataItem) => d.value"
+                            :color="(d: ChartDataItem) => d.color"
+                            :arc-width="28"
+                            :central-label-offset-y="5"
+                            :central-label="getLocaleCurrencyString(chartData?.total_assets_value ?? 0)"
+                            :central-sub-label="$t('titles.total_assets')"
+                        />
+                        <ChartTooltip
+                            :triggers="{
                                     [Donut.selectors.segment]: componentToString(chartConfig, ChartTooltipContent, { hideLabel: true })!,
                                 }"
-                            />
-                        </VisSingleContainer>
-                    </ChartContainer>
-                </template>
+                        />
+                    </VisSingleContainer>
+                </ChartContainer>
+            </template>
 
-                <!-- Empty State -->
-                <div v-else class="text-center py-8 text-muted-foreground text-sm">
-                    {{ $t('labels.no_assets_declared') }}
-                </div>
+            <!-- Empty State -->
+            <div v-else class="text-center py-8 text-muted-foreground text-sm">
+                {{ $t('labels.no_assets_declared') }}
             </div>
+        </div>
 
-            <!-- Custom Legend with Formatted Currency and Percentage -->
-            <div v-if="formattedChartData.length > 0" class="pt-4 border-t border-neutral-200/60 dark:border-border/40 space-y-2">
-                <div
-                    v-for="item in formattedChartData"
-                    :key="item.labelKey"
-                    class="flex items-center justify-between text-xs group py-0.5"
-                >
-                    <div class="flex items-center gap-2 min-w-0">
+        <!-- Custom Legend with Formatted Currency and Percentage -->
+        <div v-if="formattedChartData.length > 0" class="pt-4 border-t border-neutral-200/60 dark:border-border/40 space-y-2">
+            <div
+                v-for="item in formattedChartData"
+                :key="item.labelKey"
+                class="flex items-center justify-between text-xs group py-0.5"
+            >
+                <div class="flex items-center gap-2 min-w-0">
                         <span
                             class="w-2.5 h-2.5 rounded-full shrink-0 transition-transform group-hover:scale-125"
                             :style="{ backgroundColor: item.color }"
                         />
-                        <span class="font-medium text-muted-foreground truncate group-hover:text-foreground transition-colors">
+                    <span class="font-medium text-muted-foreground truncate group-hover:text-foreground transition-colors">
                             {{ $t(`titles.${item.labelKey}`) }}
                         </span>
-                    </div>
+                </div>
 
-                    <div class="flex items-center gap-3 shrink-0 ml-2">
+                <div class="flex items-center gap-3 shrink-0 ml-2">
                         <span class="font-mono font-semibold text-foreground">
                             {{ getLocaleCurrencyString(item.value) }}
                         </span>
-                        <span class="font-mono text-muted-foreground/80 w-12 text-right">
+                    <span class="font-mono text-muted-foreground/80 w-12 text-right">
                             {{ item.percentage.toFixed(1) }}%
                         </span>
-                    </div>
                 </div>
             </div>
-        </CardContent>
-    </Card>
+        </div>
+    </AppCard>
 </template>
