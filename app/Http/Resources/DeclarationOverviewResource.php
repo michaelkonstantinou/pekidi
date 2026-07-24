@@ -17,13 +17,14 @@ class DeclarationOverviewResource extends JsonResource
     {
         $service = new DeclarationTotalService($this->resource);
         $allTotals = $service->calculateTotalValues();
-        $allTotals['asset_distribution'] = $service->calculateAssetDistributionChartData($allTotals);
+        $chartAssetDistributionData = $service->calculateAssetDistributionChartData($allTotals);
+
+        $overview = $allTotals->toArray() + ['asset_distribution' => $chartAssetDistributionData];
 
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'overview' => $allTotals,
-
+            'overview' => $overview,
         ];
     }
 }
