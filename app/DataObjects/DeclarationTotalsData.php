@@ -22,6 +22,30 @@ readonly class DeclarationTotalsData implements Arrayable
     ) {}
 
     /**
+    * Calculate the Debt-to-Asset ratio percentage.
+    */
+    public function getDebtToAssetRatio(): float
+    {
+        return $this->totalAssetsValue > 0.0 ? ($this->totalLiabilitiesValue / $this->totalAssetsValue) * 100.0 : 0.0;
+    }
+
+    /**
+     * Calculate the percentage allocation of deposits relative to total assets.
+     */
+    public function getDepositAllocation(): float
+    {
+        return $this->totalAssetsValue > 0.0 ? ($this->deposits->totalValue / $this->totalAssetsValue) * 100.0 : 0.0;
+    }
+
+    /**
+     * Calculate the percentage allocation of investments relative to total assets.
+     */
+    public function getInvestmentAllocation(): float
+    {
+        return $this->totalAssetsValue > 0.0 ? ($this->investments->totalValue / $this->totalAssetsValue) * 100.0 : 0.0;
+    }
+
+    /**
      * Convert the DTO to an array (maintaining snake_case keys for API responses).
      */
     public function toArray(): array

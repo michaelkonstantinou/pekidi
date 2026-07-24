@@ -44,3 +44,8 @@ export interface DeclarationAssetDistributionChart {
     total_assets_value: number;
     series: AssetDistributionSeriesItem[];
 }
+
+export interface DeclarationEvaluation {
+    strengths: String[];
+    weaknesses: String[];
+}

@@ -115,7 +115,9 @@
         "risk": "Risk",
         "personal_net_worth": "Personal",
         "joint_net_worth": "Joint",
-        "family_net_worth": "Family"
+        "family_net_worth": "Family",
+        "no_assets_declared": "No assets have been declared yet.",
+        "no_evaluation_data": "No evaluation data available for this declaration."
     },
     "placeholders": {
         "location": "Full address of real estate",
@@ -170,6 +172,7 @@
         "section_meta": "Metadata"
     },
     "titles": {
+        "evaluation": "Evaluation",
         "real_estate": "Real estates",
         "real_estates": "Real estates",
         "vehicles": "Vehicles",
@@ -183,7 +186,10 @@
         "debts": "Debts",
         "net_worth_analysis": "NET worth analysis",
         "asset_distribution": "Asset Distribution",
-        "total_assets": "Total assets"
+        "total_assets": "Total assets",
+        "strengths_and_weaknesses": "Strengths & Weaknesses",
+        "strengths": "Strengths",
+        "weaknesses": "Weaknesses"
     },
     "actions": {
         "view": "View",

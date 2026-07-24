@@ -14,7 +14,7 @@ import {
 } from "lucide-vue-next";
 import { getLocaleCurrencyString } from "@/helpers/localeHelpers";
 import { DebtType } from "@/dataTypes";
-import {DeclarationAssetDistributionChart, DeclarationNetWorth} from "@/types";
+import {DeclarationAssetDistributionChart, DeclarationEvaluation, DeclarationNetWorth} from "@/types";
 
 // Structure for a single relation's stats (in lowerCamelCase)
 export interface RelationSummary {
@@ -62,6 +62,7 @@ export interface DeclarationOverviewApiPayload {
     total_assets_value?: number;
     total_liabilities_value?: number;
     net_worth: DeclarationNetWorth;
+    evaluation: DeclarationEvaluation;
 
     // Support camelCase variants
     totalsPerRelation?: TotalsPerRelationPayload;
@@ -82,7 +83,8 @@ export class DeclarationOverview {
     totalAssetsValue: number = 0;
     totalLiabilitiesValue: number = 0;
     netWorth: DeclarationNetWorth = { personal: 0, family: 0, joint: 0};
-    assetDistributionChart: DeclarationAssetDistributionChart = {series: [], total_assets_value: 0}
+    assetDistributionChart: DeclarationAssetDistributionChart = {series: [], total_assets_value: 0};
+    evaluation: DeclarationEvaluation = {strengths: [], weaknesses: []}
 
     constructor(init?: DeclarationOverviewApiPayload) {
         if (init) {
@@ -101,6 +103,7 @@ export class DeclarationOverview {
             this.totalLiabilitiesValue = init.totalLiabilitiesValue ?? init.total_liabilities_value ?? 0;
             this.netWorth = init.net_worth
             this.assetDistributionChart = init.asset_distribution
+            this.evaluation = init.evaluation
 
         }
     }

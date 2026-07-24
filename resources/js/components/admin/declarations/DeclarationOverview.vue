@@ -12,6 +12,7 @@ import DebtToAssetRatioBadge from "@/components/app-ui/declarations/DebtToAssetR
 import DeclarationNetWorthOverview from "@/components/app-ui/declarations/DeclarationNetWorthOverview.vue";
 import AppSectionHeader from "@/components/app-ui/AppSectionHeader.vue";
 import AssetDistributionChartCard from "@/components/app-ui/declarations/AssetDistributionChartCard.vue";
+import DeclarationEvaluationListItemCard from "@/components/app-ui/declarations/DeclarationEvaluationListItemCard.vue";
 
 const {toastApiErrors} = useErrorMessager()
 
@@ -180,9 +181,7 @@ const handlePrint = () => {
         </div>
 
         <div class="p-6 bg-transparent w-full">
-            <div class="">
-                <DeclarationNetWorthOverview :netWorth="overview?.netWorth" />
-            </div>
+            <DeclarationNetWorthOverview :netWorth="overview?.netWorth" />
         </div>
 
         <div class="p-6 bg-transparent w-full">
@@ -198,77 +197,11 @@ const handlePrint = () => {
                     <!-- Left: Asset Distribution Card -->
                     <AssetDistributionChartCard :chartData="overview?.assetDistributionChart" />
 
-                    <!-- Right: Your Second Card Goes Here -->
-                    <div class="p-6 bg-card border border-neutral-200/80 dark:border-border/50 rounded-default shadow-ambient flex flex-col justify-center items-center">
-                        <!-- Placeholder for the upcoming component -->
-                        <p class="text-sm text-muted-foreground">
-                            Second card placeholder
-                        </p>
-                    </div>
+                    <!-- Right Card -->
+                    <DeclarationEvaluationListItemCard :evaluation="overview?.evaluation" />
                 </div>
             </div>
         </div>
 
-            <!-- Evaluation Section Grid -->
-
-            <div class="pt-6 border-t border-outline-variant/40">
-                <h3 class="text-base font-sans font-bold text-primary mb-4">Evaluation</h3>
-
-                <div class="grid grid-cols-12 gap-5">
-
-                    <!-- Asset Distribution Chart Card -->
-                    <div class="col-span-12 lg:col-span-6 p-5 bg-surface-container-low/40 border border-outline-variant/30 rounded-xl flex flex-col items-center">
-                        <h4 class="w-full text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-4">
-                            Asset Distribution
-                        </h4>
-
-                        <!-- Circular Chart -->
-                        <div class="relative w-44 h-44 mb-4 flex items-center justify-center">
-                            <div class="w-full h-full rounded-full border-[10px] border-primary border-t-secondary border-r-secondary-container border-b-surface-dim transform -rotate-45"></div>
-
-                            <div class="absolute inset-2 bg-white rounded-full flex flex-col items-center justify-center text-center shadow-inner">
-                                <span class="text-[10px] font-semibold text-on-surface-variant uppercase tracking-wider">Liquid</span>
-                                <span class="text-2xl font-black text-primary hover:text-secondary transition-colors cursor-pointer">35%</span>
-                            </div>
-                        </div>
-
-                        <!-- Legend -->
-                        <div class="w-full space-y-2">
-                            <div v-for="item in assetDistribution" :key="item.label" class="flex items-center justify-between text-xs px-1">
-                                <div class="flex items-center gap-2">
-                                    <div :class="['w-2.5 h-2.5 rounded-full', item.color]"></div>
-                                    <span class="text-on-surface-variant font-medium">{{ item.label }}</span>
-                                </div>
-                                <span class="font-bold text-primary">{{ item.percentage }}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Compliance Summary Card -->
-                    <div class="col-span-12 lg:col-span-6 p-5 bg-surface-container-low/40 border border-outline-variant/30 rounded-xl flex flex-col">
-                        <h4 class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-4">
-                            Compliance Summary
-                        </h4>
-
-                        <div class="space-y-3">
-                            <div class="p-3 bg-white border border-outline-variant/30 rounded-lg">
-                                <p class="text-xs font-bold text-primary mb-1">Verification Status</p>
-                                <p class="text-xs text-on-surface-variant leading-relaxed">
-                                    All major assets have been cross-referenced with institutional records as of the last reporting period.
-                                </p>
-                            </div>
-
-                            <div class="p-3 bg-white border border-outline-variant/30 rounded-lg">
-                                <p class="text-xs font-bold text-primary mb-1">Risk Assessment</p>
-                                <p class="text-xs text-on-surface-variant leading-relaxed">
-                                    Debt-to-asset ratio remains within the healthy threshold for institutional compliance standards.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
+    </div>
 </template>
