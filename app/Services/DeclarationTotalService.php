@@ -194,4 +194,48 @@ class DeclarationTotalService
             ],
         ];
     }
+
+    /**
+     * Generate pre-formatted asset distribution chart data with percentages.
+     */
+    public function calculateAssetDistributionChartData(?array $totalsData = null): array
+    {
+        // Reuse precomputed totals if passed, otherwise compute them
+        $totalsData = $totalsData ?? $this->calculateTotalValues();
+
+        $totalAssets = (float) ($totalsData['total_assets_value'] ?? 0);
+        $totalsPerRelation = $totalsData['totals_per_relation'] ?? [];
+
+        $chartItems = [];
+
+        foreach ($totalsPerRelation as $relation => $data) {
+            // Filter out liabilities/debts for asset pie chart
+            if ($relation === 'debts') {
+                continue;
+            }
+
+            $value = (float) ($data['total_value'] ?? 0);
+
+            // Skip relations with zero total value to keep chart rendering clean
+            if ($value <= 0) {
+                continue;
+            }
+
+            // Compute relative share percentage rounded to 2 decimal places
+            $percentage = $totalAssets > 0
+                ? round(($value / $totalAssets) * 100, 2)
+                : 0.0;
+
+            $chartItems[] = [
+                'relation' => $relation,
+                'total_value' => $value,
+                'percentage' => $percentage,
+            ];
+        }
+
+        return [
+            'total_assets_value' => $totalAssets,
+            'series' => $chartItems,
+        ];
+    }
 }

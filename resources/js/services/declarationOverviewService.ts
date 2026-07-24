@@ -1,5 +1,16 @@
 import axios from 'axios';
-import {DeclarationOverview, DeclarationOverviewResponse} from "@/models/declarationOverview";
+import {DeclarationOverview} from "@/models/declarationOverview";
+import {DeclarationAssetDistributionChart} from "@/types";
+
+// Complete API Response interface
+export interface DeclarationOverviewResponse {
+    data: {
+        id: number;
+        name: string;
+        overview: DeclarationOverview;
+        asset_distribution: DeclarationAssetDistributionChart;
+    };
+}
 
 export default class DeclarationOverviewService {
 

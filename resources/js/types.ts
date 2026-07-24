@@ -24,3 +24,23 @@ export interface DeclarationNetWorth {
     joint: number,
     family: number
 }
+
+export interface AssetDistributionSeriesItem {
+
+    /** The key representing the asset category (e.g. 'real_estates', 'investments') */
+    relation: string;
+
+    /** Raw monetary value for tooltips and calculations */
+    total_value: number;
+
+    /** Relative percentage share (e.g. 53.18) */
+    percentage: number;
+
+    /** Optional theme color variable override (e.g., 'var(--chart-1)') */
+    fill?: string;
+}
+
+export interface DeclarationAssetDistributionChart {
+    total_assets_value: number;
+    series: AssetDistributionSeriesItem[];
+}
