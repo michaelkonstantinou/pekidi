@@ -11,6 +11,7 @@ import {getLocaleCurrencyString} from "@/helpers/localeHelpers";
 import DebtToAssetRatioBadge from "@/components/app-ui/declarations/DebtToAssetRatioBadge.vue";
 import DeclarationNetWorthOverview from "@/components/app-ui/declarations/DeclarationNetWorthOverview.vue";
 import AppSectionHeader from "@/components/app-ui/AppSectionHeader.vue";
+import AssetDistributionChartCard from "@/components/app-ui/declarations/AssetDistributionChartCard.vue";
 
 const {toastApiErrors} = useErrorMessager()
 
@@ -184,7 +185,32 @@ const handlePrint = () => {
             </div>
         </div>
 
+        <div class="p-6 bg-transparent w-full">
+            <div>
+                <AppSectionHeader
+                    title="titles.evaluation"
+                    :icon="CreditCard"
+                    variant="primary"
+                />
+
+                <!-- Two-column Grid Container -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+                    <!-- Left: Asset Distribution Card -->
+                    <AssetDistributionChartCard :chartData="overview?.assetDistributionChart" />
+
+                    <!-- Right: Your Second Card Goes Here -->
+                    <div class="p-6 bg-card border border-neutral-200/80 dark:border-border/50 rounded-default shadow-ambient flex flex-col justify-center items-center">
+                        <!-- Placeholder for the upcoming component -->
+                        <p class="text-sm text-muted-foreground">
+                            Second card placeholder
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
             <!-- Evaluation Section Grid -->
+
             <div class="pt-6 border-t border-outline-variant/40">
                 <h3 class="text-base font-sans font-bold text-primary mb-4">Evaluation</h3>
 

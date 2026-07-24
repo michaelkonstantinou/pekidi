@@ -8,6 +8,7 @@
         "strict": true,
         "paths": {
             "@/*": ["./resources/js/*"]
-        }
+        },
+        "allowSyntheticDefaultImports": true
     }
 }

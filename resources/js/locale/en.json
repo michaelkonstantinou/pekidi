@@ -171,6 +171,7 @@
     },
     "titles": {
         "real_estate": "Real estates",
+        "real_estates": "Real estates",
         "vehicles": "Vehicles",
         "businesses": "Businesses",
         "deposits": "Deposits",
@@ -180,7 +181,9 @@
         "help_dialog": "Help",
         "help_dialog_tip": "Tip",
         "debts": "Debts",
-        "net_worth_analysis": "NET worth analysis"
+        "net_worth_analysis": "NET worth analysis",
+        "asset_distribution": "Asset Distribution",
+        "total_assets": "Total assets"
     },
     "actions": {
         "view": "View",
