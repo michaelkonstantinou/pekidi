@@ -15,6 +15,7 @@ import {BookText, Home, Settings, BriefcaseBusiness} from "lucide-vue-next";
 import AdminNavUser from "@/views/layouts/AdminNavUser.vue";
 import {useAuthStore} from "@/stores/authStore";
 import {useDeclarationStore} from "@/stores/declarationStore";
+import {useRoute} from "vue-router";
 
 const authStore = useAuthStore()
 const declarationStore = useDeclarationStore()
@@ -38,10 +39,22 @@ for (const declaration of declarationStore.declarations) {
             icon: BookText
         })
 }
+
+const route = useRoute()
+
+// Helper function to check if the route matches
+const isRouteActive = (routeName, routeParams = {}) => {
+    if (route.name !== routeName) return false
+
+    // Check if params match (if any are provided)
+    return Object.entries(routeParams).every(
+        ([key, val]) => String(route.params[key]) === String(val)
+    )
+}
 </script>
 
 <template>
-    <Sidebar collapsible="icon" variant="none" class="w-64 border-r border-none bg-primary text-primary-foreground">
+    <Sidebar collapsible="icon" variant="none" class="w-64 border-r border-sidebar-border bg-sidebar-bg text-sidebar-fg">
         <!-- Sidebar Branding Header Section -->
         <SidebarHeader class="p-6 pb-10">
             <SidebarMenu>
@@ -54,7 +67,7 @@ for (const declaration of declarationStore.declarations) {
                                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSLxoe-Lj8DZY62bOFosJVdl4zLwjUSmP_DUN3_qCaXrDZLQg5ze94iEAzMZREO7De6-rhKjratyO_614iX9haU1pk5UhvYhUs0lJXguJogwyi9ZAO_3YWA89h8Mox2TQLsGoYidE6wkuPmoHsNgTzCW1OfUFme3XGzuqGQc2TFzCxqYjmoedSLuQQn9A8GWY8rNFCW6APohu9VmSOuAhKZQs4zqpi2RtwMUUo98amgNbZashqy_nAcOFH42Xtj6lSkpuOXtb-U1Q"
                             />
                             <div class="grid flex-1 text-left leading-tight">
-                                <h1 class="text-primary-foreground font-bold text-[20px] font-sans tracking-tight leading-tight">ΠΕΚΥΔΗ</h1>
+                                <h1 class="text-sidebar-fg font-bold text-[20px] font-sans tracking-tight leading-tight">ΠΕΚΥΔΗ</h1>
                             </div>
                         </router-link>
                     </SidebarMenuButton>
@@ -67,11 +80,11 @@ for (const declaration of declarationStore.declarations) {
             <!-- Root Base Dashboard Link -->
             <SidebarMenu>
                 <SidebarMenuItem>
-                    <SidebarMenuButton asChild class="h-auto p-0 m-0 rounded-default bg-transparent hover:bg-transparent">
+                    <SidebarMenuButton asChild class="h-auto p-0 m-0 rounded-default bg-transparent">
                         <router-link
                             :to="{'name': 'admin.dashboard'}"
-                            active-class="bg-white/15 text-white font-semibold shadow-sm"
-                            class="flex items-center w-full py-2.5 px-3 text-white/70 hover:text-white hover:bg-white/10 rounded-default transition-all duration-150 gap-3"
+                            activeClass="bg-sidebar-active-bg text-sidebar-active-fg dark:bg-primary/10 dark:text-primary font-semibold shadow-sm"
+                            class="flex items-center w-full py-2.5 px-3 text-sidebar-muted hover:text-sidebar-fg dark:hover:bg-primary/10 dark:hover:text-primary rounded-default transition-all duration-150 gap-3"
                         >
                             <component :is="Home" class="h-4 w-4 shrink-0" />
                             <span class="text-[14px] tracking-wide font-sans">Dashboard</span>
@@ -83,7 +96,7 @@ for (const declaration of declarationStore.declarations) {
             <!-- Loop Group Navigation Array Context -->
             <div v-for="sidebarGroup in items" :key="sidebarGroup.name" class="space-y-0.5 pt-2">
                 <!-- Group Label Layer -->
-                <div class="px-3 pb-1 text-[11px] font-bold text-white/40 uppercase tracking-widest font-sans">
+                <div class="px-3 pb-1 text-[11px] font-bold text-sidebar-muted/70 uppercase tracking-widest font-sans">
                     {{ sidebarGroup.name }}
                 </div>
 
@@ -91,9 +104,9 @@ for (const declaration of declarationStore.declarations) {
                     <SidebarMenuItem v-for="item in sidebarGroup.children" :key="item.title">
                         <SidebarMenuButton asChild class="h-auto p-0 m-0 rounded-default bg-transparent hover:bg-transparent">
                             <router-link
-                                active-class="bg-white/15 text-white font-semibold shadow-sm"
                                 :to="{'name': item.route, 'params': item.routeParams}"
-                                class="flex items-center w-full py-2.5 px-3 text-white/70 hover:text-white hover:bg-white/10 rounded-default transition-all duration-150 gap-3"
+                                activeClass="bg-sidebar-active-bg text-sidebar-active-fg dark:bg-primary/10 dark:text-primary font-semibold shadow-sm"
+                                class="flex items-center w-full py-2.5 px-3 text-sidebar-muted hover:text-sidebar-fg dark:hover:bg-primary/10 dark:hover:text-primary rounded-default transition-all duration-150 gap-3"
                             >
                                 <component v-if="item.icon !== null" :is="item.icon" class="h-4 w-4 shrink-0" />
                                 <span class="text-[14px] tracking-wide font-sans">{{ item.title }}</span>
@@ -105,7 +118,7 @@ for (const declaration of declarationStore.declarations) {
         </SidebarContent>
 
         <!-- Preserved User Layout Footer Component -->
-        <SidebarFooter class="p-4 mt-auto border-t border-border/20 bg-black/10">
+        <SidebarFooter class="p-4 mt-auto border-t border-sidebar-border bg-transparent">
             <AdminNavUser :user="authStore.user" />
         </SidebarFooter>
     </Sidebar>

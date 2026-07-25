@@ -60,7 +60,8 @@
         "spouse_assets": "Spouse Assets",
         "spouse_assets_description": "Add assets or liabilities that are registered to your spouse's account",
         "children_assets": "Children Assets",
-        "children_assets_description": "Add assets or liabilities that are registered to your non-adult children"
+        "children_assets_description": "Add assets or liabilities that are registered to your non-adult children",
+        "overview": "Overview"
     },
     "buttons": {
         "create": "Create",

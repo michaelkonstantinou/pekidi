@@ -28,26 +28,26 @@ const props = defineProps({
         <!-- Brand Contextual Sidebar Navigation -->
         <AdminSidebar />
 
-        <!-- Main Right Hand Application Canvas (Comfortable Stitch canvas tint using CSS design tokens) -->
-        <SidebarInset class="text-neutral flex flex-col min-h-screen">
+        <!-- Main Right Hand Application Canvas -->
+        <SidebarInset class="flex flex-col min-h-screen bg-background text-foreground transition-colors duration-150">
 
             <!-- Top Functional Application Bar -->
-            <header class="sticky top-0 z-40 flex h-16 shrink-0 items-center justify-between bg-[#ffffff] border-b border-neutral-200/80 px-6 shadow-sm transition-all">
+            <header class="sticky top-0 z-40 flex h-16 shrink-0 items-center justify-between bg-white border-b border-neutral-200/80 px-6 shadow-sm dark:bg-card dark:border-border dark:shadow-none transition-all">
 
                 <!-- Left Wing controls group containing triggers and path tracking matrix -->
                 <div class="flex items-center gap-3">
-                    <SidebarTrigger class="-ml-1 text-neutral hover:opacity-80 hover:bg-neutral-50 rounded-default transition-all duration-150" />
+                    <SidebarTrigger class="-ml-1 text-neutral-700 hover:text-neutral-900 hover:bg-neutral-100 dark:text-muted-foreground dark:hover:text-foreground dark:hover:bg-muted rounded-default transition-all duration-150" />
 
-                    <div class="h-4 w-[1px] bg-neutral-200 mx-1 hidden sm:block"></div>
+                    <div class="h-4 w-[1px] bg-neutral-200 dark:bg-border mx-1 hidden sm:block"></div>
 
                     <!-- Dynamic System Path Map Navigation Trackers mapped to system design tokens -->
                     <Breadcrumb class="hidden sm:inline-block">
-                        <BreadcrumbList class="flex items-center gap-1.5 text-sm font-sans font-medium tracking-normal text-neutral">
+                        <BreadcrumbList class="flex items-center gap-1.5 text-sm font-sans font-medium tracking-normal">
                             <template v-for="(item, index) in breadcrumbs" :key="index">
                                 <BreadcrumbItem>
                                     <template v-if="index === breadcrumbs.length - 1">
-                                        <!-- Final Active Route styled with high contrast bold token weighting -->
-                                        <BreadcrumbPage class="text-neutral transition-colors">
+                                        <!-- Final Active Route -->
+                                        <BreadcrumbPage class="text-neutral-900 font-semibold dark:text-foreground transition-colors">
                                             {{ $t(item.label) }}
                                         </BreadcrumbPage>
                                     </template>
@@ -55,7 +55,7 @@ const props = defineProps({
                                         <BreadcrumbLink as-child>
                                             <router-link
                                                 :to="item.routeName !== null ? {'name': item.routeName} : '#'"
-                                                class="text-neutral/70 hover:text-neutral transition-colors"
+                                                class="text-neutral-500 hover:text-neutral-800 dark:text-muted-foreground dark:hover:text-foreground transition-colors"
                                             >
                                                 {{ $t(item.label) }}
                                             </router-link>
@@ -64,7 +64,7 @@ const props = defineProps({
                                 </BreadcrumbItem>
                                 <BreadcrumbSeparator
                                     v-if="index !== breadcrumbs.length - 1"
-                                    class="text-neutral-300 font-normal scale-90 mx-0.5"
+                                    class="text-neutral-300 dark:text-border font-normal scale-90 mx-0.5"
                                 />
                             </template>
                         </BreadcrumbList>
@@ -86,6 +86,3 @@ const props = defineProps({
         </SidebarInset>
     </SidebarProvider>
 </template>
-<style scoped>
-
-</style>
