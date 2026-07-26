@@ -99,29 +99,29 @@ const handlePrint = () => {
                     <div
                         v-for="item in overview?.getAssets()"
                         :key="item.label"
-                        class="group flex justify-between items-center p-3.5 rounded-xl bg-transparent hover:bg-secondary/10 transition-colors duration-200"
+                        class="group flex justify-between items-center p-3.5 rounded-xl bg-transparent hover:bg-secondary/10 dark:hover:bg-primary/10 transition-colors duration-200"
                     >
                         <div class="flex items-center gap-4">
-                            <!-- Light Secondary Tint Badge -->
-                            <div class="w-10 h-10 rounded-lg bg-secondary/20 text-secondary flex items-center justify-center transition-colors group-hover:bg-secondary group-hover:text-secondary-foreground">
+                            <!-- Light/Dark Secondary Tint Badge -->
+                            <div class="w-10 h-10 rounded-lg bg-secondary/15 dark:bg-secondary/25 text-secondary dark:text-primary flex items-center justify-center transition-colors group-hover:bg-secondary group-hover:text-secondary-foreground dark:group-hover:bg-primary dark:group-hover:text-primary-foreground">
                                 <component :is="item.icon" class="h-5 w-5 shrink-0" />
                             </div>
 
                             <div class="flex flex-col justify-center">
-                                <span class="text-sm font-semibold text-muted-foreground group-hover:text-foreground transition-colors">
-                                    {{ $t(item.label) }}
-                                </span>
+                <span class="text-sm font-semibold text-neutral-800 dark:text-foreground group-hover:text-foreground transition-colors">
+                    {{ $t(item.label) }}
+                </span>
 
-                                <!-- Units Subtitle (appears/brightens on hover or remains subtle) -->
+                                <!-- Units Subtitle -->
                                 <span
-                                    class="text-xs font-medium text-muted-foreground/70 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                                    class="text-xs font-medium text-neutral-500 dark:text-muted-foreground transition-opacity duration-200"
                                 >
-                                    {{ item.units }} {{ item.units === 1 ? 'unit' : 'units' }}
-                                </span>
+                    {{ item.units }} {{ item.units === 1 ? 'unit' : 'units' }}
+                </span>
                             </div>
                         </div>
 
-                        <span class="text-sm font-bold text-foreground">{{ item.amount }}</span>
+                        <span class="text-sm font-bold text-neutral-900 dark:text-foreground">{{ item.amount }}</span>
                     </div>
                 </div>
             </div>

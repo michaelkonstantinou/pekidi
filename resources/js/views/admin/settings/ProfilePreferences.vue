@@ -26,20 +26,20 @@ const tabs = [
 <template>
     <HeadingSmall title="settings.preferences_title" description="settings.preferences_description" />
 
-    <div class="inline-flex gap-1 rounded-lg bg-neutral-100 p-1 dark:bg-neutral-800">
+    <div class="inline-flex gap-1 rounded-default bg-muted/60 dark:bg-muted/40 p-1 border border-neutral-200/60 dark:border-border">
         <button
             v-for="{ value, Icon, label } in tabs"
             :key="value"
             @click="mode = value"
             :class="[
-                'flex items-center rounded-md px-3.5 py-1.5 transition-colors',
+                'flex items-center rounded-sm px-3.5 py-1.5 text-sm font-medium transition-all duration-150',
                 mode === value
-                    ? 'bg-white shadow-xs dark:bg-neutral-700 dark:text-neutral-100'
-                    : 'text-neutral-500 hover:bg-neutral-200/60 hover:text-black dark:text-neutral-400 dark:hover:bg-neutral-700/60',
+                    ? 'bg-card text-foreground shadow-xs border border-neutral-200/80 dark:border-border/80'
+                    : 'text-neutral-500 dark:text-muted-foreground hover:text-foreground dark:hover:text-foreground hover:bg-neutral-200/50 dark:hover:bg-muted/80',
             ]"
         >
-            <component :is="Icon" class="-ml-1 h-4 w-4" />
-            <span class="ml-1.5 text-sm">{{ label }}</span>
+            <component :is="Icon" class="-ml-0.5 h-4 w-4 shrink-0" />
+            <span class="ml-2 font-sans">{{ label }}</span>
         </button>
     </div>
 </template>

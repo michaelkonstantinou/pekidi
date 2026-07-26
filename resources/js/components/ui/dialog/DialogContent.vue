@@ -37,7 +37,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
         <DialogClose
             @click="emits('close')"
-            class="absolute top-4 right-4 text-white/70 hover:text-white hover:bg-white/10 p-1.5 rounded-md transition-colors cursor-pointer flex items-center justify-center outline-none disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-[18px]"
+            class="dark:text-secondary dark:hover:text-secondary absolute top-4 right-4 text-white/70 hover:text-white hover:bg-white/10 p-1.5 rounded-md transition-colors cursor-pointer flex items-center justify-center outline-none disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-[18px]"
         >
             <X />
             <span class="sr-only">Close</span>

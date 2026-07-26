@@ -18,7 +18,7 @@ const emit = defineEmits(['close'])
 <template>
     <DialogContent
         @close="emit('close')"
-        class="bg-white dark:bg-card w-full max-w-2xl rounded-default border border-neutral-200/60 dark:border-border shadow-xl dark:shadow-2xl overflow-hidden p-0 gap-0 transition-all duration-200"
+        class="bg-white dark:bg-card w-full max-w-2xl rounded-default shadow-xl dark:shadow-2xl overflow-hidden p-0 gap-0 transition-all duration-200"
     >
 
         <!-- Dialog Header -->

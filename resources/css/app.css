@@ -33,6 +33,14 @@
     --sidebar-active-bg: rgba(255, 255, 255, 0.15);
     --sidebar-active-fg: #ffffff;
     --sidebar-border: rgba(255, 255, 255, 0.15);
+
+    /* Chart colors */
+    --chart-1: #001e40;
+    --chart-2: #0060ac;
+    --chart-3: #2b7fff;
+    --chart-4: #0284c7;
+    --chart-5: #0d9488;
+    --chart-6: #3a5f94;
 }
 
 .dark {
@@ -67,6 +75,14 @@
     --sidebar-active-bg: #39485a;
     --sidebar-active-fg: #a7b6cc;
     --sidebar-border: rgba(255, 255, 255, 0.08);
+
+    /* Chart colors */
+    --chart-1: #38bdf8;
+    --chart-2: #60a5fa;
+    --chart-3: #818cf8;
+    --chart-4: #2dd4bf;
+    --chart-5: #34d399;
+    --chart-6: #a78bfa;
 }
 
 @theme {

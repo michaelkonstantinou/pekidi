@@ -75,17 +75,17 @@ const handleCustomInput = (e: Event) => {
     <div class="space-y-3 w-full">
         <Select :model-value="selectedOption" @update:model-value="handleSelectChange">
             <FormControl class="w-full">
-                <SelectTrigger size="lg" class="h-11 border-neutral-300 focus:ring-primary/70 focus:ring-2 focus-visible:ring-primary/70 rounded-default bg-white text-left font-sans">
+                <SelectTrigger size="lg" class="w-full h-11 border-neutral-300 dark:border-border bg-white dark:bg-muted/30 text-neutral-800 dark:text-foreground rounded-default font-sans transition-all duration-150 outline-none focus-visible:outline-none focus:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 dark:focus:border-primary dark:focus-visible:border-primary dark:focus-visible:ring-primary/20 text-left">
                     <SelectValue :placeholder="field.placeholder" />
                 </SelectTrigger>
             </FormControl>
-            <SelectContent class="rounded-default border-neutral-300">
+            <SelectContent class="rounded-default border-neutral-200/80 dark:border-border bg-white dark:bg-card shadow-md dark:shadow-none p-1 font-sans">
                 <SelectGroup>
                     <SelectItem
                         v-for="option in field.options"
                         :key="option.value"
                         :value="option.value"
-                        class="h-11 hover:bg-neutral-50 focus:bg-neutral-50 data-[state=checked]:bg-neutral-200/50 data-[state=checked]:text-neutral-900 data-[state=checked]:font-semibold cursor-pointer"
+                        class="h-11 px-2.5 hover:bg-neutral-50 focus:bg-neutral-50 dark:hover:bg-muted/70 dark:focus:bg-muted/70 text-neutral-700 dark:text-foreground data-[state=checked]:bg-neutral-100 dark:data-[state=checked]:bg-muted data-[state=checked]:text-neutral-900 dark:data-[state=checked]:text-foreground data-[state=checked]:font-semibold cursor-pointer rounded-sm transition-colors"
                     >
                         {{ $t(option.label) }}
                     </SelectItem>
@@ -99,7 +99,7 @@ const handleCustomInput = (e: Event) => {
             v-model="customValue"
             @input="handleCustomInput"
             :placeholder="$t('placeholders.please_specify')"
-            class="h-11 border-neutral-300 focus:ring-primary/70 focus:ring-2 focus-visible:ring-primary/70 rounded-default bg-white font-sans"
+            class="h-11 border-neutral-300 dark:border-border bg-white dark:bg-muted/30 text-neutral-800 dark:text-foreground dark:placeholder:text-muted-foreground rounded-default transition-all duration-150 outline-none focus-visible:outline-none focus:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 dark:focus:border-primary dark:focus-visible:border-primary dark:focus-visible:ring-primary/20 font-sans"
         />
     </div>
 </template>
