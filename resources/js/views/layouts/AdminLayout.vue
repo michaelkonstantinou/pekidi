@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import {SidebarInset, SidebarProvider, SidebarTrigger} from "@/components/ui/sidebar";
 import AdminSidebar from "@/views/layouts/AdminSidebar.vue";
 import {
@@ -10,7 +9,6 @@ import {
     BreadcrumbSeparator
 } from "@/components/ui/breadcrumb";
 import {BreadcrumbItemType} from "@/types";
-import {Separator} from "@/components/ui/separator";
 import {PropType} from "vue";
 import AdminSwitchLocale from "@/views/layouts/AdminSwitchLocale.vue";
 

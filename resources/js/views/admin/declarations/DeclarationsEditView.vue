@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import AdminLayout from "@/views/layouts/AdminLayout.vue";
-import {BreadcrumbItemType} from "@/types";
 import Heading from "@/components/Heading.vue";
 import { Separator } from '@/components/ui/separator';
-import {Button} from "@/components/ui/button";
 import {useRoute, useRouter} from "vue-router";
 import {useDeclarationStore} from "@/stores/declarationStore";
 import {computed, onMounted, Ref, ref} from "vue";
@@ -13,7 +11,7 @@ import DeclarationPersonalDetailsEditor
 import DeclarationFamilyDetailsEditor from "@/components/admin/declarations/editor/DeclarationFamilyDetailsEditor.vue";
 import DeclarationPersonalAssetsEditor
     from "@/components/admin/declarations/editor/DeclarationPersonalAssetsEditor.vue";
-import {CloudLightning, FileText, LoaderPinwheel} from "lucide-vue-next";
+import {FileText, LoaderPinwheel} from "lucide-vue-next";
 import AppVerticalTab from "@/components/app-ui/AppVerticalTab.vue";
 import DeclarationOverview from "@/components/admin/declarations/DeclarationOverview.vue";
 
@@ -69,7 +67,6 @@ async function onSaved() {
                         title="declarations.title_edit"
                         :titleParams="[declaration?.name ?? '']"
                         description="declarations.description_edit"
-                        class="text-neutral-800"
                     />
                 </div>
             </div>
@@ -100,10 +97,8 @@ async function onSaved() {
                 </aside>
 
                 <!-- Right Side Expanded Full-Width Form Card Frame -->
-                <!-- 2. Keep min-w-0 here and add overflow-x-hidden to prevent layout spillover -->
-                <div class="flex-1 w-full min-w-0 bg-white rounded-default border border-neutral-200/60 shadow-sm min-h-[600px] overflow-hidden">
+                <div class="flex-1 w-full min-w-0 bg-white dark:bg-card rounded-default border border-neutral-200/60 dark:border-border shadow-sm dark:shadow-none min-h-[600px] overflow-hidden transition-colors duration-150">
                     <div class="p-6 md:p-8 w-full min-w-0" v-if="declaration !== null && !isLoading">
-                        <!-- 3. Add min-w-0 here so the rendering canvas lets the table shrink -->
                         <section class="w-full h-full min-w-0 overflow-x-hidden">
                             <component
                                 :key="activeTab.label"
@@ -117,8 +112,8 @@ async function onSaved() {
 
                     <!-- Loading Fallback Skeleton Layer State -->
                     <div v-else class="min-h-[600px] flex flex-col items-center justify-center p-12 text-center w-full">
-                        <LoaderPinwheel class="h-8 w-8 text-neutral-400 animate-spin mb-2" />
-                        <p class="text-xs text-neutral-400 font-medium font-sans">Loading data registry forms...</p>
+                        <LoaderPinwheel class="h-8 w-8 text-neutral-400 dark:text-muted-foreground animate-spin mb-2" />
+                        <p class="text-xs text-neutral-400 dark:text-muted-foreground font-medium font-sans">Loading data registry forms...</p>
                     </div>
                 </div>
 

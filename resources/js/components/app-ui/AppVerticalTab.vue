@@ -17,22 +17,22 @@ const emit = defineEmits(['click'])
     <Button
         variant="ghost"
         :class="[
-            'w-full justify-start gap-3 px-4 py-2.5 h-auto font-medium text-sm rounded-default transition-all duration-150 cursor-pointer',
+            'group w-full justify-start gap-3 px-3.5 py-2.5 h-auto font-sans text-sm rounded-default transition-all duration-150 cursor-pointer select-none',
             active
-              ? 'bg-primary text-primary-foreground font-semibold shadow-sm hover:bg-primary hover:text-primary-foreground'
-              : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-200/50 focus:bg-neutral-200/50'
+              ? 'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground font-semibold shadow-sm dark:bg-primary dark:text-secondary dark:hover:bg-primary dark:hover:text-secondary dark:shadow-none'
+              : 'text-neutral-600 hover:text-primary hover:bg-primary/10 dark:text-muted-foreground dark:hover:text-primary dark:hover:bg-muted/70 font-normal'
         ]"
         @click="emit('click')"
     >
         <component
             :is="icon"
-            class="h-4 w-4 shrink-0"
-            :class="active ? 'text-current' : 'text-neutral-400'"
+            class="h-4 w-4 shrink-0 transition-colors duration-150"
+            :class="[
+                active
+                  ? 'text-primary-foreground dark:text-secondary'
+                  : 'text-neutral-400 group-hover:text-primary dark:text-muted-foreground dark:group-hover:text-primary'
+            ]"
         />
-        <span>{{ $t(label) }}</span>
+        <span class="tracking-wide">{{ $t(label) }}</span>
     </Button>
 </template>
-
-<style scoped>
-
-</style>

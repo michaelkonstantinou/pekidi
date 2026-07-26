@@ -34,7 +34,7 @@ function onReload() {
         <DropdownMenuTrigger as-child>
             <Button
                 variant="ghost"
-                class="w-8 h-8 p-0 rounded-default text-neutral-500 hover:text-neutral-800 hover:bg-neutral-100 transition-colors duration-150"
+                class="w-8 h-8 p-0 rounded-default text-neutral-500 hover:text-neutral-800 hover:bg-neutral-100 dark:text-muted-foreground dark:hover:text-foreground dark:hover:bg-muted/70 transition-colors duration-150"
             >
                 <span class="sr-only">Open menu</span>
                 <MoreHorizontal class="w-4 h-4" />
@@ -44,19 +44,19 @@ function onReload() {
         <Dialog>
             <DropdownMenuContent
                 align="end"
-                class="bg-white border border-neutral-200/80 shadow-md rounded-default min-w-[140px] p-1 font-sans"
+                class="bg-white dark:bg-card border border-neutral-200/80 dark:border-border shadow-md dark:shadow-none rounded-default min-w-[140px] p-1 font-sans inner-glow transition-colors duration-150"
             >
-                <DropdownMenuLabel class="px-2.5 py-1.5 text-xs font-bold tracking-wide text-neutral-400 uppercase">
+                <DropdownMenuLabel class="px-2.5 py-1.5 text-xs font-bold tracking-wide text-neutral-400 dark:text-muted-foreground uppercase">
                     Actions
                 </DropdownMenuLabel>
-                <DropdownMenuSeparator class="my-1 bg-neutral-100" />
+                <DropdownMenuSeparator class="my-1 bg-neutral-100 dark:bg-border" />
 
                 <!-- View Option Block -->
                 <DropdownMenuItem
                     @click="showViewRecordDialog = true"
-                    class="flex items-center gap-2 px-2.5 py-2 text-sm text-neutral-700 font-medium rounded-sm cursor-pointer hover:bg-neutral-50 focus:bg-neutral-50 transition-colors duration-100 outline-none"
+                    class="group flex items-center gap-2 px-2.5 py-2 text-sm text-neutral-700 hover:text-neutral-900 font-medium rounded-sm cursor-pointer hover:bg-neutral-50 focus:bg-neutral-50 dark:text-muted-foreground dark:hover:text-foreground dark:hover:bg-muted/70 dark:focus:bg-muted/70 transition-colors duration-100 outline-none"
                 >
-                    <Eye class="h-4 w-4 text-neutral-400 shrink-0" />
+                    <Eye class="h-4 w-4 text-neutral-400 group-hover:text-neutral-600 dark:text-muted-foreground dark:group-hover:text-foreground shrink-0 transition-colors" />
                     <span>View</span>
                 </DropdownMenuItem>
 
@@ -64,9 +64,9 @@ function onReload() {
                 <DialogTrigger asChild>
                     <DropdownMenuItem
                         @click="showEditRecordDialog = true"
-                        class="flex items-center gap-2 px-2.5 py-2 text-sm text-neutral-700 font-medium rounded-sm cursor-pointer hover:bg-neutral-50 focus:bg-neutral-50 transition-colors duration-100 outline-none"
+                        class="group flex items-center gap-2 px-2.5 py-2 text-sm text-neutral-700 hover:text-neutral-900 font-medium rounded-sm cursor-pointer hover:bg-neutral-50 focus:bg-neutral-50 dark:text-muted-foreground dark:hover:text-foreground dark:hover:bg-muted/70 dark:focus:bg-muted/70 transition-colors duration-100 outline-none"
                     >
-                        <Pencil class="h-4 w-4 text-neutral-400 shrink-0" />
+                        <Pencil class="h-4 w-4 text-neutral-400 group-hover:text-neutral-600 dark:text-muted-foreground dark:group-hover:text-foreground shrink-0 transition-colors" />
                         <span>{{ $t('actions.edit') }}</span>
                     </DropdownMenuItem>
                 </DialogTrigger>
@@ -74,15 +74,15 @@ function onReload() {
                 <!-- Delete Destructive Option Block -->
                 <DropdownMenuItem
                     @click="showConfirmDeleteDialog = true"
-                    class="flex items-center gap-2 px-2.5 py-2 text-sm text-destructive hover:bg-destructive/5 focus:bg-destructive/5 font-medium rounded-sm cursor-pointer transition-colors duration-100 outline-none"
+                    class="group flex items-center gap-2 px-2.5 py-2 text-sm text-destructive hover:text-destructive focus:text-destructive hover:bg-destructive/10 focus:bg-destructive/10 dark:text-destructive dark:hover:text-destructive dark:focus:text-destructive dark:hover:bg-destructive/15 dark:focus:bg-destructive/15 font-medium rounded-sm cursor-pointer transition-colors duration-100 outline-none"
                 >
-                    <Trash2 class="h-4 w-4 text-destructive/70 shrink-0" />
+                    <Trash2 class="h-4 w-4 text-destructive group-hover:text-destructive shrink-0 transition-colors" />
                     <span>{{ $t('actions.delete') }}</span>
                 </DropdownMenuItem>
             </DropdownMenuContent>
 
             <!-- Edit Form Dialog Window Context Frame -->
-            <Dialog :open="showEditRecordDialog" >
+            <Dialog :open="showEditRecordDialog">
                 <DataTableUpsertDialog :icon="Pencil" buttonLabel="buttons.save" title="titles.edit_record" @close="showEditRecordDialog = false">
                     <slot name="editForm" @reload="onReload"/>
                 </DataTableUpsertDialog>
