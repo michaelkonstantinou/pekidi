@@ -72,9 +72,9 @@ const passwordStrength = computed(() => {
     if (score <= 2) {
         return { score, text: "Weak", colorClass: "bg-destructive", textClass: "text-destructive" }
     } else if (score <= 4) {
-        return { score, text: "Moderate", colorClass: "bg-secondary/60", textClass: "text-secondary" }
+        return { score, text: "Moderate", colorClass: "bg-secondary/60", textClass: "text-destructive/60" }
     } else {
-        return { score, text: "Secure", colorClass: "bg-secondary", textClass: "text-secondary font-semibold" }
+        return { score, text: "Secure", colorClass: "bg-secondary", textClass: "text-primary font-semibold" }
     }
 })
 
@@ -91,20 +91,26 @@ const passwordStrength = computed(() => {
                         :key="field.name"
                         :name="field.name"
                     >
-                        <!-- Use dynamic class binding to apply full width vs split width grids -->
                         <FormItem v-auto-animate class="space-y-1.5 text-left col-span-1 md:col-span-2">
-                            <FormLabel class="text-sm font-medium text-neutral-700">
+                            <FormLabel class="text-sm font-medium text-neutral-700 dark:text-foreground">
                                 {{ field.label }}
                             </FormLabel>
 
                             <FormControl>
                                 <div class="relative">
-                                    <!-- Standard Dynamic Layout Inputs -->
+                                    <!-- Leading Field Icon -->
+                                    <component
+                                        v-if="field.icon"
+                                        :is="field.icon"
+                                        class="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 dark:text-muted-foreground h-4 w-4 pointer-events-none"
+                                    />
+
                                     <Input
                                         :type="field.name === 'password' && showPassword ? 'text' : field.type"
                                         :placeholder="field.placeholder"
                                         v-bind="componentField"
-                                        class="h-11 border-neutral-300 rounded-default focus-visible:ring-secondary"
+                                        class="h-11 border-neutral-300 dark:border-border dark:bg-muted/30 dark:text-foreground dark:placeholder:text-muted-foreground rounded-default transition-all duration-150 outline-none focus-visible:outline-none focus:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20"
+                                        :class="field.icon ? 'pl-9 pr-10' : 'px-3'"
                                     />
 
                                     <!-- Password Visibility Toggle Button Overlay -->
@@ -112,30 +118,30 @@ const passwordStrength = computed(() => {
                                         v-if="field.name === 'password'"
                                         type="button"
                                         @click="showPassword = !showPassword"
-                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-primary transition-colors focus:outline-none"
+                                        class="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 dark:text-muted-foreground hover:text-neutral-700 dark:hover:text-foreground transition-colors focus:outline-none cursor-pointer"
                                     >
-                                        <component :is="showPassword ? 'EyeOff' : 'Eye'" class="h-4 w-4" />
+                                        <component :is="showPassword ? EyeOff : Eye" class="h-4 w-4" />
                                     </button>
                                 </div>
                             </FormControl>
 
-                            <!-- Password Strength Indicator (Hooks directly to field verification values) -->
-                            <div class="pt-1.5" v-if="field.name === 'password' && form.values.password">
-                                <div class="flex justify-between items-center mb-1">
-                                  <span class="text-xs" :class="passwordStrength.textClass">
-                                    Security Strength: {{ passwordStrength.text }}
-                                  </span>
+                            <!-- Password Strength Indicator -->
+                            <div class="pt-1.5 space-y-1" v-if="field.name === 'password' && form.values.password">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xs font-medium" :class="passwordStrength.textClass">
+                                        Security Strength: {{ passwordStrength.text }}
+                                    </span>
                                 </div>
-                                <div class="w-full bg-neutral-200 rounded-full h-1 overflow-hidden">
+                                <div class="w-full bg-neutral-200 dark:bg-muted/80 rounded-full h-1 overflow-hidden">
                                     <div
                                         class="h-full transition-all duration-300 ease-in-out"
                                         :class="passwordStrength.colorClass"
                                         :style="{ width: `${Math.min(passwordStrength.score * 20, 100)}%` }"
                                     ></div>
                                 </div>
-                                <span class="text-xs" :class="passwordStrength.textClass" v-if="passwordStrength.score < 5">
+                                <p class="text-xs text-neutral-500 dark:text-muted-foreground" v-if="passwordStrength.score < 5">
                                     Hint: Try mixing special characters, numbers, lowercase and uppercase letters
-                                  </span>
+                                </p>
                             </div>
 
                             <FormMessage class="text-xs text-destructive mt-1" />
@@ -146,10 +152,11 @@ const passwordStrength = computed(() => {
                 <!-- Action Form Submission Button -->
                 <AuthSubmitButton title="auth.sign_up" />
 
+                <!-- Login Switch Footer -->
                 <div class="mt-brand-md text-center">
-                    <p class="text-sm text-neutral-500">
+                    <p class="text-sm text-neutral-500 dark:text-muted-foreground">
                         {{ $t("auth.have_account") }}
-                        <router-link :to="{ name: 'auth.login' }" class="text-secondary font-semibold hover:underline decoration-2 ml-1">
+                        <router-link :to="{ name: 'auth.login' }" class="text-secondary dark:text-primary font-semibold hover:underline decoration-2 ml-1">
                             {{ $t("auth.login") }}
                         </router-link>
                     </p>

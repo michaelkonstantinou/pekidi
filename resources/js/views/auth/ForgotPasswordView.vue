@@ -66,25 +66,52 @@ const onSubmit = form.handleSubmit(async (values) => {
                         v-for="field in formFields"
                         v-slot="{ componentField }"
                         :key="field.name"
-                        :name="field.name">
-                        <FormItem v-auto-animate>
-                            <FormLabel>{{ field.label }}</FormLabel>
+                        :name="field.name"
+                    >
+                        <FormItem v-auto-animate class="space-y-1.5 text-left">
+                            <FormLabel class="text-sm font-medium text-neutral-700 dark:text-foreground">
+                                {{ field.label }}
+                            </FormLabel>
+
                             <FormControl>
-                                <Input :type="field.type" :placeholder="field.placeholder" v-bind="componentField" class="h-11 border-neutral-300 rounded-default focus-visible:ring-secondary"/>
+                                <div class="relative">
+                                    <!-- Dynamic Icon Support -->
+                                    <component
+                                        v-if="field.icon"
+                                        :is="field.icon"
+                                        class="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 dark:text-muted-foreground h-4 w-4 pointer-events-none"
+                                    />
+                                    <Input
+                                        :type="field.type"
+                                        :placeholder="field.placeholder"
+                                        v-bind="componentField"
+                                        class="h-11 border-neutral-300 dark:border-border dark:bg-muted/30 dark:text-foreground dark:placeholder:text-muted-foreground rounded-default transition-all duration-150 outline-none focus-visible:outline-none focus:border-primary focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20"
+                                        :class="field.icon ? 'pl-9 pr-3' : 'px-3'"
+                                    />
+                                </div>
                             </FormControl>
-                            <FormMessage />
+
+                            <FormMessage class="text-xs text-destructive mt-1" />
                         </FormItem>
                     </FormField>
-                    <div v-show="mailSent" class="text-center text-sm mt-2 text-red-600">
-                        {{ $t("reset_password_link_sent")}}
+
+                    <!-- Mail Sent Success / Info Alert Callout -->
+                    <div
+                        v-show="mailSent"
+                        class="mt-4 p-3 rounded-default bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-center text-sm font-medium text-emerald-700 dark:text-emerald-300 transition-colors"
+                    >
+                        {{ $t("reset_password_link_sent") }}
                     </div>
                 </div>
 
+                <!-- Submit Action Button -->
                 <AuthSubmitButton title="auth.change_password" />
+
+                <!-- Navigation Switch Link Footer -->
                 <div class="mt-brand-md text-center">
-                    <p class="text-sm text-neutral-500">
+                    <p class="text-sm text-neutral-500 dark:text-muted-foreground">
                         {{ $t("auth.dont_have_account") }}
-                        <router-link :to="{ name: 'auth.register' }" class="text-secondary font-semibold hover:underline decoration-2 ml-1">
+                        <router-link :to="{ name: 'auth.register' }" class="text-secondary dark:text-primary font-semibold hover:underline decoration-2 ml-1">
                             {{ $t("auth.sign_up") }}
                         </router-link>
                     </p>
