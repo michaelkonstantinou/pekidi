@@ -11,7 +11,8 @@ import { autoAnimatePlugin } from '@formkit/auto-animate/vue'
 import {useColorMode} from "@vueuse/core";
 import {useDeclarationStore} from "@/stores/declarationStore";
 import {getLocale} from "@/helpers/localeHelpers";
-
+import {configure} from "vee-validate";
+import { z } from 'zod'; // 1. Import Zod
 
 export const i18n = createI18n({
     locale: getLocale(),
@@ -21,6 +22,10 @@ export const i18n = createI18n({
         en,
         el
     }
+});
+
+z.setErrorMap((issue, ctx) => {
+    return { message: i18n.global.t(issue.message || "validation." + ctx.defaultError.toLowerCase()) };
 });
 
 const pinia: Pinia = createPinia()

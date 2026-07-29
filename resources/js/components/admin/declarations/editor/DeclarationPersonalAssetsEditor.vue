@@ -110,6 +110,7 @@ const realEstateHelpContent: HelpContent = {main: "help_content.real_estate", ti
                    :key="tableRender">
         <template #createForm>
             <DeclarationOwnerPositionForm @reload="reRenderTable"
+                                          :validationSchema="DeclarationInvestment.getFormValidationSchema($t)"
                                           :formFields="DeclarationInvestment.getFormFieldItems()"
                                           :service="declarationInvestmentService"/>
         </template>

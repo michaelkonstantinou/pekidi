@@ -11,6 +11,7 @@ const components = {
     Eye,
     EyeOff
 }
+import * as z from 'zod'
 import { Input } from "@/components/ui/input"
 import AuthService from "@/services/authService";
 import {useRouter} from "vue-router";
@@ -27,8 +28,8 @@ import {FormFieldItem} from "@/dataTypes";
 import AuthLayout from "@/views/layouts/AuthLayout.vue";
 import AuthSubmitButton from "@/components/auth-ui/AuthSubmitButton.vue";
 import {computed, ref} from "vue";
+import {toTypedSchema} from "@vee-validate/zod";
 const router = useRouter()
-const form = useForm()
 
 const formFields: FormFieldItem[] = [
     new FormFieldItem("name", "Full name", "text", "John Smith"),
@@ -37,7 +38,23 @@ const formFields: FormFieldItem[] = [
     new FormFieldItem("passwordConfirmation", "Confirm password", "password")
 ]
 
-const onSubmit = form.handleSubmit((values) => {
+
+const schema = toTypedSchema(
+    z.object({
+        name: z.string().min(1, "Full name is required"),
+        email: z.string().min(1, "E-mail is required").email("Invalid e-mail address"),
+        password: z.string().min(8, "Password must be at least 8 characters"),
+        passwordConfirmation: z.string().min(1, "Please confirm your password")
+    })
+)
+
+// 2. Initialize useForm with empty string initialValues
+const theForm = useForm({
+    validationSchema: schema,
+})
+
+const onSubmit = theForm.handleSubmit((values) => {
+    console.log('here')
     AuthService.register(values.name, values.email, values.password, values.passwordConfirmation)
         .then(() => {
             toast.success($t("messages.auth.successful_registration"))
@@ -47,7 +64,7 @@ const onSubmit = form.handleSubmit((values) => {
             if (errors.response?.status === 422) {
                 const messageErrors = errors.response.data.errors
                 Object.keys(messageErrors).forEach((field) => {
-                    form.setFieldError(field, messageErrors[field][0])
+                    theForm.setFieldError(field, messageErrors[field][0])
                 })
             }
         })
@@ -58,7 +75,7 @@ const showPassword = ref(false)
 // Dynamic Password Strength Calculation connected to Form state values
 const passwordStrength = computed(() => {
     // Read directly from the vee-validate form state
-    const val = form.values.password
+    const val = theForm.values.password
     let score = 0
 
     if (!val) return { score: 0, text: "Weak", colorClass: "bg-destructive", textClass: "text-destructive" }
@@ -126,7 +143,7 @@ const passwordStrength = computed(() => {
                             </FormControl>
 
                             <!-- Password Strength Indicator -->
-                            <div class="pt-1.5 space-y-1" v-if="field.name === 'password' && form.values.password">
+                            <div class="pt-1.5 space-y-1" v-if="field.name === 'password' && theForm.values.password">
                                 <div class="flex justify-between items-center">
                                     <span class="text-xs font-medium" :class="passwordStrength.textClass">
                                         Security Strength: {{ passwordStrength.text }}

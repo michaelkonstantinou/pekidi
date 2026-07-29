@@ -49,3 +49,5 @@ export interface DeclarationEvaluation {
     strengths: String[];
     weaknesses: String[];
 }
+
+export type TranslationFunction = (key: string, params?: Record<string, any>) => string;

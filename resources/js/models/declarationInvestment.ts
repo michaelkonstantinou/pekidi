@@ -1,7 +1,10 @@
 import {AbstractDeclarationOwnerPosition} from "@/models/abstractDeclarationOwnerPosition";
-import {ViewRecordRow} from "@/types";
+import {TranslationFunction, ViewRecordRow} from "@/types";
 import {FormFieldItem} from "@/dataTypes";
 import {getLocaleCurrencyString, getLocaleDateTimeString} from "@/helpers/localeHelpers";
+import {toTypedSchema} from "@vee-validate/zod";
+import * as z from "zod";
+import {TypedSchema} from "vee-validate";
 
 export default class DeclarationInvestment extends AbstractDeclarationOwnerPosition {
     name: string
@@ -22,6 +25,33 @@ export default class DeclarationInvestment extends AbstractDeclarationOwnerPosit
         this.acquisitionType = data.acquisition_type
         this.acquisitionYear = data.acquisition_year
         this.value = data.value
+    }
+
+    static override getFormValidationSchema(t: TranslationFunction): TypedSchema {
+        const currentYear = new Date().getFullYear();
+
+        return toTypedSchema(
+            z.object({
+                name: z.string().min(3, t("validation.min_characters", { count: 3 })),
+                registration_number: z.string().nullable().optional(),
+                country: z.string().nullable().optional(),
+                quantity: z
+                    .number({ invalid_type_error: t("validation.must_be_number") })
+                    .int(t("validation.must_be_integer"))
+                    .min(0, t("validation.min_value", { min: 0 })),
+                acquisition_type: z.string().nullable().optional(),
+                acquisition_year: z
+                    .number({ invalid_type_error: t("validation.must_be_number") })
+                    .int(t("validation.must_be_integer"))
+                    .min(1900, t("validation.min_year", { year: 1900 }))
+                    .max(currentYear, t("validation.max_year", { year: currentYear }))
+                    .nullable()
+                    .optional(),
+                value: z
+                    .number({ invalid_type_error: t("validation.must_be_number") })
+                    .min(0, t("validation.min_value", { min: 0 })),
+            })
+        );
     }
 
     static override getFormFieldItems(): FormFieldItem[] {

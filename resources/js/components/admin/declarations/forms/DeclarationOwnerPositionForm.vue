@@ -12,6 +12,11 @@ import ApiResourceRepository from "@/services/apiResourceRepository";
 
 const props = defineProps({
     service: ApiResourceRepository,
+    validationSchema: {
+        type: Object,
+        required: false,
+        default: undefined
+    },
     record: {
         required: false,
         type: AbstractDeclarationOwnerPosition,
@@ -24,7 +29,9 @@ const props = defineProps({
 })
 const emit = defineEmits(['reload'])
 
-const form = useForm()
+const form = useForm({
+    validationSchema: props.validationSchema
+})
 
 if (props.record instanceof AbstractDeclarationOwnerPosition) {
     form.setValues(props.record.toFormValues())
@@ -39,5 +46,5 @@ const { onSubmit, isFormLoading } = useUpsertForm(
 </script>
 
 <template>
-    <UpsertForm :formFields="formFields" @submit="onSubmit" :isLoading="isFormLoading"/>
+    <UpsertForm :validationSchema="validationSchema" :formFields="formFields" @submit="onSubmit" :isLoading="isFormLoading"/>
 </template>

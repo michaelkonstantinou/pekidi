@@ -214,5 +214,17 @@
         "personal_net_worth_desc": "Individual assets minus individual liabilities registered directly under your name.",
         "joint_net_worth_desc": "Combined assets and liabilities co-owned with a spouse or domestic partner.",
         "family_net_worth_desc": "Aggregated total net worth across all declared household members and dependents."
+    },
+    "validation": {
+        "required": "This field is required",
+        "must_be_number": "Must be a valid number",
+        "must_be_integer": "Must be a whole integer",
+        "min_characters": "Must be at least {count} characters",
+        "min_value": "Must be {min} or greater",
+        "min_year": "Year must be {year} or later",
+        "max_year": "Year cannot be after {year}",
+        "invalid_type": "Invalid value provided",
+        "too_small": "The value provided is too small",
+        "too_big": "The value provided is too large"
     }
 }
