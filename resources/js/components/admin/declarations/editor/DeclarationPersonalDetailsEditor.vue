@@ -34,8 +34,8 @@ const emit = defineEmits(['saved'])
 const isLoading: Ref<boolean> = ref(false)
 
 const formFields: FormFieldItem[] = [
-    new FormFieldItem("name", "labels.name"),
-    new FormFieldItem("full_name", "labels.full_name"),
+    new FormFieldItem("name", "labels.name", "text", "", [], {}, true),
+    new FormFieldItem("full_name", "labels.full_name", "text", "", [], {}, true),
     new FormFieldItem("born_at", "labels.born_at", "date"),
     new FormFieldItem("home_address", "labels.home_address"),
     new FormFieldItem("national_id", "labels.national_id"),

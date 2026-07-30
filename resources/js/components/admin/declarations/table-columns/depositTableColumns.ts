@@ -10,7 +10,7 @@ export function useDepositColumns(apiService: ApiResourceRepository<any>) {
 
     const depositColumns: ColumnDef<DeclarationDeposit>[] = [
         makeTextColumn<DeclarationDeposit>("name", t("labels.name")),
-        makeTextColumn<DeclarationDeposit>("account_number", t("labels.account_number")),
+        makeTextColumn<DeclarationDeposit>("accountNumber", t("labels.account_number")),
         makeCurrencyColumn<DeclarationDeposit>("value", t("labels.value")),
         makeDateColumn<DeclarationDeposit>("updatedAt", t("labels.updated_at")),
         makeActionsColumn(
@@ -18,6 +18,7 @@ export function useDepositColumns(apiService: ApiResourceRepository<any>) {
             (record) => ({
                 record: record,
                 service: apiService,
+                validationSchema: DeclarationDeposit.getFormValidationSchema(t),
                 formFields: DeclarationDeposit.getFormFieldItems()
             })
         )

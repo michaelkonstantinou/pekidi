@@ -3,7 +3,6 @@ import {ColumnDef} from "@tanstack/vue-table";
 import {useI18n} from "vue-i18n";
 import DeclarationVehicle from "@/models/declarationVehicle";
 import DeclarationOwnerPositionForm from "@/components/admin/declarations/forms/DeclarationOwnerPositionForm.vue";
-import DeclarationVehicleService from "@/services/declarationVehicleService";
 import ApiResourceRepository from "@/services/apiResourceRepository";
 
 export function useVehicleColumns(apiService: ApiResourceRepository<any>) {
@@ -18,6 +17,7 @@ export function useVehicleColumns(apiService: ApiResourceRepository<any>) {
             (record) => ({
                 record: record,
                 service: apiService,
+                validationSchema: DeclarationVehicle.getFormValidationSchema(t),
                 formFields: DeclarationVehicle.getFormFieldItems()
             })
         )

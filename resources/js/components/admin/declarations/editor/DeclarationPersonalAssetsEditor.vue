@@ -77,6 +77,7 @@ const realEstateHelpContent: HelpContent = {main: "help_content.real_estate", ti
                    :key="tableRender">
         <template #createForm>
             <DeclarationOwnerPositionForm @reload="reRenderTable"
+                                          :validationSchema="DeclarationRealEstate.getFormValidationSchema($t)"
                                           :formFields="DeclarationRealEstate.getFormFieldItems()"
                                           :service="declarationRealEstateService"/>
         </template>
@@ -87,6 +88,7 @@ const realEstateHelpContent: HelpContent = {main: "help_content.real_estate", ti
     <DataCrudTable title="titles.vehicles" :columns="vehicleColumns" :apiService="declarationVehicleService" :key="tableRender">
         <template #createForm>
             <DeclarationOwnerPositionForm @reload="reRenderTable"
+                                          :validationSchema="DeclarationVehicle.getFormValidationSchema($t)"
                                           :formFields="DeclarationVehicle.getFormFieldItems()"
                                           :service="declarationVehicleService"/>
         </template>
@@ -97,6 +99,7 @@ const realEstateHelpContent: HelpContent = {main: "help_content.real_estate", ti
     <DataCrudTable title="titles.businesses" :columns="businessColumns" :apiService="declarationBusinessService" :key="tableRender">
         <template #createForm>
             <DeclarationOwnerPositionForm @reload="reRenderTable"
+                                          :validationSchema="DeclarationBusiness.getFormValidationSchema($t)"
                                           :formFields="DeclarationBusiness.getFormFieldItems()"
                                           :service="declarationBusinessService"/>
         </template>
@@ -121,6 +124,7 @@ const realEstateHelpContent: HelpContent = {main: "help_content.real_estate", ti
     <DataCrudTable title="titles.deposits" :columns="depositColumns" :apiService="declarationDepositService" :key="tableRender">
         <template #createForm>
             <DeclarationOwnerPositionForm @reload="reRenderTable"
+                                          :validationSchema="DeclarationDeposit.getFormValidationSchema($t)"
                                           :formFields="DeclarationDeposit.getFormFieldItems()"
                                           :service="declarationDepositService"/>
         </template>
@@ -131,6 +135,7 @@ const realEstateHelpContent: HelpContent = {main: "help_content.real_estate", ti
     <DataCrudTable title="titles.additional_assets" :columns="additionalAssetColumns" :apiService="declarationAdditionalAssetService" :key="tableRender">
         <template #createForm>
             <DeclarationOwnerPositionForm @reload="reRenderTable"
+                                          :validationSchema="DeclarationAdditionalAsset.getFormValidationSchema($t)"
                                           :formFields="DeclarationAdditionalAsset.getFormFieldItems()"
                                           :service="declarationAdditionalAssetService"/>
         </template>
@@ -141,6 +146,7 @@ const realEstateHelpContent: HelpContent = {main: "help_content.real_estate", ti
     <DataCrudTable title="titles.debts" :columns="debtColumns" :apiService="declarationDebtService" :key="tableRender">
         <template #createForm>
             <DeclarationOwnerPositionForm @reload="reRenderTable"
+                                          :validationSchema="DeclarationDebt.getFormValidationSchema($t)"
                                           :formFields="DeclarationDebt.getFormFieldItems()"
                                           :service="declarationDebtService"/>
         </template>

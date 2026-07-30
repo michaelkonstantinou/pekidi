@@ -3,7 +3,6 @@ import {ColumnDef} from "@tanstack/vue-table";
 import {useI18n} from "vue-i18n";
 import DeclarationBusiness from "@/models/declarationBusiness";
 import DeclarationOwnerPositionForm from "@/components/admin/declarations/forms/DeclarationOwnerPositionForm.vue";
-import DeclarationBusinessService from "@/services/declarationBusinessService";
 import ApiResourceRepository from "@/services/apiResourceRepository";
 
 export function useBusinessColumns(apiService: ApiResourceRepository<any>) {
@@ -20,6 +19,7 @@ export function useBusinessColumns(apiService: ApiResourceRepository<any>) {
             (record) => ({
                 record: record,
                 service: apiService,
+                validationSchema: DeclarationBusiness.getFormValidationSchema(t),
                 formFields: DeclarationBusiness.getFormFieldItems()
             })
         )

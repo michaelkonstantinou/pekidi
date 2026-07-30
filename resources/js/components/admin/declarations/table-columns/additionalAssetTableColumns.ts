@@ -18,6 +18,7 @@ export function useAdditionalAssetColumns(apiService: ApiResourceRepository<any>
             (record) => ({
                 record: record,
                 service: apiService,
+                validationSchema: DeclarationAdditionalAsset.getFormValidationSchema(t),
                 formFields: DeclarationAdditionalAsset.getFormFieldItems()
             })
         )

@@ -1,11 +1,8 @@
 import {makeActionsColumn, makeCurrencyColumn, makeDateColumn, makeTextColumn} from "@/helpers/columnHelpers";
 import {ColumnDef} from "@tanstack/vue-table";
 import {useI18n} from "vue-i18n";
-import DeclarationBusiness from "@/models/declarationBusiness";
 import DeclarationOwnerPositionForm from "@/components/admin/declarations/forms/DeclarationOwnerPositionForm.vue";
-import DeclarationBusinessService from "@/services/declarationBusinessService";
 import DeclarationInvestment from "@/models/declarationInvestment";
-import DeclarationInvestmentService from "@/services/declarationInvestmentService";
 import ApiResourceRepository from "@/services/apiResourceRepository";
 
 export function useInvestmentColumns(apiService: ApiResourceRepository<any>) {
@@ -21,6 +18,7 @@ export function useInvestmentColumns(apiService: ApiResourceRepository<any>) {
             (record) => ({
                 record: record,
                 service: apiService,
+                validationSchema: DeclarationInvestment.getFormValidationSchema(t),
                 formFields: DeclarationInvestment.getFormFieldItems()
             })
         )

@@ -18,7 +18,10 @@ defineProps({
         :key="field.name"
         :name="field.name">
         <FormItem v-auto-animate>
-            <FormLabel>{{ $t(field.label) }}</FormLabel>
+            <FormLabel>
+                <span v-if="field.isRequired">{{ $t(field.label) }}*</span>
+                <span v-else>{{ $t(field.label) }}</span>
+            </FormLabel>
             <FormControl>
                 <AppInput :field="field" v-bind="componentField" />
             </FormControl>

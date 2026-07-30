@@ -1,7 +1,10 @@
 import {AbstractDeclarationOwnerPosition} from "@/models/abstractDeclarationOwnerPosition";
-import {ViewRecordRow} from "@/types";
+import {TranslationFunction, ViewRecordRow} from "@/types";
 import {getLocaleCurrencyString, getLocaleDateTimeString} from "@/helpers/localeHelpers";
 import {FormFieldItem} from "@/dataTypes";
+import {toTypedSchema} from "@vee-validate/zod";
+import {TypedSchema} from "vee-validate";
+import * as z from "zod";
 
 export default class DeclarationVehicle extends AbstractDeclarationOwnerPosition {
     description: string
@@ -35,5 +38,14 @@ export default class DeclarationVehicle extends AbstractDeclarationOwnerPosition
             new FormFieldItem("description", "labels.description", "text", "placeholders.vehicle_description"),
             new FormFieldItem("value", "labels.value", "number", "", [], {"min": 0}),
         ]
+    }
+
+    static override getFormValidationSchema(t: TranslationFunction): TypedSchema {
+        return toTypedSchema(
+            z.object({
+                description: z.string().min(1).min(3, t("validation.min_characters", { count: 3 })),
+                value: z.number().min(0, t("validation.min_value", { min: 0 })),
+            })
+        );
     }
 }

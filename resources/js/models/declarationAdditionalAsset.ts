@@ -1,7 +1,10 @@
 import {AbstractDeclarationOwnerPosition} from "@/models/abstractDeclarationOwnerPosition";
-import {ViewRecordRow} from "@/types";
+import {TranslationFunction, ViewRecordRow} from "@/types";
 import {FormFieldItem} from "@/dataTypes";
 import {getLocaleCurrencyString, getLocaleDateTimeString} from "@/helpers/localeHelpers";
+import {toTypedSchema} from "@vee-validate/zod";
+import {TypedSchema} from "vee-validate";
+import * as z from "zod";
 
 export default class DeclarationAdditionalAsset extends AbstractDeclarationOwnerPosition {
     name: string
@@ -47,20 +50,48 @@ export default class DeclarationAdditionalAsset extends AbstractDeclarationOwner
     }
 
     static override getFormFieldItems(): FormFieldItem[] {
+        const currentYear = new Date().getFullYear();
+
         return [
-            new FormFieldItem("name", "labels.name", "text", "placeholders.asset_name"),
-            new FormFieldItem("asset_type", "labels.asset_type", "text", "placeholders.asset_type"),
-            new FormFieldItem("registration_number", "labels.registration_number", "text", "placeholders.registration_number"),
-            new FormFieldItem("acquisition_type", "labels.acquisition_type", "text", "placeholders.acquisition_type"),
+            new FormFieldItem("name", "labels.name", "text", "placeholders.asset_name", [], {}, true),
+            new FormFieldItem("asset_type", "labels.asset_type", "text", "placeholders.asset_type", [], {}, true),
+            new FormFieldItem("registration_number", "labels.registration_number", "text", "placeholders.registration_number", [], {}, false),
+            new FormFieldItem("acquisition_type", "labels.acquisition_type", "text", "placeholders.acquisition_type", [], {}, false),
             new FormFieldItem(
                 "acquisition_year",
                 "labels.acquisition_year",
                 "number",
                 "placeholders.acquisition_year",
                 [],
-                {"min": 1900, "max": new Date().getFullYear()}
+                { min: 1900, max: currentYear },
+                false
             ),
-            new FormFieldItem("value", "labels.value", "number", "", [], {"min": 0}),
-        ]
+            new FormFieldItem("value", "labels.value", "number", "", [], { min: 0 }, true),
+        ];
+    }
+
+    static override getFormValidationSchema(t: TranslationFunction): TypedSchema {
+        const currentYear = new Date().getFullYear();
+
+        return toTypedSchema(
+            z.object({
+                // min(1) triggers validation.required from global error map
+                name: z
+                    .string()
+                    .min(1)
+                    .min(3, t("validation.min_characters", { count: 3 })),
+                asset_type: z.string().min(1),
+                registration_number: z.string().nullable().optional(),
+                acquisition_type: z.string().nullable().optional(),
+                acquisition_year: z
+                    .number()
+                    .int(t("validation.must_be_integer"))
+                    .min(1900, t("validation.min_year", { year: 1900 }))
+                    .max(currentYear, t("validation.max_year", { year: currentYear }))
+                    .nullable()
+                    .optional(),
+                value: z.number().min(0, t("validation.min_value", { min: 0 })),
+            })
+        );
     }
 }

@@ -1,10 +1,13 @@
 import {AbstractDeclarationOwnerPosition} from "@/models/abstractDeclarationOwnerPosition";
-import {ViewRecordRow} from "@/types";
+import {TranslationFunction, ViewRecordRow} from "@/types";
 import {DebtType, FormFieldItem} from "@/dataTypes";
 import {
     getLocaleCurrencyString,
     getLocaleDateTimeString
 } from "@/helpers/localeHelpers";
+import * as z from "zod";
+import {toTypedSchema} from "@vee-validate/zod";
+import {TypedSchema} from "vee-validate";
 
 export default class DeclarationDebt extends AbstractDeclarationOwnerPosition {
     creditorName: string
@@ -29,28 +32,10 @@ export default class DeclarationDebt extends AbstractDeclarationOwnerPosition {
 
     static override getFormFieldItems(): FormFieldItem[] {
         return [
-            new FormFieldItem(
-                "creditor_name",
-                "labels.creditor_name",
-                "text",
-                "placeholders.creditor_name"
-            ),
-            new FormFieldItem(
-                "debt_type",
-                "labels.debt_type",
-                "select",
-                "placeholders.debt_type",
-                DebtType.getFormOptions()
-            ),
-            new FormFieldItem(
-                "value",
-                "labels.value",
-                "number",
-                "",
-                [],
-                {"min": 0}
-            ),
-        ]
+            new FormFieldItem("creditor_name", "labels.creditor_name", "text", "placeholders.creditor_name", [], {}, true),
+            new FormFieldItem("debt_type", "labels.debt_type", "select", "placeholders.debt_type", DebtType.getFormOptions(), {}, true),
+            new FormFieldItem("value", "labels.value", "number", "", [], { min: 0 }, true),
+        ];
     }
 
     override toViewRecordData(): ViewRecordRow[] {
@@ -103,5 +88,15 @@ export default class DeclarationDebt extends AbstractDeclarationOwnerPosition {
         }
 
         return `${DebtType.TRANSLATION_PREFIX}.${this.debtType}`;
+    }
+
+    static override getFormValidationSchema(t: TranslationFunction): TypedSchema {
+        return toTypedSchema(
+            z.object({
+                creditor_name: z.string().min(1).min(2, t("validation.min_characters", { count: 2 })),
+                debt_type: z.string().min(1),
+                value: z.number().min(0, t("validation.min_value", { min: 0 })),
+            })
+        );
     }
 }

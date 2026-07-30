@@ -1,7 +1,10 @@
-import {ViewRecordRow} from "@/types";
-import {getLocaleCurrencyString, getLocaleDateString, getLocaleDateTimeString} from "@/helpers/localeHelpers";
+import {TranslationFunction, ViewRecordRow} from "@/types";
+import {getLocaleCurrencyString, getLocaleDateTimeString} from "@/helpers/localeHelpers";
 import {FormFieldItem} from "@/dataTypes";
 import {AbstractDeclarationOwnerPosition} from "@/models/abstractDeclarationOwnerPosition";
+import {toTypedSchema} from "@vee-validate/zod";
+import {TypedSchema} from "vee-validate";
+import * as z from "zod";
 
 export default class DeclarationBusiness extends AbstractDeclarationOwnerPosition {
     name: string
@@ -39,10 +42,21 @@ export default class DeclarationBusiness extends AbstractDeclarationOwnerPositio
 
     static override getFormFieldItems(): FormFieldItem[] {
         return [
-            new FormFieldItem("name", "labels.name", "text", "placeholders.business_name"),
-            new FormFieldItem("business_type", "labels.business_type", "text", "placeholders.business_type"),
-            new FormFieldItem("involvement_type", "labels.involvement_type", "text", "placeholders.involvement_type"),
-            new FormFieldItem("value", "labels.value", "number", "", [], {"min": 0}),
-        ]
+            new FormFieldItem("name", "labels.name", "text", "placeholders.business_name", [], {}, true),
+            new FormFieldItem("business_type", "labels.business_type", "text", "placeholders.business_type", [], {}, true),
+            new FormFieldItem("involvement_type", "labels.involvement_type", "text", "placeholders.involvement_type", [], {}, true),
+            new FormFieldItem("value", "labels.value", "number", "", [], { min: 0 }, true),
+        ];
+    }
+
+    static override getFormValidationSchema(t: TranslationFunction): TypedSchema {
+        return toTypedSchema(
+            z.object({
+                name: z.string().min(1).min(2, t("validation.min_characters", { count: 2 })),
+                business_type: z.string().min(1).min(2, t("validation.min_characters", { count: 2 })),
+                involvement_type: z.string().min(1).min(2, t("validation.min_characters", { count: 2 })),
+                value: z.number().min(0, t("validation.min_value", { min: 0 })),
+            })
+        );
     }
 }

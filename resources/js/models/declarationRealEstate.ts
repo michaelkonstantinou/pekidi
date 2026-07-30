@@ -1,7 +1,10 @@
 import {AbstractDeclarationOwnerPosition} from "@/models/abstractDeclarationOwnerPosition";
-import {ViewRecordRow} from "@/types";
+import {TranslationFunction, ViewRecordRow} from "@/types";
 import {getLocaleCurrencyString, getLocaleDateTimeString} from "@/helpers/localeHelpers";
 import {FormFieldItem} from "@/dataTypes";
+import {toTypedSchema} from "@vee-validate/zod";
+import {TypedSchema} from "vee-validate";
+import * as z from "zod";
 
 export default class DeclarationRealEstate extends AbstractDeclarationOwnerPosition {
     location: string
@@ -55,15 +58,46 @@ export default class DeclarationRealEstate extends AbstractDeclarationOwnerPosit
     }
 
     static override getFormFieldItems(): FormFieldItem[] {
+        const currentYear = new Date().getFullYear();
+
         return [
-            new FormFieldItem("location", "labels.location", "text", "placeholders.location"),
-            new FormFieldItem("area", "labels.area", "number"),
-            new FormFieldItem("real_estate_type", "labels.real_estate_type", "text", "placeholders.real_estate_type"),
-            new FormFieldItem("acquisition_type", "labels.acquisition_type", "text", "placeholders.acquisition_type"),
-            new FormFieldItem("acquisition_year", "labels.acquisition_year", "number"),
-            new FormFieldItem("acquisition_value", "labels.acquisition_value", "number", "", [], {"min": 0}),
-            new FormFieldItem("current_value", "labels.current_value", "number", "", [], {"min": 0}),
-            new FormFieldItem("rights_encumbrances", "labels.rights_encumbrances", 'textarea', "placeholders.rights_encumbrances"),
-        ]
+            new FormFieldItem("location", "labels.location", "text", "placeholders.location", [], {}, true),
+            new FormFieldItem("area", "labels.area", "number", "", [], { min: 1 }, true),
+            new FormFieldItem("real_estate_type", "labels.real_estate_type", "text", "placeholders.real_estate_type", [], {}, true),
+            new FormFieldItem("acquisition_type", "labels.acquisition_type", "text", "placeholders.acquisition_type", [], {}, true),
+            new FormFieldItem(
+                "acquisition_year",
+                "labels.acquisition_year",
+                "number",
+                "",
+                [],
+                { min: 1800, max: currentYear },
+                true
+            ),
+            new FormFieldItem("acquisition_value", "labels.acquisition_value", "number", "", [], { min: 0 }, true),
+            new FormFieldItem("current_value", "labels.current_value", "number", "", [], { min: 0 }, true),
+            new FormFieldItem("rights_encumbrances", "labels.rights_encumbrances", "textarea", "placeholders.rights_encumbrances", [], {}, true),
+        ];
+    }
+
+    static override getFormValidationSchema(t: TranslationFunction): TypedSchema {
+        const currentYear = new Date().getFullYear();
+
+        return toTypedSchema(
+            z.object({
+                location: z.string().min(1),
+                real_estate_type: z.string().min(1),
+                area: z.number().min(1, t("validation.min_value", { min: 1 })),
+                acquisition_type: z.string().min(1),
+                acquisition_year: z
+                    .number()
+                    .int(t("validation.must_be_integer"))
+                    .min(1800, t("validation.min_year", { year: 1800 }))
+                    .max(currentYear, t("validation.max_year", { year: currentYear })),
+                acquisition_value: z.number().min(0, t("validation.min_value", { min: 0 })),
+                current_value: z.number().min(0, t("validation.min_value", { min: 0 })),
+                rights_encumbrances: z.string().min(1),
+            })
+        );
     }
 }

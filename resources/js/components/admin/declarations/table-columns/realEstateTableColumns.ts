@@ -3,7 +3,6 @@ import {ColumnDef} from "@tanstack/vue-table";
 import {useI18n} from "vue-i18n";
 import DeclarationRealEstate from "@/models/declarationRealEstate";
 import DeclarationOwnerPositionForm from "@/components/admin/declarations/forms/DeclarationOwnerPositionForm.vue";
-import DeclarationRealEstateService from "@/services/declarationRealEstateService";
 import ApiResourceRepository from "@/services/apiResourceRepository";
 
 export function useRealEstateTableColumns(apiService: ApiResourceRepository<any>) {
@@ -19,6 +18,7 @@ export function useRealEstateTableColumns(apiService: ApiResourceRepository<any>
             (record) => ({
                 record: record,
                 service: apiService,
+                validationSchema: DeclarationRealEstate.getFormValidationSchema(t),
                 formFields: DeclarationRealEstate.getFormFieldItems()
             })
         )

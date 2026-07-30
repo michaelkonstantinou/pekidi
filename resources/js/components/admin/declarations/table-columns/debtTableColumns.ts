@@ -3,7 +3,6 @@ import {ColumnDef} from "@tanstack/vue-table";
 import {useI18n} from "vue-i18n";
 import DeclarationOwnerPositionForm from "@/components/admin/declarations/forms/DeclarationOwnerPositionForm.vue";
 import ApiResourceRepository from "@/services/apiResourceRepository";
-import DeclarationAdditionalAsset from "@/models/declarationAdditionalAsset";
 import DeclarationDebt from "@/models/declarationDebt";
 import {h} from "vue";
 
@@ -28,6 +27,7 @@ export function useDebtColumns(apiService: ApiResourceRepository<any>) {
             (record) => ({
                 record: record,
                 service: apiService,
+                validationSchema: DeclarationDebt.getFormValidationSchema(t),
                 formFields: DeclarationDebt.getFormFieldItems()
             })
         )

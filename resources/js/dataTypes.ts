@@ -4,15 +4,17 @@ export class FormFieldItem {
     label: string;
     placeholder: string;
     options: Array<any>;
-    attributes: Object<any>;
+    attributes: Object;
+    isRequired: boolean;
 
-    constructor(name: string, label: string, type: string = "text", placeholder: string = "", options: any = [], attributes: any = {}) {
+    constructor(name: string, label: string, type: string = "text", placeholder: string = "", options: any = [], attributes: any = {}, isRequired: boolean = false) {
         this.name = name;
         this.type = type;
         this.label = label;
         this.placeholder = placeholder;
-        this.options = options
-        this.attributes = attributes
+        this.options = options;
+        this.attributes = attributes;
+        this.isRequired = isRequired
     }
 }
 

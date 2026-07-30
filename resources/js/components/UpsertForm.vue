@@ -32,7 +32,10 @@ const props = defineProps({
                 :key="field.name"
                 :name="field.name">
                 <FormItem v-auto-animate>
-                    <FormLabel>{{ $t(field.label) }}</FormLabel>
+                    <FormLabel>
+                        <span v-if="field.isRequired">{{ $t(field.label) }}*</span>
+                        <span v-else>{{ $t(field.label) }}</span>
+                    </FormLabel>
                     <AppSelect :field="field" v-if="field.type === 'select'" v-bind="componentField" />
 
                     <FormControl v-if="field.type === 'textarea'">

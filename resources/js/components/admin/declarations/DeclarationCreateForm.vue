@@ -21,7 +21,7 @@ const emit = defineEmits(['saved'])
 const isLoading: Ref<boolean> = ref(false)
 
 const formFields: FormFieldItem[] = [
-    new FormFieldItem("name", "labels.name"),
+    new FormFieldItem("name", "labels.name", "text", "", [], {}, true),
 ]
 
 const onSubmit = form.handleSubmit(values => {

@@ -55,18 +55,25 @@ export default class DeclarationInvestment extends AbstractDeclarationOwnerPosit
     }
 
     static override getFormFieldItems(): FormFieldItem[] {
+        const currentYear = new Date().getFullYear();
+
         return [
-            new FormFieldItem("name", "labels.name", "text", "placeholders.investment_name"),
-            new FormFieldItem("registration_number", "labels.registration_number", "text", "placeholders.registration_number"),
-            new FormFieldItem("country", "labels.country", "text", "placeholders.country"),
-            new FormFieldItem("quantity", "labels.quantity", "number", "placeholders.quantity", [], {"min": 0}),
-            new FormFieldItem("acquisition_type", "labels.acquisition_type", "text", "placeholders.acquisition_type"),
-            new FormFieldItem("acquisition_year", "labels.acquisition_year", "number", "placeholders.acquisition_year", [], {
-                "min": 1900,
-                "max": new Date().getFullYear()
-            }),
-            new FormFieldItem("value", "labels.value", "number", "", [], {"min": 0}),
-        ]
+            new FormFieldItem("name", "labels.name", "text", "placeholders.investment_name", [], {}, true),
+            new FormFieldItem("registration_number", "labels.registration_number", "text", "placeholders.registration_number", [], {}, false),
+            new FormFieldItem("country", "labels.country", "text", "placeholders.country", [], {}, false),
+            new FormFieldItem("quantity", "labels.quantity", "number", "placeholders.quantity", [], { min: 0 }, true),
+            new FormFieldItem("acquisition_type", "labels.acquisition_type", "text", "placeholders.acquisition_type", [], {}, false),
+            new FormFieldItem(
+                "acquisition_year",
+                "labels.acquisition_year",
+                "number",
+                "placeholders.acquisition_year",
+                [],
+                { min: 1900, max: currentYear },
+                false
+            ),
+            new FormFieldItem("value", "labels.value", "number", "", [], { min: 0 }, true),
+        ];
     }
 
     override toViewRecordData(): ViewRecordRow[] {

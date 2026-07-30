@@ -5,7 +5,7 @@ export interface BreadcrumbItemType {
 
 export interface ViewRecordRow {
     label: string,
-    value: string,
+    value: any,
     isLongText: boolean,
     isMeta: boolean,
     isTranslatable?: boolean,

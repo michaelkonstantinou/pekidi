@@ -1,7 +1,10 @@
 import {AbstractDeclarationOwnerPosition} from "@/models/abstractDeclarationOwnerPosition";
-import {ViewRecordRow} from "@/types";
+import {TranslationFunction, ViewRecordRow} from "@/types";
 import {FormFieldItem} from "@/dataTypes";
 import {getLocaleCurrencyString, getLocaleDateTimeString} from "@/helpers/localeHelpers";
+import {toTypedSchema} from "@vee-validate/zod";
+import {TypedSchema} from "vee-validate";
+import * as z from "zod";
 
 export default class DeclarationDeposit extends AbstractDeclarationOwnerPosition {
     name: string
@@ -18,10 +21,10 @@ export default class DeclarationDeposit extends AbstractDeclarationOwnerPosition
 
     static override getFormFieldItems(): FormFieldItem[] {
         return [
-            new FormFieldItem("name", "labels.name", "text", "placeholders.deposit_name"),
-            new FormFieldItem("account_number", "labels.account_number", "text", "placeholders.account_number"),
-            new FormFieldItem("value", "labels.value", "number", "", [], {"min": 0}),
-        ]
+            new FormFieldItem("name", "labels.name", "text", "placeholders.deposit_name", [], {}, true),
+            new FormFieldItem("account_number", "labels.account_number", "text", "placeholders.account_number", [], {}, false),
+            new FormFieldItem("value", "labels.value", "number", "", [], { min: 0 }, true),
+        ];
     }
 
     override toViewRecordData(): ViewRecordRow[] {
@@ -40,5 +43,15 @@ export default class DeclarationDeposit extends AbstractDeclarationOwnerPosition
             "account_number": this.accountNumber,
             "value": this.value,
         }
+    }
+
+    static override getFormValidationSchema(t: TranslationFunction): TypedSchema {
+        return toTypedSchema(
+            z.object({
+                name: z.string().min(1).min(3, t("validation.min_characters", { count: 3 })),
+                account_number: z.string().nullable().optional(),
+                value: z.number().min(0, t("validation.min_value", { min: 0 })),
+            })
+        );
     }
 }
