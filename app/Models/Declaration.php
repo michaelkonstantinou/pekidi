@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Types\OwnerType;
+use App\Types\RelationshipType;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -17,6 +19,7 @@ use Throwable;
  * @property string $national_id
  * @property int $user_id
  * @property Collection<DeclarationDebt> $debts
+ * @property Collection<DeclarationFamilyMember> $familyMembers
  */
 class Declaration extends Model
 {
@@ -132,5 +135,47 @@ class Declaration extends Model
 
             return parent::delete();
         });
+    }
+
+    /**
+     * Check if the declaration includes a spouse.
+     */
+    public function hasSpouse(): bool
+    {
+        return $this->familyMembers->contains(
+            fn(DeclarationFamilyMember $member) => $member->relationship === RelationshipType::Spouse
+        );
+    }
+
+    /**
+     * Retrieve the spouse model, if present.
+     */
+    public function spouse(): ?DeclarationFamilyMember
+    {
+        return $this->familyMembers->first(
+            fn(DeclarationFamilyMember $member) => $member->relationship === RelationshipType::Spouse
+        );
+    }
+
+    /**
+     * Get a collection of all minor children (under 18 years old).
+     */
+    public function minorChildren(): Collection
+    {
+        return $this->familyMembers->filter(function (DeclarationFamilyMember $member) {
+            if ($member->relationship !== RelationshipType::Child) {
+                return false;
+            }
+
+            return !$member->born_at || Carbon::parse($member->born_at)->age < 18;
+        });
+    }
+
+    /**
+     * Count the total number of minor children.
+     */
+    public function minorChildrenCount(): int
+    {
+        return $this->minorChildren()->count();
     }
 }

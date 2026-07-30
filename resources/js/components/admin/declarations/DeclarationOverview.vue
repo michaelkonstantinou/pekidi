@@ -13,6 +13,8 @@ import DeclarationNetWorthOverview from "@/components/app-ui/declarations/Declar
 import AppSectionHeader from "@/components/app-ui/AppSectionHeader.vue";
 import AssetDistributionChartCard from "@/components/app-ui/declarations/AssetDistributionChartCard.vue";
 import DeclarationEvaluationListItemCard from "@/components/app-ui/declarations/DeclarationEvaluationListItemCard.vue";
+import axios from "axios";
+import DeclarationPdfService from "@/services/declarationPdfService";
 
 const {toastApiErrors} = useErrorMessager()
 
@@ -27,7 +29,9 @@ onMounted(async () => {
     await loadData()
 })
 
+const pdfService = new DeclarationPdfService()
 const isLoading = ref(false)
+const isPdfProcessing = ref(false)
 const overview: Ref<DeclarationOverview | null> = ref(null)
 
 async function loadData() {
@@ -43,16 +47,33 @@ async function loadData() {
     }
 }
 
-const assetDistribution = [
-    { label: 'Real Estate', percentage: '45%', color: 'bg-primary' },
-    { label: 'Financials', percentage: '25%', color: 'bg-secondary' },
-    { label: 'Business', percentage: '15%', color: 'bg-blue-400' },
-    { label: 'Others', percentage: '15%', color: 'bg-slate-300' },
-]
+const handleDownload = async () => {
+    if (isPdfProcessing.value) return;
+    isPdfProcessing.value = true;
 
-const handlePrint = () => {
-    window.print()
-}
+    try {
+        await pdfService.download(props.declaration.id);
+    } catch (error) {
+        const message = await pdfService.parseBlobError(error);
+        alert(message);
+    } finally {
+        isPdfProcessing.value = false;
+    }
+};
+
+const handlePrint = async () => {
+    if (isPdfProcessing.value) return;
+    isPdfProcessing.value = true;
+
+    try {
+        await pdfService.print(props.declaration.id);
+    } catch (error) {
+        const message = await pdfService.parseBlobError(error);
+        alert(message);
+    } finally {
+        isPdfProcessing.value = false;
+    }
+};
 </script>
 
 <template>
@@ -67,13 +88,14 @@ const handlePrint = () => {
                 <Button
                     variant="outline"
                     size="xl"
+                    :disabled="isPdfProcessing"
                     @click="handlePrint"
                 >
                     <Printer class="w-4 h-4" />
                     Print
                 </Button>
 
-                <Button size="xl">
+                <Button size="xl" :disabled="isPdfProcessing" @click="handleDownload">
                     <Download class="w-4 h-4" />
                     Export PDF
                 </Button>
