@@ -26,10 +26,14 @@ const formFields: FormFieldItem[] = [
 
 const onSubmit = form.handleSubmit(values => {
     isLoading.value = true
-    declarationStore.create(values).then(() => {
-        toast.success(t("messages.actions.create_success"))
-        form.resetForm()
-        emit('saved')
+    declarationStore.create(values).then(declaration => {
+        if (declaration === null) {
+            toast.error(t("errors.unexpected"))
+        } else {
+            toast.success(t("messages.actions.create_success"))
+            form.resetForm()
+            emit('saved', declaration.id)
+        }
     }).catch(errors => {
         updateFormErrors(form, errors)
     }).finally(() => isLoading.value = false)

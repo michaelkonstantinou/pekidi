@@ -82,4 +82,22 @@ class UserDeclarationController
 
         return response()->json($declaration);
     }
+
+    public function destroy(Declaration $declaration): JsonResponse
+    {
+        /** @var ?User $user */
+        $user = auth()->user();
+        if ($user === null || $declaration->user_id !== $user->id) {
+            return response()->json([], JsonResponse::HTTP_UNAUTHORIZED);
+        }
+
+        try {
+            $response = $declaration->delete();
+            return response()->json($response);
+
+        } catch (\Exception $e) {
+        }
+
+        return response()->json([], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+    }
 }

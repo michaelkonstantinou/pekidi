@@ -5,17 +5,26 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import Declaration from "@/models/declaration";
 import {Pencil, Trash2} from "lucide-vue-next";
 import {useRouter} from "vue-router";
+import ConfirmDialog from "@/components/dialogs/ConfirmDialog.vue";
+import {ref} from "vue";
 
 const router = useRouter()
+const showConfirmDeleteDialog = ref(false)
 
 const props = defineProps<{
     record: {
         type: Declaration
     }
 }>()
+const emit = defineEmits(['deleteItem'])
 
 function navigateToEditor() {
     router.push({'name': 'admin.declarations.edit', 'params': {'id': props.record.id}})
+}
+
+function deleteItem() {
+    showConfirmDeleteDialog.value = false
+    emit('deleteItem', props.record.id)
 }
 </script>
 
@@ -43,8 +52,12 @@ function navigateToEditor() {
             </DropdownMenuItem>
 
             <!-- Destructive Delete Item Row -->
-            <DropdownMenuItem class="flex items-center gap-2 px-2.5 py-2 text-sm text-neutral-700 font-medium rounded-sm cursor-pointer hover:bg-neutral-50 focus:bg-neutral-50 transition-colors duration-100 outline-none">
+            <DropdownMenuItem
+                @click="showConfirmDeleteDialog = true"
+                class="flex items-center gap-2 px-2.5 py-2 text-sm text-neutral-700 font-medium rounded-sm cursor-pointer hover:bg-neutral-50 focus:bg-neutral-50 transition-colors duration-100 outline-none">
                 <Trash2 /> Delete</DropdownMenuItem>
         </DropdownMenuContent>
     </DropdownMenu>
+
+    <ConfirmDialog :open="showConfirmDeleteDialog" destructive @cancel="showConfirmDeleteDialog = false" @confirm="deleteItem"/>
 </template>

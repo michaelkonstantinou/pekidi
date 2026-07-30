@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 /**
  * @property string $name
@@ -108,5 +110,27 @@ class Declaration extends Model
     public function debtsOfOwner(OwnerType $owner): Collection
     {
         return $this->debts()->where('owner', $owner)->get();
+    }
+
+    /**
+     * Override delete to automatically transaction-wrap relation cleanup.
+     *
+     * @return bool|null
+     * @throws Throwable
+     */
+    public function delete(): ?bool
+    {
+        return DB::transaction(function () {
+            $this->familyMembers()->delete();
+            $this->realEstates()->delete();
+            $this->vehicles()->delete();
+            $this->businesses()->delete();
+            $this->investments()->delete();
+            $this->deposits()->delete();
+            $this->additionalAssets()->delete();
+            $this->debts()->delete();
+
+            return parent::delete();
+        });
     }
 }

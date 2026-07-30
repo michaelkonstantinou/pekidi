@@ -16,10 +16,10 @@ export const useDeclarationStore = defineStore('declaration', () => {
         const response = await userDeclarationService.create(recordValues)
         if (response !== null) {
             await fetchAll()
-            return true;
+            return response;
         }
 
-        return false;
+        return null;
     }
 
     async function update(recordValues: any, id: number) {
@@ -37,5 +37,9 @@ export const useDeclarationStore = defineStore('declaration', () => {
         return userDeclarationService.findById(id)
     }
 
-    return {declarations, fetchAll, create, fetchById, update}
+    function deleteById(id: number) {
+        return userDeclarationService.deleteById(id)
+    }
+
+    return {declarations, fetchAll, create, fetchById, update, deleteById}
 })
