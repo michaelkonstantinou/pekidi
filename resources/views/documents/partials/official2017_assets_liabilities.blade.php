@@ -127,3 +127,6 @@
 @empty
     <p>Δεν υπάρχουν καταγεγραμμένες οφειλές.</p>
 @endforelse
+
+<div class="page-break"></div>
+

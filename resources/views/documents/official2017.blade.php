@@ -148,34 +148,28 @@
 <div class="page-break"></div>
 
 <!-- PART C: DECLARANT'S ASSETS & DEBTS (SELF) -->
-@include('documents.partials.official2017_assets_liabilities', [
+@includeWhen($includePersonalAssets, 'documents.partials.official2017_assets_liabilities', [
     'declaration' => $declaration,
     'owner' => \App\Types\OwnerType::Self,
     'title' => "ΜΕΡΟΣ Γ'",
     'subtitle' => 'ΠΕΡΙΟΥΣΙΑΚΑ ΣΤΟΙΧΕΙΑ ΔΗΛΟΥΝΤΟΣ (Εντός και εκτός της Δημοκρατίας)',
 ])
 
-<div class="page-break"></div>
-
 <!-- PART D: SPOUSE'S ASSETS & DEBTS -->
-@include('documents.partials.official2017_assets_liabilities', [
+@includeWhen($includeSpouseAssets, 'documents.partials.official2017_assets_liabilities', [
     'declaration' => $declaration,
     'owner' => \App\Types\OwnerType::Spouse,
     'title' => "ΜΕΡΟΣ Δ'",
     'subtitle' => 'ΠΕΡΙΟΥΣΙΑΚΑ ΣΤΟΙΧΕΙΑ ΣΥΖΥΓΟΥ (Εντός και εκτός της Δημοκρατίας)',
 ])
 
-<div class="page-break"></div>
-
 <!-- PART E: CHILDREN'S ASSETS & DEBTS -->
-@include('documents.partials.official2017_assets_liabilities', [
+@includeWhen($includeChildrenAssets, 'documents.partials.official2017_assets_liabilities', [
     'declaration' => $declaration,
     'owner' => \App\Types\OwnerType::Child,
     'title' => "ΜΕΡΟΣ Ε'",
     'subtitle' => 'ΠΕΡΙΟΥΣΙΑΚΑ ΣΤΟΙΧΕΙΑ ΑΝΗΛΙΚΩΝ ΤΕΚΝΩΝ (Εντός και εκτός της Δημοκρατίας)',
 ])
-
-<div class="page-break"></div>
 
 <!-- FINANCIAL OVERVIEW SUMMARY -->
 <h3 class="text-center">ΣΥΝΟΨΗ ΠΕΡΙΟΥΣΙΑΚΗΣ ΚΑΤΑΣΤΑΣΗΣ</h3>

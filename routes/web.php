@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\DeclarationPdfController;
 use App\Http\Middleware\LocaleHandler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\App;
@@ -18,8 +17,6 @@ Route::middleware(LocaleHandler::class)->group(function () {
 
         return response()->json(['locale' => $locale]);
     });
-
-    Route::get('/preview/{id}', [DeclarationPdfController::class, 'download']);
 
     Route::get('/login', function () {
         return view('index');

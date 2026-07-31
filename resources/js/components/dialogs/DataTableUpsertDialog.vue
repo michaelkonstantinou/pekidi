@@ -1,6 +1,4 @@
 <script setup lang="ts">
-
-import {DialogContent, DialogDescription, DialogTitle} from "@/components/ui/dialog";
 import AppDialogContent from "@/components/app-ui/AppDialogContent.vue";
 import type {Component} from "vue";
 

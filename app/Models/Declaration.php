@@ -142,19 +142,7 @@ class Declaration extends Model
      */
     public function hasSpouse(): bool
     {
-        return $this->familyMembers->contains(
-            fn(DeclarationFamilyMember $member) => $member->relationship === RelationshipType::Spouse
-        );
-    }
-
-    /**
-     * Retrieve the spouse model, if present.
-     */
-    public function spouse(): ?DeclarationFamilyMember
-    {
-        return $this->familyMembers->first(
-            fn(DeclarationFamilyMember $member) => $member->relationship === RelationshipType::Spouse
-        );
+        return $this->familyMembers()->where('relationship', RelationshipType::Spouse->value)->count() > 0;
     }
 
     /**

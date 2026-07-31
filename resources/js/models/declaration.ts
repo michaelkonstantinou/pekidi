@@ -7,6 +7,8 @@ export default class Declaration {
     createdAt: Date
     updatedAt: Date
     bornAt: Date | null
+    hasSpouse: boolean
+    hasMinorChildren: boolean
 
     constructor(data: any) {
         this.id = data.id
@@ -17,6 +19,8 @@ export default class Declaration {
         this.createdAt = new Date(data.created_at)
         this.updatedAt = new Date(data.updated_at)
         this.bornAt = data.born_at !== null ? new Date(data.born_at) : null
+        this.hasSpouse = data.has_spouse
+        this.hasMinorChildren = data.has_minor_children
     }
 
     getBornAtAsInputString(): String | null {

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import {Banknote, Info, Building2, CreditCard, Download, Landmark, Printer, Wallet} from 'lucide-vue-next'
+import {CreditCard, Download, Printer, Wallet} from 'lucide-vue-next'
 import {Button} from '@/components/ui/button'
 import Declaration from "@/models/declaration";
 import HeadingSmall from "@/components/HeadingSmall.vue";
-import {computed, onMounted, Ref, ref} from "vue";
+import {onMounted, Ref, ref} from "vue";
 import DeclarationOverviewService from "@/services/declarationOverviewService";
 import {DeclarationOverview} from "@/models/declarationOverview";
 import {useErrorMessager} from "@/composables/useErrorMessager";
@@ -13,8 +13,7 @@ import DeclarationNetWorthOverview from "@/components/app-ui/declarations/Declar
 import AppSectionHeader from "@/components/app-ui/AppSectionHeader.vue";
 import AssetDistributionChartCard from "@/components/app-ui/declarations/AssetDistributionChartCard.vue";
 import DeclarationEvaluationListItemCard from "@/components/app-ui/declarations/DeclarationEvaluationListItemCard.vue";
-import axios from "axios";
-import DeclarationPdfService from "@/services/declarationPdfService";
+import ExportDeclarationDialog from "@/components/dialogs/ExportDeclarationDialog.vue";
 
 const {toastApiErrors} = useErrorMessager()
 
@@ -29,9 +28,8 @@ onMounted(async () => {
     await loadData()
 })
 
-const pdfService = new DeclarationPdfService()
 const isLoading = ref(false)
-const isPdfProcessing = ref(false)
+const showExportDialog = ref(false)
 const overview: Ref<DeclarationOverview | null> = ref(null)
 
 async function loadData() {
@@ -46,34 +44,6 @@ async function loadData() {
         isLoading.value = false;
     }
 }
-
-const handleDownload = async () => {
-    if (isPdfProcessing.value) return;
-    isPdfProcessing.value = true;
-
-    try {
-        await pdfService.download(props.declaration.id);
-    } catch (error) {
-        const message = await pdfService.parseBlobError(error);
-        alert(message);
-    } finally {
-        isPdfProcessing.value = false;
-    }
-};
-
-const handlePrint = async () => {
-    if (isPdfProcessing.value) return;
-    isPdfProcessing.value = true;
-
-    try {
-        await pdfService.print(props.declaration.id);
-    } catch (error) {
-        const message = await pdfService.parseBlobError(error);
-        alert(message);
-    } finally {
-        isPdfProcessing.value = false;
-    }
-};
 </script>
 
 <template>
@@ -85,17 +55,7 @@ const handlePrint = async () => {
 
             <!-- Action Buttons -->
             <div class="flex items-center gap-3">
-                <Button
-                    variant="outline"
-                    size="xl"
-                    :disabled="isPdfProcessing"
-                    @click="handlePrint"
-                >
-                    <Printer class="w-4 h-4" />
-                    Print
-                </Button>
-
-                <Button size="xl" :disabled="isPdfProcessing" @click="handleDownload">
+                <Button size="xl" @click="showExportDialog = true">
                     <Download class="w-4 h-4" />
                     Export PDF
                 </Button>
@@ -103,8 +63,6 @@ const handlePrint = async () => {
         </div>
 
         <div class="space-y-8 mb-8 w-full">
-
-
 
             <!-- Total Assets Section -->
             <div class="p-6 bg-transparent w-full">
@@ -226,4 +184,6 @@ const handlePrint = async () => {
         </div>
 
     </div>
+
+    <ExportDeclarationDialog :isOpen="showExportDialog" :declaration="declaration" @close="showExportDialog = false"/>
 </template>

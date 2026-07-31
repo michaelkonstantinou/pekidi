@@ -118,7 +118,17 @@
         "joint_net_worth": "Joint",
         "family_net_worth": "Family",
         "no_assets_declared": "No assets have been declared yet.",
-        "no_evaluation_data": "No evaluation data available for this declaration."
+        "no_evaluation_data": "No evaluation data available for this declaration.",
+        "document_type": "Document Type",
+        "official_document": "Official Document",
+        "official_document_redacted": "Official Document (Redacted)",
+        "friendly_summary": "Friendly Summary",
+        "asset_selection": "Asset Selection",
+        "include_personal_assets": "Include Personal Assets",
+        "include_spouse_assets": "Include Spouse Assets",
+        "include_children_assets": "Include Children Assets",
+        "cancel": "Cancel",
+        "generate_pdf": "Generate PDF"
     },
     "placeholders": {
         "location": "Full address of real estate",
@@ -190,7 +200,8 @@
         "total_assets": "Total assets",
         "strengths_and_weaknesses": "Strengths & Weaknesses",
         "strengths": "Strengths",
-        "weaknesses": "Weaknesses"
+        "weaknesses": "Weaknesses",
+        "export_pdf": "Export Declaration"
     },
     "actions": {
         "view": "View",
@@ -213,7 +224,10 @@
     "descriptions": {
         "personal_net_worth_desc": "Individual assets minus individual liabilities registered directly under your name.",
         "joint_net_worth_desc": "Combined assets and liabilities co-owned with a spouse or domestic partner.",
-        "family_net_worth_desc": "Aggregated total net worth across all declared household members and dependents."
+        "family_net_worth_desc": "Aggregated total net worth across all declared household members and dependents.",
+        "official_document_help": "Standard legal form adhering strictly to statutory filings (Law 2017/2004).",
+        "official_redacted_help": "Exports the official filing with sensitive personal identifiers hidden for public record.",
+        "friendly_summary_help": "A visually simplified report designed for personal record-keeping and family review."
     },
     "validation": {
         "required": "This field is required",

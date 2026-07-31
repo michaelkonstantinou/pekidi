@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DeclarationStore;
+use App\Http\Resources\DeclarationResource;
 use App\Models\Declaration;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -37,7 +38,7 @@ class UserDeclarationController
         }
 
         if ($declaration->user_id === $user->id) {
-            return response()->json($declaration);
+            return response()->json(new DeclarationResource($declaration));
         }
 
         return response()->json([], JsonResponse::HTTP_FORBIDDEN);

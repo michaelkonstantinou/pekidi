@@ -1,81 +1,56 @@
 import axios from 'axios';
+import {ExportOptions} from "@/components/dialogs/ExportDeclarationDialog.vue";
 
 export default class DeclarationPdfService {
     /**
-     * Fetch the PDF binary blob from the API.
+     * Fetch the PDF binary blob from the API with custom export parameters.
      */
-    public async fetchPdfBlob(declarationId: number): Promise<Blob> {
-        const response = await axios.get(`/api/declarations/${declarationId}/pdf`, {
+    public async fetchPdfBlob(declarationId: number, options: ExportOptions): Promise<{ blob: Blob; filename?: string }> {
+        const response = await axios.post(`/api/declarations/${declarationId}/pdf`, {
+            document_type: options?.documentType,
+            include_personal: options?.includePersonal,
+            include_spouse: options?.includeSpouse,
+            include_children: options?.includeChildren,
+        }, {
             responseType: 'blob',
         });
 
-        return new Blob([response.data], { type: 'application/pdf' });
+        // Try to parse filename from backend header if present
+        let filename: string | undefined;
+        const disposition = response.headers['content-disposition'];
+        if (disposition && disposition.includes('filename=')) {
+            const match = disposition.match(/filename="?([^";]+)"?/);
+            if (match && match[1]) {
+                filename = match[1];
+            }
+        }
+
+        const blob = new Blob([response.data], { type: 'application/pdf' });
+        return { blob, filename };
     }
 
     /**
      * Download the declaration PDF to the user's device.
      */
-    public async download(declarationId: number): Promise<void> {
-        const blob = await this.fetchPdfBlob(declarationId);
+    public async download(declarationId: number, options: ExportOptions): Promise<void> {
+        const { blob, filename } = await this.fetchPdfBlob(declarationId, options);
         const blobUrl = window.URL.createObjectURL(blob);
-
         const link = document.createElement('a');
-        link.href = blobUrl;
-        link.setAttribute('download', `declaration_${declarationId}.pdf`);
-        document.body.appendChild(link);
-        link.click();
 
-        // Cleanup DOM and memory
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(blobUrl);
-    }
+        try {
+            const fallbackName = `declaration_${declarationId}_${options?.documentType || 'official'}.pdf`;
 
-    /**
-     * Trigger the native browser print dialog for the declaration PDF via a hidden iframe.
-     */
-    public async print(declarationId: number): Promise<void> {
-        const blob = await this.fetchPdfBlob(declarationId);
-        const blobUrl = window.URL.createObjectURL(blob);
-
-        return new Promise((resolve, reject) => {
-            const iframe = document.createElement('iframe');
-            iframe.style.position = 'fixed';
-            iframe.style.right = '0';
-            iframe.style.bottom = '0';
-            iframe.style.width = '0';
-            iframe.style.height = '0';
-            iframe.style.border = '0';
-
-            // Appending parameters forces PDF render engines to complete page layout upfront
-            iframe.src = `${blobUrl}#toolbar=0&navpanes=0`;
-
-            document.body.appendChild(iframe);
-
-            iframe.onload = () => {
-                // Give the browser's PDF engine 1 second to parse all pages (Parts A through E)
-                setTimeout(() => {
-                    try {
-                        iframe.contentWindow?.focus();
-                        iframe.contentWindow?.print();
-                    } catch (err) {
-                        reject(err);
-                    } finally {
-                        // Delay cleanup so print dialogue doesn't get garbage collected mid-print
-                        setTimeout(() => {
-                            document.body.removeChild(iframe);
-                            window.URL.revokeObjectURL(blobUrl);
-                            resolve();
-                        }, 2000);
-                    }
-                }, 1000); // 1000ms delay ensures PDF multi-page layout is complete
-            };
-
-            iframe.onerror = (err) => {
-                document.body.removeChild(iframe);
-                window.URL.revokeObjectURL(blobUrl);
-                reject(err);
-            };
-        });
+            link.href = blobUrl;
+            link.setAttribute('download', filename || fallbackName);
+            document.body.appendChild(link);
+            link.click();
+        } finally {
+            // Clean up DOM and release memory safely
+            if (document.body.contains(link)) {
+                document.body.removeChild(link);
+            }
+            window.URL.revokeObjectURL(blobUrl);
+        }
     }
 
     /**
