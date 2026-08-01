@@ -51,3 +51,10 @@ export interface DeclarationEvaluation {
 }
 
 export type TranslationFunction = (key: string, params?: Record<string, any>) => string;
+
+export interface ExportOptions {
+    documentType: 'official' | 'official_redacted' | 'friendly';
+    includePersonal: boolean;
+    includeSpouse: boolean;
+    includeChildren: boolean;
+}

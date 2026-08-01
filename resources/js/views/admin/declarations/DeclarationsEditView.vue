@@ -2,9 +2,9 @@
 import AdminLayout from "@/views/layouts/AdminLayout.vue";
 import Heading from "@/components/Heading.vue";
 import { Separator } from '@/components/ui/separator';
-import {useRoute, useRouter} from "vue-router";
+import {useRoute} from "vue-router";
 import {useDeclarationStore} from "@/stores/declarationStore";
-import {computed, onMounted, Ref, ref} from "vue";
+import {computed, onMounted, Ref, ref, watch} from "vue";
 import Declaration from "@/models/declaration";
 import DeclarationPersonalDetailsEditor
     from "@/components/admin/declarations/editor/DeclarationPersonalDetailsEditor.vue";
@@ -34,12 +34,12 @@ const breadcrumbs = computed(() => [
 
 
 const tabs = ref([
-    {'label': 'declarations.personal_details', isActive: true, content: DeclarationPersonalDetailsEditor},
-    {'label': 'declarations.family_details', isActive: false, content: DeclarationFamilyDetailsEditor},
-    {'label': 'declarations.personal_assets', isActive: false, content: DeclarationPersonalAssetsEditor, owner: 'self'},
-    {'label': 'declarations.spouse_assets', isActive: false, content: DeclarationPersonalAssetsEditor, owner: 'spouse'},
-    {'label': 'declarations.children_assets', isActive: false, content: DeclarationPersonalAssetsEditor, owner: 'child'},
-    {'label': 'declarations.overview', isActive: false, content: DeclarationOverview},
+    {'label': 'declarations.personal_details', isActive: true, content: DeclarationPersonalDetailsEditor, isVisible: true},
+    {'label': 'declarations.family_details', isActive: false, content: DeclarationFamilyDetailsEditor, isVisible: true},
+    {'label': 'declarations.personal_assets', isActive: false, content: DeclarationPersonalAssetsEditor, owner: 'self', isVisible: true},
+    {'label': 'declarations.spouse_assets', isActive: false, content: DeclarationPersonalAssetsEditor, owner: 'spouse', isVisible: declaration.value?.hasSpouse ?? false},
+    {'label': 'declarations.children_assets', isActive: false, content: DeclarationPersonalAssetsEditor, owner: 'child', isVisible: declaration.value?.hasMinorChildren ?? false},
+    {'label': 'declarations.overview', isActive: false, content: DeclarationOverview, isVisible: true},
 ])
 
 const activeTab = computed(() => tabs.value.find(tab => tab.isActive))
@@ -56,6 +56,16 @@ function navigateToTab(index: number): void {
 async function onSaved() {
     declaration.value = await declarationStore.fetchById(declarationId)
 }
+
+watch(() => declaration.value, (newVal) => {
+    if (!newVal) return;
+
+    const spouseTab = tabs.value.find(t => t.owner === 'spouse');
+    if (spouseTab) spouseTab.isVisible = newVal.hasSpouse;
+
+    const childrenTab = tabs.value.find(t => t.owner === 'child');
+    if (childrenTab) childrenTab.isVisible = newVal.hasMinorChildren;
+}, { immediate: true, deep: true });
 </script>
 
 <template>
@@ -75,14 +85,18 @@ async function onSaved() {
 
                 <aside class="py-6 md:py-8 w-full md:w-56 shrink-0 min-w-0">
                     <nav class="flex flex-col space-y-1">
-                        <AppVerticalTab
+                        <template
                             v-for="(tab, index) in tabs.slice(0, -1)"
-                            :key="tab.label"
-                            :icon="tab.icon || FileText"
-                            :active="tab.isActive"
-                            :label="tab.label"
-                            @click="navigateToTab(index)"
-                        />
+                            :key="tab.label + tab.isVisible"
+                        >
+                            <AppVerticalTab
+                                v-if="tab.isVisible"
+                                :icon="tab.icon || FileText"
+                                :active="tab.isActive"
+                                :label="tab.label"
+                                @click="navigateToTab(index)"
+                            />
+                        </template>
                         <Separator class="my-4" />
 
                         <AppVerticalTab

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ExportOptions} from "@/components/dialogs/ExportDeclarationDialog.vue";
+import {ExportOptions} from "@/types";
 
 export default class DeclarationPdfService {
     /**

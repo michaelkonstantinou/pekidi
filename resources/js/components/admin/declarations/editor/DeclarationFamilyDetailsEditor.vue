@@ -18,12 +18,15 @@ const props = defineProps({
     }
 })
 
+const emit = defineEmits(['saved'])
+
 /**
  * In general it is not efficient to re-render the table. However, we only use it during a new addition, where
  * we want to reset the table to its original state and all open modals
  */
 function reRenderTable() {
     tableRender.value += 1;
+    emit('saved')
 }
 
 const declarationFamilyMembersService = new DeclarationFamilyMembersService(props.declaration.id)

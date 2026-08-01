@@ -9,15 +9,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Declaration from "@/models/declaration";
 import {Dialog} from "@/components/ui/dialog";
 import DeclarationPdfService from "@/services/declarationPdfService";
+import {ExportOptions} from "@/types";
 
 const pdfService = new DeclarationPdfService()
-
-export interface ExportOptions {
-    documentType: 'official' | 'official_redacted' | 'friendly';
-    includePersonal: boolean;
-    includeSpouse: boolean;
-    includeChildren: boolean;
-}
 
 const props = defineProps<{
     declaration: Declaration;

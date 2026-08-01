@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Types\ExportDocumentType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -21,10 +22,15 @@ class DeclarationPdfRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'document_type' => ['sometimes', 'string', Rule::in(['official', 'official_redacted', 'friendly'])],
-            'include_personal' => ['sometimes', 'boolean'],
-            'include_spouse' => ['sometimes', 'boolean'],
-            'include_children' => ['sometimes', 'boolean'],
+            'document_type' => ['required', 'string', Rule::in(ExportDocumentType::values())],
+            'include_personal' => ['required', 'boolean'],
+            'include_spouse' => ['required', 'boolean'],
+            'include_children' => ['required', 'boolean'],
         ];
+    }
+
+    public function getDocumentType(): ExportDocumentType
+    {
+        return ExportDocumentType::from($this->document_type);
     }
 }

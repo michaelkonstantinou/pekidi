@@ -74,7 +74,7 @@
     </tr>
     <tr>
         <td class="label">Διεύθυνση κατοικίας:</td>
-        <td>{{ $declaration->home_address }}</td>
+        <td>{{ $hideSensitiveInfo ? '******' : $declaration->home_address }}</td>
     </tr>
     <tr>
         <td class="label">Ημερομηνία γεννήσεως:</td>
@@ -82,7 +82,7 @@
     </tr>
     <tr>
         <td class="label">Αριθμός ταυτότητας:</td>
-        <td>{{ $declaration->national_id }}</td>
+        <td>{{ $hideSensitiveInfo ? '******' : ($member->national_id ?? '-') }}</td>
     </tr>
     <tr>
         <td class="label">Έγγαμος / Άγαμος:</td>
@@ -132,7 +132,9 @@
             <td class="text-center">
                 {{ $member->born_at ? \Carbon\Carbon::parse($member->born_at)->format('d/m/Y') : '-' }}
             </td>
-            <td class="text-center">{{ $member->national_id ?? '-' }}</td>
+            <td class="text-center">
+                {{ $hideSensitiveInfo ? '******' : ($member->national_id ?? '-') }}
+            </td>
             <td>{{ $member->profession ?? $member->relationship?->value ?? '-' }}</td>
         </tr>
     @empty

@@ -3,32 +3,35 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DeclarationPdfRequest;
-use App\Models\Declaration;
+use App\Models\User;
 use App\Services\DeclarationTotalService;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class DeclarationPdfController extends Controller
 {
-    public function download(DeclarationPdfRequest $request, int $id)
+    public function download(DeclarationPdfRequest $request, int $id): Response|JsonResponse
     {
-        // 2. Compute summarized totals
+        // 1. Compute summarized totals
         $service = new DeclarationTotalService($id);
         $declarationToDownload = $service->declarationUnderReview();
 
         // 2. Authorization Check: Ensure authenticated user owns this declaration
-        if ($declarationToDownload->user_id !== $request->user()->id) {
-            return response()->json([
-                'message' => 'Unauthorized action. You do not own this declaration.'
-            ], 403);
+        /** @var ?User $user */
+        $user = Auth::user();
+        if ($user === null || $user->id !== $declarationToDownload->user_id) {
+            return response()->json([], JsonResponse::HTTP_UNAUTHORIZED);
         }
 
         $totals = $service->calculateTotalValues();
 
-        // 3. Render the target Blade view: resources/views/documents/official2017.blade.php
+        // 3. Render the target Blade view
         $pdf = Pdf::loadView('documents.official2017', [
             'declaration' => $declarationToDownload,
             'totals' => $totals,
+            'hideSensitiveInfo' => $request->getDocumentType()->hideSensitiveInfo(),
             'includePersonalAssets' => $request->boolean('include_personal', true),
             'includeSpouseAssets' => $request->boolean('include_spouse') && $declarationToDownload->hasSpouse(),
             'includeChildrenAssets' => $request->boolean('include_children') && $declarationToDownload->minorChildrenCount() > 0
