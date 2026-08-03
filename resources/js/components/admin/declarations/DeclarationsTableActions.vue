@@ -3,13 +3,15 @@ import { MoreHorizontal } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import Declaration from "@/models/declaration";
-import {Pencil, Trash2} from "lucide-vue-next";
+import {Pencil, Trash2, Download} from "lucide-vue-next";
 import {useRouter} from "vue-router";
 import ConfirmDialog from "@/components/dialogs/ConfirmDialog.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
+import ExportDeclarationDialog from "@/components/dialogs/ExportDeclarationDialog.vue";
 
 const router = useRouter()
 const showConfirmDeleteDialog = ref(false)
+const showExportDialog = ref(false)
 
 const props = defineProps<{
     record: {
@@ -48,16 +50,25 @@ function deleteItem() {
                 @click="navigateToEditor"
                 class="flex items-center gap-2 px-2.5 py-2 text-sm text-neutral-700 font-medium rounded-sm cursor-pointer hover:bg-neutral-50 focus:bg-neutral-50 transition-colors duration-100 outline-none">
                 <Pencil />
-                Edit
+                {{ $t('actions.edit') }}
+            </DropdownMenuItem>
+
+            <DropdownMenuItem
+                @click="showExportDialog = true"
+                class="flex items-center gap-2 px-2.5 py-2 text-sm text-neutral-700 font-medium rounded-sm cursor-pointer hover:bg-neutral-50 focus:bg-neutral-50 transition-colors duration-100 outline-none">
+                <Download />
+                {{ $t('actions.export') }}
             </DropdownMenuItem>
 
             <!-- Destructive Delete Item Row -->
             <DropdownMenuItem
                 @click="showConfirmDeleteDialog = true"
                 class="flex items-center gap-2 px-2.5 py-2 text-sm text-neutral-700 font-medium rounded-sm cursor-pointer hover:bg-neutral-50 focus:bg-neutral-50 transition-colors duration-100 outline-none">
-                <Trash2 /> Delete</DropdownMenuItem>
+                <Trash2 /> {{ $t('actions.delete') }}
+            </DropdownMenuItem>
         </DropdownMenuContent>
     </DropdownMenu>
 
     <ConfirmDialog :open="showConfirmDeleteDialog" destructive @cancel="showConfirmDeleteDialog = false" @confirm="deleteItem"/>
+    <ExportDeclarationDialog :isOpen="showExportDialog" :declaration="record" @close="showExportDialog = false"/>
 </template>

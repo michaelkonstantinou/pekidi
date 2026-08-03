@@ -19,7 +19,7 @@ class UserDeclarationController
             return response()->json([], JsonResponse::HTTP_UNAUTHORIZED);
         }
 
-        return response()->json($user->declarations);
+        return response()->json(DeclarationResource::collection($user->declarations));
     }
 
     /**

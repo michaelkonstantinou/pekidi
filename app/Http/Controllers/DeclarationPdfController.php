@@ -28,14 +28,16 @@ class DeclarationPdfController extends Controller
         $totals = $service->calculateTotalValues();
 
         // 3. Render the target Blade view
-        $pdf = Pdf::loadView('documents.official2017', [
+        $data = [
             'declaration' => $declarationToDownload,
             'totals' => $totals,
             'hideSensitiveInfo' => $request->getDocumentType()->hideSensitiveInfo(),
             'includePersonalAssets' => $request->boolean('include_personal', true),
             'includeSpouseAssets' => $request->boolean('include_spouse') && $declarationToDownload->hasSpouse(),
             'includeChildrenAssets' => $request->boolean('include_children') && $declarationToDownload->minorChildrenCount() > 0
-        ]);
+        ];
+
+        $pdf = Pdf::loadView($request->getDocumentType()->getViewName(), $data);
 
         $pdf->setPaper('a4', 'portrait');
 
