@@ -39,6 +39,11 @@ class Declaration extends Model
         ]);
     }
 
+    public static function lastForUser(User $user): ?Declaration
+    {
+        return Declaration::where('user_id', $user->id)->orderBy('updated_at', 'desc')->first();
+    }
+
     public function familyMembers(): HasMany
     {
         return $this->hasMany(DeclarationFamilyMember::class, 'declaration_id');

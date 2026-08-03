@@ -101,4 +101,22 @@ class UserDeclarationController
 
         return response()->json([], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
     }
+
+    /**
+     * Fetch and return the latest user declaration for a user
+     *
+     * @return JsonResponse
+     */
+    public function last(): JsonResponse
+    {
+        /** @var ?User $user */
+        $user = auth()->user();
+        if ($user === null) {
+            return response()->json([], JsonResponse::HTTP_UNAUTHORIZED);
+        }
+
+        $lastUserDeclaration = Declaration::lastForUser($user);
+
+        return response()->json(new DeclarationResource($lastUserDeclaration));
+    }
 }

@@ -17,6 +17,16 @@ export function getLocaleCurrencyString(value: number): string {
     }).format(value)
 }
 
+export function getLocaleDateDetailedString(dateObject: Date): string {
+    return new Intl.DateTimeFormat(getLocale(), {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+    }).format(dateObject)
+}
+
 export function setHtmlLocale(locale: string): void {
     document.querySelector("html")?.setAttribute('lang', locale);
 }

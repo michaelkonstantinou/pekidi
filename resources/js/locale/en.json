@@ -241,5 +241,12 @@
         "invalid_type": "Invalid value provided",
         "too_small": "The value provided is too small",
         "too_big": "The value provided is too large"
+    },
+    "widgets": {
+        "continue_declaration": {
+            "last_updated": "Last updated: {date}",
+            "description": "This is the last declaration you worked on. Pick up where you left off by pressing the button.",
+            "action_button": "Continue Declaration"
+        }
     }
 }
