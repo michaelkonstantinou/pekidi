@@ -247,6 +247,11 @@
             "last_updated": "Last updated: {date}",
             "description": "This is the last declaration you worked on. Pick up where you left off by pressing the button.",
             "action_button": "Continue Declaration"
+        },
+        "create_declaration": {
+            "title": "New Declaration",
+            "description": "Start a new asset declaration for the current submission year.",
+            "action_button": "Start Declaration"
         }
     }
 }
