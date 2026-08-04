@@ -201,7 +201,11 @@
         "strengths_and_weaknesses": "Strengths & Weaknesses",
         "strengths": "Strengths",
         "weaknesses": "Weaknesses",
-        "export_pdf": "Export Declaration"
+        "export_pdf": "Export Declaration",
+        "good_morning_user": "Good morning {0}!",
+        "hello_user": "Hello {0}!",
+        "good_evening_user": "Good evening {0}!",
+        "explore_our_products": "Explore our products"
     },
     "actions": {
         "view": "View",
@@ -228,7 +232,8 @@
         "family_net_worth_desc": "Aggregated total net worth across all declared household members and dependents.",
         "official_document_help": "Standard legal form adhering strictly to statutory filings (Law 2017/2004).",
         "official_redacted_help": "Exports the official filing with sensitive personal identifiers hidden for public record.",
-        "friendly_summary_help": "A visually simplified report designed for personal record-keeping and family review."
+        "friendly_summary_help": "A visually simplified report designed for personal record-keeping and family review.",
+        "explore_our_products": "Did you like this application? Take a look at the following products. We believe these might be of your interest"
     },
     "validation": {
         "required": "This field is required",
@@ -252,6 +257,12 @@
             "title": "New Declaration",
             "description": "Start a new asset declaration for the current submission year.",
             "action_button": "Start Declaration"
+        },
+        "compliance_info": {
+            "title": "Legal Framework & Guidelines",
+            "description": "Asset declaration filing is mandatory under statutory law. Ensure you review the official declaration form and statutory provisions prior to final submission.",
+            "law_link": "Filing Law",
+            "form_link": "Official Form"
         }
     }
 }

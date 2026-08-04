@@ -7,6 +7,9 @@ import Declaration from "@/models/declaration";
 import UserDeclarationService from "@/services/userDeclarationService";
 import { useRouter } from "vue-router";
 import CreateDeclarationWidget from "@/components/admin/widgets/CreateDeclarationWidget.vue";
+import ComplianceInfoCard from "@/components/admin/widgets/ComplianceInfoCard.vue";
+import Heading from "@/components/Heading.vue";
+import TimeAwareGreeting from "@/components/admin/widgets/TimeAwareGreeting.vue";
 
 const breadcrumbs: BreadcrumbItemType[] = [
     { 'label': 'Dashboard', routeName: 'admin.dashboard' }
@@ -34,10 +37,12 @@ function navigateToAllDeclarations() {
 
 <template>
     <AdminLayout :breadcrumbs="breadcrumbs">
+        <TimeAwareGreeting />
+
         <div class="space-y-5">
             <!-- Full-Width Card (Animates on async data resolve) -->
             <Transition
-                enter-active-class="transition-all duration-700 ease-out"
+                enter-active-class="transition-all duration-1200 ease-out"
                 enter-from-class="opacity-0 translate-y-6 scale-[0.98]"
                 enter-to-class="opacity-100 translate-y-0 scale-100"
             >
@@ -65,13 +70,12 @@ function navigateToAllDeclarations() {
 
                 <!-- Future Half-Width Widget goes here -->
                 <div key="future-widget" class="col-span-1 transition-all duration-700 delay-200">
-                    <!-- Widget 3 Slot -->
+                    <ComplianceInfoCard />
                 </div>
             </TransitionGroup>
         </div>
+
+<!--        <div class="border-b mt-10"></div>-->
+        <Heading class="mt-15" title="titles.explore_our_products" description="descriptions.explore_our_products"/>
     </AdminLayout>
 </template>
-
-<style scoped>
-
-</style>
