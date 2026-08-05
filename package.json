@@ -25,6 +25,7 @@
         "@vueuse/core": "^13.9.0",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
+        "embla-carousel-vue": "^8.6.0",
         "filepond": "^4.32.9",
         "filepond-plugin-image-crop": "^2.0.6",
         "filepond-plugin-image-edit": "^1.6.3",

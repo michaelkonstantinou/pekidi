@@ -128,7 +128,8 @@
         "include_spouse_assets": "Include Spouse Assets",
         "include_children_assets": "Include Children Assets",
         "cancel": "Cancel",
-        "generate_pdf": "Generate PDF"
+        "generate_pdf": "Generate PDF",
+        "learn_more": "Επίσκεψη Εφαρμογής"
     },
     "placeholders": {
         "location": "Full address of real estate",
@@ -263,6 +264,17 @@
             "description": "Asset declaration filing is mandatory under statutory law. Ensure you review the official declaration form and statutory provisions prior to final submission.",
             "law_link": "Filing Law",
             "form_link": "Official Form"
+        },
+        "products": {
+            "workfolio_architect": {
+                "title": "Workfolio Architect",
+                "description": "Δημιουργήστε επαγγελματικά χαρτοφυλάκια και διαχειριστείτε τα έργα σας με στυλ."
+            },
+            "badges": {
+                "featured": "Featured",
+                "best_seller": "Best seller",
+                "coming_soon": "Coming soon"
+            }
         }
     }
 }

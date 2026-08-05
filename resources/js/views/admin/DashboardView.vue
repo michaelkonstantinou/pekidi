@@ -10,6 +10,7 @@ import CreateDeclarationWidget from "@/components/admin/widgets/CreateDeclaratio
 import ComplianceInfoCard from "@/components/admin/widgets/ComplianceInfoCard.vue";
 import Heading from "@/components/Heading.vue";
 import TimeAwareGreeting from "@/components/admin/widgets/TimeAwareGreeting.vue";
+import ProductAdsWidget from "@/components/admin/widgets/ProductAdsWidget.vue";
 
 const breadcrumbs: BreadcrumbItemType[] = [
     { 'label': 'Dashboard', routeName: 'admin.dashboard' }
@@ -77,5 +78,6 @@ function navigateToAllDeclarations() {
 
 <!--        <div class="border-b mt-10"></div>-->
         <Heading class="mt-15" title="titles.explore_our_products" description="descriptions.explore_our_products"/>
+        <ProductAdsWidget />
     </AdminLayout>
 </template>
