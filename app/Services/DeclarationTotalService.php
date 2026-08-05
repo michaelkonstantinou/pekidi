@@ -9,6 +9,7 @@ use App\DataObjects\NetWorthData;
 use App\Models\Declaration;
 use App\Types\OwnerType;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 class DeclarationTotalService
 {
@@ -27,6 +28,7 @@ class DeclarationTotalService
 
     /**
      * Map of camelCase relation names to their database value column.
+     * Note: 'investments' is dynamically evaluated via DB::raw('quantity * value').
      */
     protected array $relationColumns = [
         'realEstates' => 'current_value',
@@ -64,26 +66,28 @@ class DeclarationTotalService
         foreach ($this->relationColumns as $relation => $valueColumn) {
             $snakeRelation = str($relation)->snake();
 
+            // Use calculated raw column expression for investments, standard column for others
+            $targetColumn = ($relation === 'investments')
+                ? DB::raw('quantity * value')
+                : $valueColumn;
+
             // Total sum
-            $query->withSum("{$relation} as {$snakeRelation}_sum_value", $valueColumn);
+            $query->withSum("{$relation} as {$snakeRelation}_sum_value", $targetColumn);
 
             // Sum where owner is 'self'
-            $query->withSum(["{$relation} as {$snakeRelation}_sum_value_self" => function (Builder $q) use ($valueColumn) {
+            $query->withSum(["{$relation} as {$snakeRelation}_sum_value_self" => function (Builder $q) use ($targetColumn) {
                 $q->where('owner', 'self');
-            }], $valueColumn);
+            }], $targetColumn);
 
             // Sum where owner is 'self' OR 'spouse'
-            $query->withSum(["{$relation} as {$snakeRelation}_sum_value_joint" => function (Builder $q) use ($valueColumn) {
+            $query->withSum(["{$relation} as {$snakeRelation}_sum_value_joint" => function (Builder $q) use ($targetColumn) {
                 $q->whereIn('owner', ['self', 'spouse']);
-            }], $valueColumn);
+            }], $targetColumn);
         }
 
         return $query->firstOrFail();
     }
 
-    /**
-     * Build the structured overview object from an aggregated Declaration instance.
-     */
     public function calculateTotalValues(): DeclarationTotalsData
     {
         $totalAssetsValue = 0.0;
@@ -142,17 +146,12 @@ class DeclarationTotalService
         );
     }
 
-    /**
-     * Generate pre-formatted asset distribution chart data with percentages.
-     */
     public function calculateAssetDistributionChartData(?DeclarationTotalsData $totalsData = null): array
     {
-        // Reuse precomputed totals if passed, otherwise compute them
         $totalsData ??= $this->calculateTotalValues();
 
         $totalAssets = $totalsData->totalAssetsValue;
 
-        // Map named DTO properties to their snake_case chart identifiers
         $assetPositions = [
             'real_estates'     => $totalsData->realEstates,
             'vehicles'         => $totalsData->vehicles,
@@ -166,12 +165,10 @@ class DeclarationTotalService
         foreach ($assetPositions as $relation => $position) {
             $value = $position->totalValue;
 
-            // Skip relations with zero total value to keep chart rendering clean
             if ($value <= 0) {
                 continue;
             }
 
-            // Compute relative share percentage rounded to 2 decimal places
             $percentage = $totalAssets > 0 ? round(($value / $totalAssets) * 100, 2) : 0.0;
 
             $chartItems[] = [
@@ -187,26 +184,11 @@ class DeclarationTotalService
         ];
     }
 
-    /**
-     * Calculate net worth by deducting total liabilities from total assets.
-     *
-     * @param float $assetsValue The total monetary value of all assets.
-     * @param float $liabilitiesValue The total monetary value of all liabilities/debts.
-     * @return float The calculated net worth balance.
-     */
     private function getNetWorth(float $assetsValue, float $liabilitiesValue): float
     {
         return $assetsValue - $liabilitiesValue;
     }
 
-    /**
-     * Calculate total liability metrics and generate type-based breakdowns for debts.
-     *
-     * Aggregates count, total value, self-owned value, and joint-owned value across
-     * all liabilities in the current declaration, mapping them into typed position DTOs.
-     *
-     * @return DeclarationDebtPositionSummaryData Fully populated summary DTO including breakdown by debt type.
-     */
     private function calculateDebtSummary(): DeclarationDebtPositionSummaryData
     {
         $debts = $this->declarationUnderReview->debts;
@@ -235,26 +217,22 @@ class DeclarationTotalService
             $debtValue = (float) $debt->value;
             $owner = $debt->owner;
 
-            // Increment totals
             $rawDebtsBreakdown[$normalizedType]['count'] += 1;
             $rawDebtsBreakdown[$normalizedType]['total_value'] += $debtValue;
             $totalDebtsCount += 1;
             $totalLiabilitiesValue += $debtValue;
 
-            // Increment 'self' liabilities
             if ($owner === OwnerType::Self) {
                 $rawDebtsBreakdown[$normalizedType]['self_value'] += $debtValue;
                 $totalLiabilitiesSelfValue += $debtValue;
             }
 
-            // Increment 'self' & 'spouse' (joint) liabilities
             if (in_array($owner, [OwnerType::Self, OwnerType::Spouse], true)) {
                 $rawDebtsBreakdown[$normalizedType]['joint_value'] += $debtValue;
                 $totalLiabilitiesJointValue += $debtValue;
             }
         }
 
-        // Convert raw breakdown accumulators into typed DTOs
         $debtsBreakdown = [];
         foreach ($rawDebtsBreakdown as $type => $data) {
             $debtsBreakdown[$type] = new DeclarationPositionSummaryData(
