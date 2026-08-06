@@ -10,6 +10,10 @@ export function useErrorMessager() {
      */
     function toastApiErrors(errors: any) {
         const code = errors?.response?.status
+        if (!code) {
+            toast.error(t("errors.unexpected"))
+            return
+        }
 
         switch (code) {
             case 401:

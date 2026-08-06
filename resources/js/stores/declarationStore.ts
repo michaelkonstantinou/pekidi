@@ -22,6 +22,17 @@ export const useDeclarationStore = defineStore('declaration', () => {
         return null;
     }
 
+    async function duplicate(id: number) {
+        const response = await userDeclarationService.copyById(id);
+
+        if (response === null) {
+            throw new Error(`Failed to duplicate declaration with id: ${id}`);
+        }
+
+        await fetchAll();
+        return response; // Resolves with the new Declaration object
+    }
+
     async function update(recordValues: any, id: number) {
         recordValues.id = id
         const response = await userDeclarationService.update(recordValues)
@@ -41,5 +52,5 @@ export const useDeclarationStore = defineStore('declaration', () => {
         return userDeclarationService.deleteById(id)
     }
 
-    return {declarations, fetchAll, create, fetchById, update, deleteById}
+    return {declarations, fetchAll, create, fetchById, update, deleteById, duplicate}
 })

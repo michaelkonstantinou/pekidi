@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { MoreHorizontal } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import Declaration from "@/models/declaration";
-import {Pencil, Trash2, Download} from "lucide-vue-next";
+import {Pencil, Trash2, Download, Copy} from "lucide-vue-next";
 import {useRouter} from "vue-router";
 import ConfirmDialog from "@/components/dialogs/ConfirmDialog.vue";
 import {onMounted, ref} from "vue";
@@ -11,6 +11,7 @@ import ExportDeclarationDialog from "@/components/dialogs/ExportDeclarationDialo
 
 const router = useRouter()
 const showConfirmDeleteDialog = ref(false)
+const showDuplicateDialog = ref(false)
 const showExportDialog = ref(false)
 
 const props = defineProps<{
@@ -18,7 +19,7 @@ const props = defineProps<{
         type: Declaration
     }
 }>()
-const emit = defineEmits(['deleteItem'])
+const emit = defineEmits(['deleteItem', 'duplicateItem'])
 
 function navigateToEditor() {
     router.push({'name': 'admin.declarations.edit', 'params': {'id': props.record.id}})
@@ -27,6 +28,11 @@ function navigateToEditor() {
 function deleteItem() {
     showConfirmDeleteDialog.value = false
     emit('deleteItem', props.record.id)
+}
+
+function duplicateItem() {
+    showDuplicateDialog.value = false
+    emit('duplicateItem', props.record.id)
 }
 </script>
 
@@ -54,6 +60,13 @@ function deleteItem() {
             </DropdownMenuItem>
 
             <DropdownMenuItem
+                @click="showDuplicateDialog = true"
+                class="flex items-center gap-2 px-2.5 py-2 text-sm text-neutral-700 font-medium rounded-sm cursor-pointer hover:bg-neutral-50 focus:bg-neutral-50 transition-colors duration-100 outline-none">
+                <Copy />
+                {{ $t('actions.duplicate') }}
+            </DropdownMenuItem>
+
+            <DropdownMenuItem
                 @click="showExportDialog = true"
                 class="flex items-center gap-2 px-2.5 py-2 text-sm text-neutral-700 font-medium rounded-sm cursor-pointer hover:bg-neutral-50 focus:bg-neutral-50 transition-colors duration-100 outline-none">
                 <Download />
@@ -70,5 +83,13 @@ function deleteItem() {
     </DropdownMenu>
 
     <ConfirmDialog :open="showConfirmDeleteDialog" destructive @cancel="showConfirmDeleteDialog = false" @confirm="deleteItem"/>
+    <ConfirmDialog
+        key="duplicate-dialog"
+        :open="showDuplicateDialog"
+        @cancel="showDuplicateDialog = false"
+        @confirm="duplicateItem"
+        labelTitle="confirm_dialog.title_duplicate"
+        labelDescription="confirm_dialog.duplicate_description"
+    />
     <ExportDeclarationDialog :isOpen="showExportDialog" :declaration="record" @close="showExportDialog = false"/>
 </template>

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Types\RelationshipType;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -15,6 +16,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class DeclarationFamilyMember extends Model
 {
+    use HasFactory;
+
     protected $table = 'declaration_family_members';
     protected $fillable = ['full_name', 'national_id', 'profession', 'born_at', 'declaration_id', 'relationship'];
 

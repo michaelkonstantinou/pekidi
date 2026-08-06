@@ -27,7 +27,7 @@ const props = defineProps<{
     compact?: boolean
     title?: string
 }>()
-const emit = defineEmits(['deleteItem', 'reload'])
+const emit = defineEmits(['deleteItem', 'reload', 'duplicateItem'])
 
 const pageSize: Ref<number> = ref<number>(5)
 
@@ -41,8 +41,12 @@ table.setPageSize(pageSize.value)
 
 watch(pageSize, (newValue) => table.setPageSize(newValue))
 
-function onDeleteItem(primaryKey) {
+function onDeleteItem(primaryKey: number) {
     emit('deleteItem', primaryKey)
+}
+
+function onDuplicateItem(primaryKey: number) {
+    emit('duplicateItem', primaryKey)
 }
 </script>
 
@@ -122,6 +126,7 @@ function onDeleteItem(primaryKey) {
                                         :render="cell.column.columnDef.cell"
                                         :props="cell.getContext()"
                                         @deleteItem="onDeleteItem"
+                                        @duplicateItem="onDuplicateItem"
                                         @reload="emit('reload')"
                                     />
                                 </TableCell>

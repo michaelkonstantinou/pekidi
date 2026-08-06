@@ -61,7 +61,7 @@ async function loadData() {
 function onDeleteItem(primaryKey: number) {
     isLoading.value = true
     props.apiService.deleteById(primaryKey).then(async () => {
-        toast.success(t("actions.delete_successful"));
+        toast.success(t("messages.actions.delete_successful"));
         await loadData()
     }).catch(err => toastApiErrors(err))
         .finally(() => isLoading.value=false)

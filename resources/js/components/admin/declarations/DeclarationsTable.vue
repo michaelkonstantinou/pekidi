@@ -28,15 +28,25 @@ const onRecordCreated = (id: number) => {
 const onDeleteRecord = (id: number) => {
     isLoading.value = true
     declarationStore.deleteById(id).then(async () => {
-        toast.success(t("actions.delete_successful"));
+        toast.success(t("messages.actions.delete_successful"));
         await declarationStore.fetchAll()
+    }).catch(err => toastApiErrors(err))
+        .finally(() => isLoading.value=false)
+}
+
+const onDuplicateItem = (id: number) => {
+    isLoading.value = true
+    declarationStore.duplicate(id).then(async (newDeclaration) => {
+        toast.success(t("messages.actions.duplicate_successful"));
+        await declarationStore.fetchAll()
+        await router.push({'name': 'admin.declarations.edit', 'params': {'id': newDeclaration.id}})
     }).catch(err => toastApiErrors(err))
         .finally(() => isLoading.value=false)
 }
 </script>
 
 <template>
-<DataTable :data="declarationStore.declarations" :columns="tableColumns" @deleteItem="onDeleteRecord">
+<DataTable :data="declarationStore.declarations" :columns="tableColumns" @deleteItem="onDeleteRecord" @duplicateItem="onDuplicateItem">
     <template #buttons>
         <DataTableCreateDialog>
             <DeclarationCreateForm buttonLabel="create" @saved="onRecordCreated"></DeclarationCreateForm>

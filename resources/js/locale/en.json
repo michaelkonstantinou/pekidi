@@ -39,7 +39,9 @@
         "incorrect_login": "Incorrect login credentials. Either the given e-mail or password is wrong",
         "actions": {
             "create_success": "Record created successfully!",
-            "save_success": "Data saved successfully!"
+            "save_success": "Data saved successfully!",
+            "duplicate_successful": "Record has been duplicated successfully!",
+            "delete_successful": "Record has been deleted successfully!"
         }
     },
     "errors": {
@@ -173,6 +175,8 @@
     },
     "confirm_dialog": {
         "title": "Are you sure?",
+        "title_duplicate": "Duplicate declaration",
+        "duplicate_description": "A new declaration will be created with all associated assets, liabilities, and family members. Are you sure?",
         "delete_description": "This action cannot be reverted! Once you proceed with this action the record will be deleted from our system. Keep in mind that any associated records will be deleted as well."
     },
     "view_dialog": {
@@ -212,7 +216,8 @@
         "view": "View",
         "edit": "Edit",
         "delete": "Delete",
-        "export": "Export"
+        "export": "Export",
+        "duplicate": "Duplicate"
     },
     "risk": {
         "low": "Low Risk",

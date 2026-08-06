@@ -6,8 +6,12 @@ use App\Http\Requests\DeclarationStore;
 use App\Http\Resources\DeclarationResource;
 use App\Models\Declaration;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Log\Logger;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class UserDeclarationController
 {
@@ -19,7 +23,7 @@ class UserDeclarationController
             return response()->json([], JsonResponse::HTTP_UNAUTHORIZED);
         }
 
-        return response()->json(DeclarationResource::collection($user->declarations));
+        return response()->json(DeclarationResource::collection($user->declarations()->orderByDesc('id')->get()));
     }
 
     /**
@@ -96,7 +100,7 @@ class UserDeclarationController
             $response = $declaration->delete();
             return response()->json($response);
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
         }
 
         return response()->json([], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
@@ -118,5 +122,30 @@ class UserDeclarationController
         $lastUserDeclaration = Declaration::lastForUser($user);
 
         return response()->json(new DeclarationResource($lastUserDeclaration));
+    }
+
+    /**
+     * Deep copies the provided Declaration and deep copies all its relation instances as well
+     * Returns the newly created (copied) Declaration
+     *
+     * @param Declaration $declaration
+     * @return JsonResponse
+     */
+    public function copy(Declaration $declaration): JsonResponse
+    {
+        /** @var ?User $user */
+        $user = auth()->user();
+        if ($user === null) {
+            return response()->json([], JsonResponse::HTTP_UNAUTHORIZED);
+        }
+
+        try {
+            $newDeclaration = $declaration->copy();
+            return response()->json(new DeclarationResource($newDeclaration));
+        } catch (Throwable $e) {
+            Log::error("Failed to copy declaration\n".$e);
+        }
+
+        return response()->json([], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

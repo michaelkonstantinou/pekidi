@@ -9,7 +9,7 @@ export function useDeclarationTableColumns() {
     const {t} = useI18n()
 
     const tableColumns: ColumnDef<Declaration>[] = [
-        makeTextColumn<Declaration>("name", "Declaration name"),
+        makeTextColumn<Declaration>("name", t("labels.name")),
         makeDateColumn<Declaration>("createdAt", t("labels.created_at")),
         makeDateColumn<Declaration>("updatedAt", t("labels.updated_at")),
         {
@@ -21,6 +21,7 @@ export function useDeclarationTableColumns() {
                 return h(DeclarationsTableActions, {
                     record,
                     onDeleteItem: (payload: any) => instance?.proxy?.$emit('deleteItem', payload),
+                    onDuplicateItem: (payload: any) => instance?.proxy?.$emit('duplicateItem', payload)
                 })
             },
         },

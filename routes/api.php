@@ -20,6 +20,7 @@ Route::middleware(["auth:sanctum", LocaleHandler::class])->group(function () {
     Route::post("/user/upload-profile-picture", [AuthUserController::class, "uploadProfilePicture"]);
     Route::resource('/user/declarations', UserDeclarationController::class)->except(['edit', 'create']);
     Route::get('/user/declarations-last', [UserDeclarationController::class, "last"]);
+    Route::post('/user/declarations/{declaration}/copy', [UserDeclarationController::class, "copy"]);
     Route::resource('/user/declarations/{declaration}/family-members', UserDeclarationFamilyMemberController::class)->except(['edit', 'create']);
     Route::resource('/user/declarations/{declaration}/{owner}/real-estates', UserDeclarationRealEstateController::class)->except(['edit', 'create']);
     Route::resource('/user/declarations/{declaration}/{owner}/vehicles', UserDeclarationVehicleController::class)->except(['edit', 'create']);

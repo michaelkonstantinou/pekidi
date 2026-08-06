@@ -20,5 +20,5 @@ it('can fetch all declarations', function () {
                      ->getJson('api/user/declarations');
 
     $response->assertStatus(200);
-    $response->assertJson([$declaration->toArray(), $declaration2->toArray()]);
+    $response->assertJson([$declaration2->toArray(), $declaration->toArray()]);
 });

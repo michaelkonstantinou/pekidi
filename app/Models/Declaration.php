@@ -44,6 +44,42 @@ class Declaration extends Model
         return Declaration::where('user_id', $user->id)->orderBy('updated_at', 'desc')->first();
     }
 
+    /**
+     * Replicate the declaration and all associated relations.
+     *
+     * @throws Throwable
+     */
+    public function copy(): Declaration
+    {
+        return DB::transaction(function () {
+            /** @var Declaration $newDeclaration */
+            $newDeclaration = $this->replicate();
+            $newDeclaration->name = $this->name . ' (copy)';
+            $newDeclaration->save();
+
+            $relations = [
+                'familyMembers',
+                'realEstates',
+                'vehicles',
+                'businesses',
+                'investments',
+                'deposits',
+                'additionalAssets',
+                'debts',
+            ];
+
+            foreach ($relations as $relation) {
+                foreach ($this->{$relation} as $record) {
+                    $newRecord = $record->replicate();
+                    $newRecord->declaration_id = $newDeclaration->id;
+                    $newRecord->save();
+                }
+            }
+
+            return $newDeclaration;
+        });
+    }
+
     public function familyMembers(): HasMany
     {
         return $this->hasMany(DeclarationFamilyMember::class, 'declaration_id');
