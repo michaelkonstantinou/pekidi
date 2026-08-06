@@ -11,12 +11,14 @@ import ComplianceInfoCard from "@/components/admin/widgets/ComplianceInfoCard.vu
 import Heading from "@/components/Heading.vue";
 import TimeAwareGreeting from "@/components/admin/widgets/TimeAwareGreeting.vue";
 import ProductAdsWidget from "@/components/admin/widgets/ProductAdsWidget.vue";
+import {useNavigation} from "@/composables/useNavigation";
 
 const breadcrumbs: BreadcrumbItemType[] = [
     { 'label': 'Dashboard', routeName: 'admin.dashboard' }
 ];
 const service = new UserDeclarationService();
 const router = useRouter();
+const {goToEditor, goToDeclarationIndex} = useNavigation()
 const lastDeclaration: Ref<Declaration | null> = ref(null);
 
 onMounted(async () => {
@@ -28,11 +30,11 @@ function continueLastDeclaration() {
         return;
     }
 
-    router.push({ 'name': 'admin.declarations.edit', 'params': { 'id': lastDeclaration.value.id } });
+    goToEditor(lastDeclaration.value.id)
 }
 
 function navigateToAllDeclarations() {
-    router.push({ 'name': 'admin.declarations.index' })
+    goToDeclarationIndex()
 }
 </script>
 

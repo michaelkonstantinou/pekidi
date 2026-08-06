@@ -8,8 +8,9 @@ import {useRouter} from "vue-router";
 import ConfirmDialog from "@/components/dialogs/ConfirmDialog.vue";
 import {onMounted, ref} from "vue";
 import ExportDeclarationDialog from "@/components/dialogs/ExportDeclarationDialog.vue";
+import {useNavigation} from "@/composables/useNavigation";
 
-const router = useRouter()
+const {goToEditor} = useNavigation()
 const showConfirmDeleteDialog = ref(false)
 const showDuplicateDialog = ref(false)
 const showExportDialog = ref(false)
@@ -22,7 +23,7 @@ const props = defineProps<{
 const emit = defineEmits(['deleteItem', 'duplicateItem'])
 
 function navigateToEditor() {
-    router.push({'name': 'admin.declarations.edit', 'params': {'id': props.record.id}})
+    goToEditor(props.record.id)
 }
 
 function deleteItem() {

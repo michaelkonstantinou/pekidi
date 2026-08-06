@@ -9,9 +9,11 @@ import {useRouter} from "vue-router";
 import {toast} from "vue-sonner";
 import {useI18n} from "vue-i18n";
 import {useErrorMessager} from "@/composables/useErrorMessager";
+import {useNavigation} from "@/composables/useNavigation";
 
 const {t} = useI18n()
 const {toastApiErrors} = useErrorMessager()
+const {goToEditor} = useNavigation()
 const declarationStore = useDeclarationStore()
 const {tableColumns} = useDeclarationTableColumns()
 const router = useRouter()
@@ -22,7 +24,7 @@ onMounted(async () => {
 })
 
 const onRecordCreated = (id: number) => {
-    router.push({'name': 'admin.declarations.edit', 'params': {'id': id}})
+    goToEditor(id)
 }
 
 const onDeleteRecord = (id: number) => {
@@ -39,7 +41,7 @@ const onDuplicateItem = (id: number) => {
     declarationStore.duplicate(id).then(async (newDeclaration) => {
         toast.success(t("messages.actions.duplicate_successful"));
         await declarationStore.fetchAll()
-        await router.push({'name': 'admin.declarations.edit', 'params': {'id': newDeclaration.id}})
+        goToEditor(newDeclaration.id)
     }).catch(err => toastApiErrors(err))
         .finally(() => isLoading.value=false)
 }

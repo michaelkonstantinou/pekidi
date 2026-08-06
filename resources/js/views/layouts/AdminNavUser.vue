@@ -33,12 +33,11 @@ import {
 } from "@/components/ui/sidebar"
 import User from "@/models/user";
 import {toast} from "vue-sonner";
-import {useRouter} from "vue-router";
 import {useAuthStore} from "@/stores/authStore";
 import {useColorMode} from "@vueuse/core";
-import {ref} from "vue";
+import {useNavigation} from "@/composables/useNavigation";
 
-const router = useRouter()
+const {goTo} = useNavigation()
 const authStore = useAuthStore()
 
 const props = defineProps<{
@@ -51,7 +50,7 @@ const colorMode = useColorMode()
 const logout = async () => {
     const isLoggedOut: Boolean = await authStore.logout()
     if (isLoggedOut === true) {
-        router.push({'name': 'auth.login'})
+        goTo('auth.login')
     } else {
         toast.error($t("errors.unexpected"))
     }
@@ -111,7 +110,7 @@ const toggleColorMode = () => {
 
                     <DropdownMenuGroup class="space-y-0.5">
                         <DropdownMenuItem
-                            @click="router.push({'name': 'admin.profileSettings.userInfo'})"
+                            @click="goTo('admin.profileSettings.userInfo')"
                             class="flex items-center gap-2 px-2.5 py-2 text-sm text-neutral-600 hover:text-primary hover:bg-neutral-50 rounded-default cursor-pointer transition-all duration-150 dark:text-muted-foreground dark:hover:text-foreground dark:hover:bg-muted/70"
                         >
                             <Settings class="h-4 w-4 shrink-0 text-neutral-400 group-hover:text-primary dark:text-muted-foreground dark:group-hover:text-foreground" />
