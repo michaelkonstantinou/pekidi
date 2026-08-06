@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Types\OwnerType;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Carbon;
 
 /**
@@ -17,6 +18,8 @@ use Illuminate\Support\Carbon;
  */
 class DeclarationDebt extends AbstractDeclarationOwnerPosition
 {
+    use HasFactory;
+
     protected $casts = ['owner' => OwnerType::class];
     protected $fillable = [
         'declaration_id',

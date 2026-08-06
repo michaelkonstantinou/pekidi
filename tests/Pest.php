@@ -11,8 +11,14 @@
 |
 */
 
+use App\Models\Declaration;
+use App\Models\User;
+use App\Types\OwnerType;
+use DragonCode\Support\Facades\Helpers\Str;
+use Illuminate\Http\JsonResponse;
+
 pest()->extend(Tests\TestCase::class)
- // ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+    ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Feature');
 
 /*
@@ -41,7 +47,132 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function assertIndexReturnsOwnerPositions(string $controllerClass, string $modelClass): void
 {
-    // ..
+    $user = User::factory()->create();
+    $declaration = Declaration::factory()->create(['user_id' => $user->id]);
+
+    $modelClass::factory()->create([
+        'declaration_id' => $declaration->id,
+        'owner' => OwnerType::Self,
+    ]);
+
+    $modelClass::factory()->create([
+        'declaration_id' => $declaration->id,
+        'owner' => OwnerType::Spouse,
+    ]);
+
+    $url = action([$controllerClass, 'index'], [
+        'declaration' => $declaration,
+        'owner' => OwnerType::Self->value,
+    ]);
+
+    $response = test()->actingAs($user)->getJson($url);
+
+    $response->assertOk();
+    $response->assertJsonCount(1);
+}
+
+function assertIndexUnauthorizedForNonOwner(string $controllerClass): void
+{
+    $owner = User::factory()->create();
+    $otherUser = User::factory()->create();
+    $declaration = Declaration::factory()->create(['user_id' => $owner->id]);
+
+    $url = action([$controllerClass, 'index'], [
+        'declaration' => $declaration,
+        'owner' => OwnerType::Self->value,
+    ]);
+
+    $response = test()->actingAs($otherUser)->getJson($url);
+
+    $response->assertStatus(JsonResponse::HTTP_UNAUTHORIZED);
+}
+
+function assertStoreCreatesPosition(string $controllerClass, string $tableName, array $payload): void
+{
+    $user = User::factory()->create();
+    $declaration = Declaration::factory()->create(['user_id' => $user->id]);
+
+    $url = action([$controllerClass, 'store'], [
+        'declaration' => $declaration,
+        'owner' => OwnerType::Self->value,
+    ]);
+
+    $response = test()->actingAs($user)->postJson($url, $payload);
+
+    $response->assertOk();
+    test()->assertDatabaseHas($tableName, array_merge($payload, [
+        'declaration_id' => $declaration->id,
+        'owner' => OwnerType::Self->value,
+    ]));
+}
+
+function assertStoreUnauthorizedForNonOwner(string $controllerClass, string $tableName, array $payload): void
+{
+    $owner = User::factory()->create();
+    $otherUser = User::factory()->create();
+    $declaration = Declaration::factory()->create(['user_id' => $owner->id]);
+
+    $url = action([$controllerClass, 'store'], [
+        'declaration' => $declaration,
+        'owner' => OwnerType::Self->value,
+    ]);
+
+    $response = test()->actingAs($otherUser)->postJson($url, $payload);
+
+    $response->assertStatus(JsonResponse::HTTP_UNAUTHORIZED);
+    test()->assertDatabaseEmpty($tableName);
+}
+
+function assertUpdateModifiesPosition(string $controllerClass, string $modelClass, string $tableName, array $updatePayload): void
+{
+    $user = User::factory()->create();
+    $declaration = Declaration::factory()->create(['user_id' => $user->id]);
+
+    $record = $modelClass::factory()->create([
+        'declaration_id' => $declaration->id,
+        'owner' => OwnerType::Self,
+    ]);
+
+    $paramName = lcfirst(str_replace('Declaration', '', class_basename($modelClass)));
+    $paramName = Str::snake($paramName);
+
+    $url = action([$controllerClass, 'update'], [
+        'declaration' => $declaration,
+        'owner' => OwnerType::Self->value,
+        $paramName => $record,
+    ]);
+
+    $response = test()->actingAs($user)->putJson($url, $updatePayload);
+
+    $response->assertOk();
+    test()->assertDatabaseHas($tableName, array_merge([
+        'id' => $record->id,
+    ], $updatePayload));
+}
+
+function assertDestroyDeletesPosition(string $controllerClass, string $modelClass, string $tableName): void
+{
+    $user = User::factory()->create();
+    $declaration = Declaration::factory()->create(['user_id' => $user->id]);
+
+    $record = $modelClass::factory()->create([
+        'declaration_id' => $declaration->id,
+        'owner' => OwnerType::Self,
+    ]);
+
+    $paramName = lcfirst(str_replace('Declaration', '', class_basename($modelClass)));
+    $paramName = Str::snake($paramName);
+
+    $url = action([$controllerClass, 'destroy'], [
+        'declaration' => $declaration,
+        'owner' => OwnerType::Self->value,
+        $paramName => $record,
+    ]);
+
+    $response = test()->actingAs($user)->deleteJson($url);
+
+    $response->assertOk();
+    test()->assertDatabaseMissing($tableName, ['id' => $record->id]);
 }

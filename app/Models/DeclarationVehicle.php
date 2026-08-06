@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Types\OwnerType;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @property int $id
@@ -13,5 +14,7 @@ use App\Types\OwnerType;
  */
 class DeclarationVehicle extends AbstractDeclarationOwnerPosition
 {
+    use HasFactory;
+
     protected $fillable = ['declaration_id', 'owner', 'description', 'value'];
 }

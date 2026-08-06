@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Types\OwnerType;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -16,5 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class DeclarationBusiness extends AbstractDeclarationOwnerPosition
 {
+    use HasFactory;
+
     protected $fillable = ['declaration_id', 'owner', 'name', 'business_type', 'involvement_type', 'value'];
 }

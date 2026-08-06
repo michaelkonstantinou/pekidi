@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Types\OwnerType;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -20,6 +21,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class DeclarationRealEstate extends AbstractDeclarationOwnerPosition
 {
+    use HasFactory;
+
     protected $fillable = [
         'declaration_id',
         'owner',

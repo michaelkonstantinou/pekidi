@@ -1,10 +1,10 @@
 <?php
+declare(strict_types=1);
+
+namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Declaration;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-
-pest()->use(RefreshDatabase::class);
 
 it('cannot fetch data as a guest', function () {
     $response = $this->getJson('api/user/declarations');
